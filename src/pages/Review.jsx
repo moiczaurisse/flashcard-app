@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { useApp } from '../context/AppContext'
 import { calculateNextReview } from '../utils/srs'
 
-// Isolated component — keyed by `reviewed` so it mounts fresh for every card.
-// This guarantees isFlipped always starts at false with no residual CSS transition.
 function FlipCard({ card, onRate }) {
   const [flipped, setFlipped] = useState(false)
 
@@ -50,7 +48,7 @@ function FlipCard({ card, onRate }) {
 }
 
 export default function Review({ categoryId, onDone }) {
-  const { getDueCards, updateCard, categories, cards } = useApp()
+  const { getDueCards, updateCard, categories, cards, recordCardReview } = useApp()
 
   const [queue,        setQueue]        = useState(() => [...getDueCards(categoryId)])
   const [reviewed,     setReviewed]     = useState(0)
@@ -70,12 +68,12 @@ export default function Review({ categoryId, onDone }) {
   }
 
   const rate = (quality) => {
-    // In free mode we skip SRS — no interval recalculation, no persistence.
     let updates = null
     if (!freeMode) {
       updates = calculateNextReview(card, quality)
       updateCard(card.id, updates)
     }
+    recordCardReview()
 
     const keys = ['again', 'hard', 'good', 'easy']
     setSessionStats(prev => ({ ...prev, [keys[quality]]: prev[keys[quality]] + 1 }))
@@ -83,8 +81,6 @@ export default function Review({ categoryId, onDone }) {
 
     setQueue(prev => {
       const rest = prev.slice(1)
-      // "Again" re-queues the card (SRS mode: merge updates so in-queue metadata
-      // stays current; free mode: plain card object, no SRS changes).
       if (quality === 0) return [...rest, updates ? { ...prev[0], ...updates } : prev[0]]
       return rest
     })
@@ -199,7 +195,6 @@ export default function Review({ categoryId, onDone }) {
         </div>
       )}
 
-      {/* key=reviewed forces a fresh mount — no flash of the previous card's back face */}
       <FlipCard key={reviewed} card={card} onRate={rate} />
     </main>
   )

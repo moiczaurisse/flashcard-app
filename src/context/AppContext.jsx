@@ -50,8 +50,10 @@ const SEED_CARDS = [
 
 // ── Provider ─────────────────────────────────
 export function AppProvider({ children }) {
-  const [cards, setCards]           = useLocalStorage('fc_cards', SEED_CARDS)
-  const [categories, setCategories] = useLocalStorage('fc_cats',  SEED_CATS)
+  const [cards, setCards]               = useLocalStorage('fc_cards', SEED_CARDS)
+  const [categories, setCategories]     = useLocalStorage('fc_cats',  SEED_CATS)
+  const [studyDays, setStudyDays]       = useLocalStorage('fc_study_days', [])
+  const [totalReviewed, setTotalReviewed] = useLocalStorage('fc_total_reviewed', 0)
 
   const addCard = useCallback((data) => {
     const card = {
@@ -72,11 +74,41 @@ export function AppProvider({ children }) {
     setCards(prev => prev.map(c => c.id === id ? { ...c, ...updates } : c))
   }, [setCards])
 
+  const deleteCard = useCallback((id) => {
+    setCards(prev => prev.filter(c => c.id !== id))
+  }, [setCards])
+
   const addCategory = useCallback((data) => {
     const cat = { id: `c${Date.now()}`, ...data }
     setCategories(prev => [...prev, cat])
     return cat
   }, [setCategories])
+
+  const recordCardReview = useCallback(() => {
+    const today = new Date().toISOString().split('T')[0]
+    setStudyDays(prev => prev.includes(today) ? prev : [...prev, today])
+    setTotalReviewed(prev => prev + 1)
+  }, [setStudyDays, setTotalReviewed])
+
+  const getStreak = useCallback(() => {
+    if (studyDays.length === 0) return 0
+    const sorted = [...new Set(studyDays)].sort().reverse()
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const todayStr = today.toISOString().split('T')[0]
+    // Start from today; if today not studied yet, start from yesterday
+    const checkStart = new Date(today)
+    if (!sorted.includes(todayStr)) checkStart.setDate(checkStart.getDate() - 1)
+    let streak = 0
+    const check = new Date(checkStart)
+    while (true) {
+      const dateStr = check.toISOString().split('T')[0]
+      if (!sorted.includes(dateStr)) break
+      streak++
+      check.setDate(check.getDate() - 1)
+    }
+    return streak
+  }, [studyDays])
 
   const getDueCards = useCallback((catId = null) => {
     return cards.filter(c => {
@@ -94,11 +126,21 @@ export function AppProvider({ children }) {
 
   const getCatStats = useCallback((catId) => {
     const cat = cards.filter(c => c.categoryId === catId)
-    return { total: cat.length, due: cat.filter(isDue).length }
+    return {
+      total:    cat.length,
+      due:      cat.filter(isDue).length,
+      mastered: cat.filter(isMastered).length,
+      learning: cat.filter(c => !isMastered(c)).length,
+    }
   }, [cards])
 
   return (
-    <Ctx.Provider value={{ cards, categories, addCard, updateCard, addCategory, getDueCards, getStats, getCatStats }}>
+    <Ctx.Provider value={{
+      cards, categories,
+      addCard, updateCard, deleteCard, addCategory,
+      getDueCards, getStats, getCatStats,
+      recordCardReview, getStreak, totalReviewed,
+    }}>
       {children}
     </Ctx.Provider>
   )

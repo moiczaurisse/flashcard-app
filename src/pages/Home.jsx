@@ -1,32 +1,30 @@
 import { useApp } from '../context/AppContext'
 
 export default function Home({ onReview }) {
-  const { categories, getStats, getCatStats } = useApp()
+  const { categories, getStats, getCatStats, getStreak } = useApp()
   const stats = getStats()
+  const streak = getStreak()
+
+  const hour = new Date().getHours()
+  const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
 
   return (
     <main className="page">
-      <div className="home-header">
-        <h1 className="page-title">Flashcards</h1>
-      </div>
-
-      {/* Stats */}
-      <div className="stats-grid">
-        <div className="stat-card highlight">
-          <div className="stat-label">À réviser</div>
-          <div className="stat-value">{stats.dueCount}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Total</div>
-          <div className="stat-value">{stats.totalCount}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Vues aujourd'hui</div>
-          <div className="stat-value">{stats.viewedToday}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Maîtrisées</div>
-          <div className="stat-value">{stats.mastered}</div>
+      {/* Hero */}
+      <div className="home-hero">
+        <div className="home-greeting-text">{greeting}, Loïc !</div>
+        <div className="home-due-row">
+          <div className="home-due-number">{stats.dueCount}</div>
+          <div className="home-due-info">
+            <div className="home-due-label">
+              carte{stats.dueCount !== 1 ? 's' : ''} à réviser
+            </div>
+            {streak > 0 ? (
+              <div className="home-streak-badge">🔥 {streak} jour{streak > 1 ? 's' : ''} de suite</div>
+            ) : (
+              <div className="home-streak-badge home-streak-empty">Commence ta série !</div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -50,7 +48,7 @@ export default function Home({ onReview }) {
       {categories.length === 0 ? (
         <div className="empty-state">
           <div className="empty-state-icon">📂</div>
-          <p className="empty-state-text">Aucune catégorie.<br/>Créez votre première carte !</p>
+          <p className="empty-state-text">Aucune catégorie.<br />Créez votre première carte !</p>
         </div>
       ) : (
         categories.map(cat => {
@@ -60,10 +58,7 @@ export default function Home({ onReview }) {
               <span className="cat-dot" style={{ background: cat.color }} />
               <span className="cat-name">{cat.name}</span>
               {cs.due > 0 && (
-                <span
-                  className="cat-due"
-                  style={{ background: cat.color + '22', color: cat.color }}
-                >
+                <span className="cat-due" style={{ background: cat.color + '22', color: cat.color }}>
                   {cs.due}
                 </span>
               )}

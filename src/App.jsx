@@ -3,11 +3,13 @@ import TabBar from './components/TabBar'
 import Home   from './pages/Home'
 import Review from './pages/Review'
 import Add    from './pages/Add'
+import Manage from './pages/Manage'
+import Stats  from './pages/Stats'
 import { useApp } from './context/AppContext'
 
 export default function App() {
-  const [tab, setTab]                   = useState('home')
-  const [reviewCatId, setReviewCatId]   = useState(null)
+  const [tab, setTab]                 = useState('home')
+  const [reviewCatId, setReviewCatId] = useState(null)
   const { getDueCards } = useApp()
 
   const startReview = (catId = null) => {
@@ -19,10 +21,7 @@ export default function App() {
 
   return (
     <>
-      {tab === 'home' && (
-        <Home onReview={startReview} />
-      )}
-
+      {tab === 'home'   && <Home onReview={startReview} />}
       {tab === 'review' && (
         <Review
           key={`review-${reviewCatId}`}
@@ -30,10 +29,9 @@ export default function App() {
           onDone={() => { setReviewCatId(null); setTab('home') }}
         />
       )}
-
-      {tab === 'add' && (
-        <Add onSaved={() => setTab('home')} />
-      )}
+      {tab === 'add'    && <Add onSaved={() => setTab('home')} />}
+      {tab === 'manage' && <Manage />}
+      {tab === 'stats'  && <Stats />}
 
       <TabBar
         active={tab}

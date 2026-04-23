@@ -28,6 +28,23 @@ export default function TabBar({ active, onChange, dueCount }) {
         </svg>
         Ajouter
       </button>
+
+      <button className={`tab-item ${active === 'manage' ? 'active' : ''}`} onClick={() => onChange('manage')}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="m18.5 2.5 3 3L12 15H9v-3z"/>
+        </svg>
+        Gérer
+      </button>
+
+      <button className={`tab-item ${active === 'stats' ? 'active' : ''}`} onClick={() => onChange('stats')}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        Stats
+      </button>
     </nav>
   )
 }

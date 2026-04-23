@@ -7,7 +7,6 @@ export default function Home({ onReview }) {
   return (
     <main className="page">
       <div className="home-header">
-        <p className="home-greeting">Bonne révision !</p>
         <h1 className="page-title">Flashcards</h1>
       </div>
 

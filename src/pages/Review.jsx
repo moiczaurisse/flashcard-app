@@ -1,28 +1,63 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useApp } from '../context/AppContext'
-import { calculateNextReview, fmtInterval } from '../utils/srs'
+import { calculateNextReview } from '../utils/srs'
+
+// Isolated component — keyed by `reviewed` so it mounts fresh for every card.
+// This guarantees isFlipped always starts at false with no residual CSS transition.
+function FlipCard({ card, onRate }) {
+  const [flipped, setFlipped] = useState(false)
+
+  return (
+    <>
+      <div
+        className="flip-wrap"
+        onClick={() => !flipped && setFlipped(true)}
+        role="button"
+        aria-label={flipped ? 'Réponse affichée' : 'Révéler la réponse'}
+      >
+        <div className={`flip-inner ${flipped ? 'flipped' : ''}`}>
+          <div className="flip-face">
+            <div className="face-label">Question</div>
+            <p className="face-text">{card.question}</p>
+          </div>
+          <div className="flip-face flip-back">
+            <div className="face-label">Réponse</div>
+            <p className="face-text">{card.answer}</p>
+          </div>
+        </div>
+      </div>
+
+      {!flipped ? (
+        <p className="flip-hint">Appuyez sur la carte pour révéler la réponse</p>
+      ) : (
+        <div className="rating-grid">
+          <button className="rate-btn rate-again" onClick={() => onRate(0)}>
+            <span className="rate-label">Raté</span>
+          </button>
+          <button className="rate-btn rate-hard" onClick={() => onRate(1)}>
+            <span className="rate-label">Difficile</span>
+          </button>
+          <button className="rate-btn rate-good" onClick={() => onRate(2)}>
+            <span className="rate-label">Bien</span>
+          </button>
+          <button className="rate-btn rate-easy" onClick={() => onRate(3)}>
+            <span className="rate-label">Facile</span>
+          </button>
+        </div>
+      )}
+    </>
+  )
+}
 
 export default function Review({ categoryId, onDone }) {
   const { getDueCards, updateCard, categories } = useApp()
 
-  const [queue,         setQueue]         = useState(() => [...getDueCards(categoryId)])
-  const [isFlipped,     setIsFlipped]     = useState(false)
-  const [reviewed,      setReviewed]      = useState(0)
-  const [sessionStats,  setSessionStats]  = useState({ again: 0, hard: 0, good: 0, easy: 0 })
+  const [queue,        setQueue]        = useState(() => [...getDueCards(categoryId)])
+  const [reviewed,     setReviewed]     = useState(0)
+  const [sessionStats, setSessionStats] = useState({ again: 0, hard: 0, good: 0, easy: 0 })
 
   const card     = queue[0]
   const category = card ? categories.find(c => c.id === card.categoryId) : null
-
-  // Pre-compute next intervals for each button
-  const previews = useMemo(() => {
-    if (!card) return null
-    return {
-      again: calculateNextReview(card, 0),
-      hard:  calculateNextReview(card, 1),
-      good:  calculateNextReview(card, 2),
-      easy:  calculateNextReview(card, 3),
-    }
-  }, [card])
 
   const rate = (quality) => {
     const updates = calculateNextReview(card, quality)
@@ -34,17 +69,14 @@ export default function Review({ categoryId, onDone }) {
 
     setQueue(prev => {
       const rest = prev.slice(1)
-      // "Again" — re-queue at the end with updated data
       return quality === 0 ? [...rest, { ...prev[0], ...updates }] : rest
     })
-
-    setIsFlipped(false)
   }
 
-  // ── Empty on start (nothing due) ─────────────
+  // ── Nothing due ───────────────────────────────
   if (queue.length === 0 && reviewed === 0) {
     return (
-      <main className="page">
+      <main className="review-page">
         <div className="done-screen">
           <div className="done-icon">🎉</div>
           <h2 className="done-title">Tout à jour !</h2>
@@ -60,14 +92,13 @@ export default function Review({ categoryId, onDone }) {
   // ── Session complete ──────────────────────────
   if (queue.length === 0) {
     return (
-      <main className="page">
+      <main className="review-page">
         <div className="done-screen">
           <div className="done-icon">✅</div>
           <h2 className="done-title">Session terminée !</h2>
           <p className="done-sub">
             {reviewed} carte{reviewed > 1 ? 's' : ''} révisée{reviewed > 1 ? 's' : ''}
           </p>
-
           <div className="done-stats">
             {sessionStats.again > 0 && (
               <div className="done-stat">
@@ -94,7 +125,6 @@ export default function Review({ categoryId, onDone }) {
               </div>
             )}
           </div>
-
           <button className="btn btn-primary" onClick={onDone}>Retour à l'accueil</button>
         </div>
       </main>
@@ -102,12 +132,10 @@ export default function Review({ categoryId, onDone }) {
   }
 
   // ── Active review ─────────────────────────────
-  const total    = reviewed + queue.length
-  const progress = total > 0 ? reviewed / total : 0
+  const progress = reviewed / (reviewed + queue.length)
 
   return (
-    <main className="page">
-      {/* Progress */}
+    <main className="review-page">
       <div className="review-header">
         <div className="progress-bar">
           <div className="progress-fill" style={{ width: `${progress * 100}%` }} />
@@ -115,7 +143,6 @@ export default function Review({ categoryId, onDone }) {
         <span className="review-count">{queue.length} restante{queue.length > 1 ? 's' : ''}</span>
       </div>
 
-      {/* Category badge */}
       {category && (
         <div>
           <span
@@ -131,50 +158,8 @@ export default function Review({ categoryId, onDone }) {
         </div>
       )}
 
-      {/* Flip card */}
-      <div
-        className="flip-wrap"
-        onClick={() => !isFlipped && setIsFlipped(true)}
-        role="button"
-        aria-label={isFlipped ? 'Carte retournée' : 'Appuyer pour révéler la réponse'}
-      >
-        <div className={`flip-inner ${isFlipped ? 'flipped' : ''}`}>
-          {/* Front */}
-          <div className="flip-face">
-            <div className="face-label">Question</div>
-            <p className="face-text">{card.question}</p>
-          </div>
-          {/* Back */}
-          <div className="flip-face flip-back">
-            <div className="face-label">Réponse</div>
-            <p className="face-text">{card.answer}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Hint or rating buttons */}
-      {!isFlipped ? (
-        <p className="flip-hint">Appuyez sur la carte pour révéler la réponse</p>
-      ) : (
-        <div className="rating-grid">
-          <button className="rate-btn rate-again" onClick={() => rate(0)}>
-            <span className="rate-label">Raté</span>
-            <span className="rate-interval">{fmtInterval(previews.again.interval)}</span>
-          </button>
-          <button className="rate-btn rate-hard" onClick={() => rate(1)}>
-            <span className="rate-label">Difficile</span>
-            <span className="rate-interval">{fmtInterval(previews.hard.interval)}</span>
-          </button>
-          <button className="rate-btn rate-good" onClick={() => rate(2)}>
-            <span className="rate-label">Bien</span>
-            <span className="rate-interval">{fmtInterval(previews.good.interval)}</span>
-          </button>
-          <button className="rate-btn rate-easy" onClick={() => rate(3)}>
-            <span className="rate-label">Facile</span>
-            <span className="rate-interval">{fmtInterval(previews.easy.interval)}</span>
-          </button>
-        </div>
-      )}
+      {/* key=reviewed forces a fresh mount — no flash of the previous card's back face */}
+      <FlipCard key={reviewed} card={card} onRate={rate} />
     </main>
   )
 }

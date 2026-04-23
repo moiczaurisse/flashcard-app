@@ -62,11 +62,26 @@ body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 24px 16px calc(var(--tab-height) + var(--safe-bottom) + 20px);
+  /* safe-area-inset-top keeps content below notch / Dynamic Island */
+  padding: calc(24px + env(safe-area-inset-top, 0px))
+           16px
+           calc(var(--tab-height) + env(safe-area-inset-bottom, 0px) + 20px);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 .page::-webkit-scrollbar { display: none; }
+
+/* Review uses a fixed-height flex column so the card fills all available space */
+.review-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top, 0px) + 20px)
+           16px
+           calc(var(--tab-height) + env(safe-area-inset-bottom, 0px) + 16px);
+  overflow: hidden;
+  min-height: 0;
+}
 
 /* ── TAB BAR ────────────────────────────────── */
 .tab-bar {
@@ -76,14 +91,28 @@ body {
   transform: translateX(-50%);
   width: 100%;
   max-width: 480px;
-  height: calc(var(--tab-height) + var(--safe-bottom));
+  /* height grows with the home-indicator safe area */
+  height: calc(var(--tab-height) + env(safe-area-inset-bottom, 0px));
   background: var(--surface);
   border-top: 1px solid var(--border);
   display: flex;
   align-items: flex-start;
   padding-top: 8px;
+  /* push tab items above the home indicator */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 100;
   box-shadow: 0 -2px 16px rgba(83, 74, 183, 0.09);
+}
+
+/* Extends background colour into the safe area so no gap appears */
+.tab-bar::after {
+  content: '';
+  position: absolute;
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-bottom, 0px);
+  background: var(--surface);
 }
 
 .tab-item {
@@ -298,8 +327,10 @@ body {
 
 /* ── FLIP CARD ───────────────────────────────── */
 .flip-wrap {
+  /* flex: 1 fills all remaining vertical space in .review-page */
+  flex: 1;
+  min-height: 0;
   perspective: 1200px;
-  height: 260px;
   cursor: pointer;
   user-select: none;
   margin-bottom: 16px;
@@ -408,10 +439,9 @@ body {
 
 .rate-btn {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 11px 6px;
+  justify-content: center;
+  padding: 16px 6px;
   border: none;
   border-radius: var(--radius-sm);
   font-family: var(--font-sans);
@@ -421,15 +451,9 @@ body {
 .rate-btn:active { transform: scale(0.94); }
 
 .rate-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 1;
-}
-
-.rate-interval {
-  font-size: 10px;
-  font-weight: 500;
-  opacity: 0.7;
 }
 
 .rate-again  { background: #FEE2E2; color: #DC2626; }

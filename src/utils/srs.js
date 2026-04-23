@@ -1,27 +1,52 @@
+const MIN_EASE = 1.3
+const MAX_EASE = 4.0
+
+// Randomise intervals slightly to prevent review pile-ups on a single day.
+// Applied only to mature intervals (≥ 7 days) per Anki's fuzz approach.
+function fuzz(n) {
+  if (n < 7) return n
+  const range = Math.max(1, Math.round(n * 0.15))
+  return n + Math.floor(Math.random() * (range * 2 + 1)) - range
+}
+
 export function calculateNextReview(card, quality) {
   let { interval, easeFactor, repetitions } = { ...card }
 
+  // Cards with < 2 repetitions are still in the learning phase.
+  // Ease-factor adjustments only apply once a card has graduated to review.
+  const inLearning = repetitions < 2
+
   if (quality === 0) {
-    // Again — reset, re-show tomorrow
-    repetitions = 0
+    // Again — reset to start of learning.
+    // Lapsed review cards (not just learning ones) receive an ease penalty.
     interval = 1
+    repetitions = 0
+    if (!inLearning) {
+      easeFactor = Math.max(MIN_EASE, +(easeFactor - 0.20).toFixed(2))
+    }
   } else if (quality === 1) {
-    // Hard — small bump, ease drops
-    interval = repetitions === 0 ? 1 : Math.max(1, Math.round(interval * 1.2))
-    easeFactor = Math.max(1.3, +(easeFactor - 0.15).toFixed(2))
+    // Hard — stay in learning or advance slowly; ease drops on review cards only.
+    if (repetitions === 0) {
+      interval = 1
+    } else if (repetitions === 1) {
+      interval = 1           // keep in learning one more day
+    } else {
+      interval = fuzz(Math.max(1, Math.round(interval * 1.2)))
+      easeFactor = Math.max(MIN_EASE, +(easeFactor - 0.15).toFixed(2))
+    }
+    // repetitions intentionally NOT incremented for Hard
   } else if (quality === 2) {
-    // Good — standard SM-2
-    if (repetitions === 0) interval = 1
-    else if (repetitions === 1) interval = 6
-    else interval = Math.round(interval * easeFactor)
-    repetitions++
+    // Good — standard SM-2 graduation.  No ease change (preserves ease factor
+    // and avoids the ease-hell spiral triggered by too many Hard responses).
+    if (repetitions === 0) { interval = 1;  repetitions = 1 }
+    else if (repetitions === 1) { interval = 6;  repetitions = 2 }
+    else { interval = fuzz(Math.round(interval * easeFactor)); repetitions++ }
   } else {
-    // Easy — accelerated, ease rises
-    if (repetitions === 0) interval = 4
-    else if (repetitions === 1) interval = 10
-    else interval = Math.round(interval * easeFactor * 1.3)
-    easeFactor = Math.min(4.0, +(easeFactor + 0.15).toFixed(2))
-    repetitions++
+    // Easy — accelerated graduation with ease boost.
+    if (repetitions === 0) { interval = 4;  repetitions = 1 }
+    else if (repetitions === 1) { interval = 10; repetitions = 2 }
+    else { interval = fuzz(Math.round(interval * easeFactor * 1.3)); repetitions++ }
+    easeFactor = Math.min(MAX_EASE, +(easeFactor + 0.15).toFixed(2))
   }
 
   const due = new Date()
@@ -58,12 +83,4 @@ export function isReviewedToday(card) {
     today.getMonth() === rev.getMonth() &&
     today.getDate() === rev.getDate()
   )
-}
-
-export function fmtInterval(days) {
-  if (days <= 0) return '<1j'
-  if (days === 1) return '1j'
-  if (days < 30) return `${days}j`
-  if (days < 365) return `${Math.round(days / 30)}mo`
-  return `${(days / 365).toFixed(1)}a`
 }

@@ -1,8 +1,7 @@
 import { useApp } from '../context/AppContext'
 
 export default function Stats() {
-  const { categories, getCatStats, getStreak, totalReviewed } = useApp()
-  const streak = getStreak()
+  const { categories, getCatStats, totalReviewed } = useApp()
 
   return (
     <main className="page">
@@ -15,11 +14,6 @@ export default function Stats() {
         <div className="stat-global-item">
           <div className="stat-global-value">{totalReviewed}</div>
           <div className="stat-global-label">Cartes révisées</div>
-        </div>
-        <div className="stat-global-item">
-          <div className="stat-global-icon">🔥</div>
-          <div className="stat-global-value">{streak}</div>
-          <div className="stat-global-label">{streak > 1 ? 'Jours consécutifs' : 'Jour consécutif'}</div>
         </div>
       </div>
 

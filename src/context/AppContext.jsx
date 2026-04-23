@@ -52,7 +52,6 @@ const SEED_CARDS = [
 export function AppProvider({ children }) {
   const [cards, setCards]               = useLocalStorage('fc_cards', SEED_CARDS)
   const [categories, setCategories]     = useLocalStorage('fc_cats',  SEED_CATS)
-  const [studyDays, setStudyDays]       = useLocalStorage('fc_study_days', [])
   const [totalReviewed, setTotalReviewed] = useLocalStorage('fc_total_reviewed', 0)
 
   const addCard = useCallback((data) => {
@@ -102,30 +101,8 @@ export function AppProvider({ children }) {
   }, [setCards, setCategories])
 
   const recordCardReview = useCallback(() => {
-    const today = new Date().toISOString().split('T')[0]
-    setStudyDays(prev => prev.includes(today) ? prev : [...prev, today])
     setTotalReviewed(prev => prev + 1)
-  }, [setStudyDays, setTotalReviewed])
-
-  const getStreak = useCallback(() => {
-    if (studyDays.length === 0) return 0
-    const sorted = [...new Set(studyDays)].sort().reverse()
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    const todayStr = today.toISOString().split('T')[0]
-    // Start from today; if today not studied yet, start from yesterday
-    const checkStart = new Date(today)
-    if (!sorted.includes(todayStr)) checkStart.setDate(checkStart.getDate() - 1)
-    let streak = 0
-    const check = new Date(checkStart)
-    while (true) {
-      const dateStr = check.toISOString().split('T')[0]
-      if (!sorted.includes(dateStr)) break
-      streak++
-      check.setDate(check.getDate() - 1)
-    }
-    return streak
-  }, [studyDays])
+  }, [setTotalReviewed])
 
   const getDueCards = useCallback((catId = null) => {
     return cards.filter(c => {
@@ -156,7 +133,7 @@ export function AppProvider({ children }) {
       cards, categories,
       addCard, updateCard, deleteCard, addCategory,
       getDueCards, getStats, getCatStats,
-      recordCardReview, getStreak, totalReviewed,
+      recordCardReview, totalReviewed,
       importData,
     }}>
       {children}

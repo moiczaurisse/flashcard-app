@@ -47,6 +47,7 @@ body {
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 
 #root {
@@ -66,9 +67,7 @@ body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: calc(24px + env(safe-area-inset-top, 0px))
-           16px
-           calc(60px + env(safe-area-inset-bottom));
+  padding: 24px 16px 80px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -79,9 +78,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: calc(env(safe-area-inset-top, 0px) + 20px)
-           16px
-           calc(60px + env(safe-area-inset-bottom));
+  padding: 20px 16px 80px;
   overflow: hidden;
   min-height: 0;
 }
@@ -92,14 +89,12 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: calc(60px + env(safe-area-inset-bottom));
-  padding-bottom: env(safe-area-inset-bottom);
-  background: var(--surface);
+  height: 60px;
+  background: var(--bg);
   border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
   z-index: 100;
-  box-shadow: 0 -2px 16px rgba(83, 74, 183, 0.09);
 }
 
 .tab-item {
@@ -150,7 +145,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--surface);
+  border: 2px solid var(--bg);
   line-height: 1;
 }
 
@@ -588,7 +583,7 @@ body {
 /* ── TOAST ───────────────────────────────────── */
 .toast {
   position: fixed;
-  bottom: calc(60px + env(safe-area-inset-bottom) + 8px);
+  bottom: 72px;
   left: 50%;
   transform: translateX(-50%) translateY(12px);
   background: var(--text);
@@ -772,23 +767,20 @@ body {
   display: flex;
   align-items: flex-end;
   padding: 16px;
-  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: 16px;
 }
 
 .modal {
   background: var(--surface);
   border-radius: var(--radius-lg);
   padding: 24px;
+  padding-bottom: 28px;
   width: 100%;
   max-width: 448px;
   margin: 0 auto;
   box-shadow: var(--shadow-lg);
-}
-
-.modal-form {
-  max-height: 82vh;
+  max-height: 80vh;
   overflow-y: auto;
-  padding-bottom: 120px;
 }
 
 .modal-title {
@@ -819,6 +811,105 @@ body {
 .btn-danger-light {
   background: #FEE2E2;
   color: #DC2626;
+}
+
+/* ── SESSION INFO ────────────────────────────── */
+.session-info {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-10);
+  border-radius: 20px;
+  padding: 4px 12px;
+  align-self: center;
+  margin-bottom: 10px;
+}
+
+/* ── CATEGORY MANAGEMENT ─────────────────────── */
+.manage-cats-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.cat-manage-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cat-manage-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cat-manage-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.icon-btn:hover { background: var(--primary-10); color: var(--primary); }
+.icon-btn:active { transform: scale(0.92); }
+
+.icon-btn-danger { background: #FEE2E2; color: #DC2626; }
+.icon-btn-danger:hover { background: #FECACA; color: #B91C1C; }
+
+/* ── DELETE CATEGORY OPTIONS ─────────────────── */
+.delete-cat-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.delete-cat-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.delete-cat-option.active {
+  border-color: var(--primary);
+  background: var(--primary-10);
+}
+
+.delete-cat-option input[type="radio"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+}
+
+.delete-cat-option-body {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
 }
 
 /* ── STATS PAGE ──────────────────────────────── */

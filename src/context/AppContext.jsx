@@ -83,6 +83,24 @@ export function AppProvider({ children }) {
     return cat
   }, [setCategories])
 
+  const updateCategory = useCallback((id, updates) => {
+    setCategories(prev => prev.map(c => c.id === id ? { ...c, ...updates } : c))
+  }, [setCategories])
+
+  const deleteCategory = useCallback((id, { moveTo = null } = {}) => {
+    if (moveTo) {
+      setCards(prev => prev.map(c => c.categoryId === id ? { ...c, categoryId: moveTo } : c))
+    } else {
+      setCards(prev => prev.filter(c => c.categoryId !== id))
+    }
+    setCategories(prev => prev.filter(c => c.id !== id))
+  }, [setCards, setCategories])
+
+  const mergeCategories = useCallback((sourceId, targetId) => {
+    setCards(prev => prev.map(c => c.categoryId === sourceId ? { ...c, categoryId: targetId } : c))
+    setCategories(prev => prev.filter(c => c.id !== sourceId))
+  }, [setCards, setCategories])
+
   const importData = useCallback((data) => {
     if (data.categories && Array.isArray(data.categories)) {
       setCategories(prev => {
@@ -132,6 +150,7 @@ export function AppProvider({ children }) {
     <Ctx.Provider value={{
       cards, categories,
       addCard, updateCard, deleteCard, addCategory,
+      updateCategory, deleteCategory, mergeCategories,
       getDueCards, getStats, getCatStats,
       recordCardReview, totalReviewed,
       importData,

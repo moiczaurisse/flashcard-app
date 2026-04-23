@@ -2,6 +2,39 @@ import { useState } from 'react'
 import { useApp } from '../context/AppContext'
 import { calculateNextReview } from '../utils/srs'
 
+const SESSION_LIMIT = 20
+
+function fisherYates(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+function buildInterleavedQueue(cards) {
+  const shuffled = fisherYates(cards)
+  for (let i = 2; i < shuffled.length; i++) {
+    if (
+      shuffled[i].categoryId === shuffled[i - 1].categoryId &&
+      shuffled[i].categoryId === shuffled[i - 2].categoryId
+    ) {
+      let swapIdx = -1
+      for (let j = i + 1; j < shuffled.length; j++) {
+        if (shuffled[j].categoryId !== shuffled[i].categoryId) {
+          swapIdx = j
+          break
+        }
+      }
+      if (swapIdx !== -1) {
+        ;[shuffled[i], shuffled[swapIdx]] = [shuffled[swapIdx], shuffled[i]]
+      }
+    }
+  }
+  return shuffled
+}
+
 function FlipCard({ card, onRate }) {
   const [flipped, setFlipped] = useState(false)
 
@@ -50,18 +83,29 @@ function FlipCard({ card, onRate }) {
 export default function Review({ categoryId, onDone }) {
   const { getDueCards, updateCard, categories, cards, recordCardReview } = useApp()
 
-  const [queue,        setQueue]        = useState(() => [...getDueCards(categoryId)])
-  const [reviewed,     setReviewed]     = useState(0)
+  const [sessionInfo] = useState(() => {
+    const due = getDueCards(categoryId)
+    const totalDue = due.length
+    const sessionSize = Math.min(totalDue, SESSION_LIMIT)
+    const totalSessions = Math.ceil(totalDue / SESSION_LIMIT) || 1
+    return { totalDue, sessionSize, totalSessions }
+  })
+
+  const [queue, setQueue] = useState(() => {
+    const due = getDueCards(categoryId)
+    const sorted = [...due].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+    return buildInterleavedQueue(sorted.slice(0, SESSION_LIMIT))
+  })
+  const [reviewed, setReviewed] = useState(0)
   const [sessionStats, setSessionStats] = useState({ again: 0, hard: 0, good: 0, easy: 0 })
-  const [freeMode,     setFreeMode]     = useState(false)
+  const [freeMode, setFreeMode] = useState(false)
 
-  const card     = queue[0]
+  const card = queue[0]
   const category = card ? categories.find(c => c.id === card.categoryId) : null
-
   const allCards = cards.filter(c => categoryId ? c.categoryId === categoryId : true)
 
   const startFreeSession = () => {
-    setQueue([...allCards])
+    setQueue(buildInterleavedQueue(allCards))
     setReviewed(0)
     setSessionStats({ again: 0, hard: 0, good: 0, easy: 0 })
     setFreeMode(true)
@@ -81,7 +125,14 @@ export default function Review({ categoryId, onDone }) {
 
     setQueue(prev => {
       const rest = prev.slice(1)
-      if (quality === 0) return [...rest, updates ? { ...prev[0], ...updates } : prev[0]]
+      if (quality === 0) {
+        const updatedCard = updates ? { ...prev[0], ...updates } : prev[0]
+        if (rest.length === 0) return [updatedCard]
+        // Insert in the latter half of the remaining queue
+        const minPos = Math.max(1, Math.ceil(rest.length * 0.5))
+        const insertAt = minPos + Math.floor(Math.random() * (rest.length - minPos + 1))
+        return [...rest.slice(0, insertAt), updatedCard, ...rest.slice(insertAt)]
+      }
       return rest
     })
   }
@@ -174,6 +225,12 @@ export default function Review({ categoryId, onDone }) {
         </div>
         <span className="review-count">{queue.length} restante{queue.length > 1 ? 's' : ''}</span>
       </div>
+
+      {!freeMode && (
+        <div className="session-info">
+          Session 1/{sessionInfo.totalSessions} · {sessionInfo.sessionSize} carte{sessionInfo.sessionSize > 1 ? 's' : ''}
+        </div>
+      )}
 
       {(category || freeMode) && (
         <div className="review-badges">

@@ -1,9 +1,8 @@
 import { useApp } from '../context/AppContext'
 
 export default function Home({ onReview }) {
-  const { categories, getStats, getCatStats, getStreak } = useApp()
+  const { categories, getStats, getCatStats } = useApp()
   const stats = getStats()
-  const streak = getStreak()
 
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
@@ -19,11 +18,6 @@ export default function Home({ onReview }) {
             <div className="home-due-label">
               carte{stats.dueCount !== 1 ? 's' : ''} à réviser
             </div>
-            {streak > 0 ? (
-              <div className="home-streak-badge">🔥 {streak} jour{streak > 1 ? 's' : ''} de suite</div>
-            ) : (
-              <div className="home-streak-badge home-streak-empty">Commence ta série !</div>
-            )}
           </div>
         </div>
       </div>

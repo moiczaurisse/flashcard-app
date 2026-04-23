@@ -66,7 +66,7 @@ body {
   /* safe-area-inset-top keeps content below notch / Dynamic Island */
   padding: calc(24px + env(safe-area-inset-top, 0px))
            16px
-           calc(var(--tab-height) + env(safe-area-inset-bottom, 0px) + 20px);
+           calc(var(--tab-height) + max(env(safe-area-inset-bottom, 0px), 16px));
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -79,7 +79,7 @@ body {
   flex-direction: column;
   padding: calc(env(safe-area-inset-top, 0px) + 20px)
            16px
-           calc(var(--tab-height) + env(safe-area-inset-bottom, 0px) + 16px);
+           calc(var(--tab-height) + max(env(safe-area-inset-bottom, 0px), 16px));
   overflow: hidden;
   min-height: 0;
 }
@@ -88,32 +88,16 @@ body {
 .tab-bar {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
-  /* height grows with the home-indicator safe area */
-  height: calc(var(--tab-height) + env(safe-area-inset-bottom, 0px));
+  left: 0;
+  right: 0;
   background: var(--surface);
   border-top: 1px solid var(--border);
   display: flex;
   align-items: flex-start;
   padding-top: 8px;
-  /* push tab items above the home indicator */
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: max(env(safe-area-inset-bottom), 16px);
   z-index: 100;
   box-shadow: 0 -2px 16px rgba(83, 74, 183, 0.09);
-}
-
-/* Extends background colour into the safe area so no gap appears */
-.tab-bar::after {
-  content: '';
-  position: absolute;
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-bottom, 0px);
-  background: var(--surface);
 }
 
 .tab-item {
@@ -602,7 +586,7 @@ body {
 /* ── TOAST ───────────────────────────────────── */
 .toast {
   position: fixed;
-  bottom: calc(var(--tab-height) + var(--safe-bottom) + 16px);
+  bottom: calc(var(--tab-height) + max(var(--safe-bottom), 16px) + 8px);
   left: 50%;
   transform: translateX(-50%) translateY(12px);
   background: var(--text);
@@ -681,6 +665,32 @@ body {
 }
 
 /* ── MANAGE PAGE ─────────────────────────────── */
+.manage-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.manage-io-buttons {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.manage-toast {
+  background: var(--primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
 .manage-group { margin-bottom: 24px; }
 
 .manage-group-header {
@@ -786,8 +796,9 @@ body {
 }
 
 .modal-form {
-  max-height: 78vh;
+  max-height: 82vh;
   overflow-y: auto;
+  padding-bottom: 120px;
 }
 
 .modal-title {

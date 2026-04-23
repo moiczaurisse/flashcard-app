@@ -1,11 +1,48 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useApp } from '../context/AppContext'
 
 export default function Manage() {
-  const { cards, categories, deleteCard, updateCard } = useApp()
+  const { cards, categories, deleteCard, updateCard, importData } = useApp()
   const [expandedCards, setExpandedCards] = useState(new Set())
   const [editCard, setEditCard] = useState(null)
   const [deleteTarget, setDeleteTarget] = useState(null)
+  const [toast, setToast] = useState(null)
+  const fileInputRef = useRef(null)
+
+  const showToast = (msg) => {
+    setToast(msg)
+    setTimeout(() => setToast(null), 3000)
+  }
+
+  const handleExport = () => {
+    const data = JSON.stringify({ cards, categories }, null, 2)
+    const blob = new Blob([data], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `flashcards-${new Date().toISOString().split('T')[0]}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const handleImportFile = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result)
+        if (!data.cards && !data.categories) throw new Error('Format invalide')
+        importData(data)
+        const count = (data.cards || []).length
+        showToast(`${count} carte${count > 1 ? 's' : ''} importée${count > 1 ? 's' : ''}`)
+      } catch {
+        showToast('Fichier invalide')
+      }
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
 
   const grouped = categories
     .map(cat => ({ ...cat, cards: cards.filter(c => c.categoryId === cat.id) }))
@@ -27,9 +64,36 @@ export default function Manage() {
 
   return (
     <main className="page">
-      <div className="home-header">
+      <div className="manage-top-bar">
         <h1 className="page-title">Gérer</h1>
+        <div className="manage-io-buttons">
+          <button className="btn btn-secondary btn-sm" onClick={handleExport}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exporter
+          </button>
+          <button className="btn btn-secondary btn-sm" onClick={() => fileInputRef.current?.click()}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Importer
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json,application/json"
+            style={{ display: 'none' }}
+            onChange={handleImportFile}
+          />
+        </div>
       </div>
+
+      {toast && <div className="manage-toast">{toast}</div>}
 
       {cards.length === 0 ? (
         <div className="empty-state">

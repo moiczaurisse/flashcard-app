@@ -84,6 +84,23 @@ export function AppProvider({ children }) {
     return cat
   }, [setCategories])
 
+  const importData = useCallback((data) => {
+    if (data.categories && Array.isArray(data.categories)) {
+      setCategories(prev => {
+        const existing = new Set(prev.map(c => c.id))
+        const newCats = data.categories.filter(c => !existing.has(c.id))
+        return [...prev, ...newCats]
+      })
+    }
+    if (data.cards && Array.isArray(data.cards)) {
+      setCards(prev => {
+        const existing = new Set(prev.map(c => c.id))
+        const newCards = data.cards.filter(c => !existing.has(c.id))
+        return [...prev, ...newCards]
+      })
+    }
+  }, [setCards, setCategories])
+
   const recordCardReview = useCallback(() => {
     const today = new Date().toISOString().split('T')[0]
     setStudyDays(prev => prev.includes(today) ? prev : [...prev, today])
@@ -140,6 +157,7 @@ export function AppProvider({ children }) {
       addCard, updateCard, deleteCard, addCategory,
       getDueCards, getStats, getCatStats,
       recordCardReview, getStreak, totalReviewed,
+      importData,
     }}>
       {children}
     </Ctx.Provider>

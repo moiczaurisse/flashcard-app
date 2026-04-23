@@ -50,18 +50,32 @@ function FlipCard({ card, onRate }) {
 }
 
 export default function Review({ categoryId, onDone }) {
-  const { getDueCards, updateCard, categories } = useApp()
+  const { getDueCards, updateCard, categories, cards } = useApp()
 
   const [queue,        setQueue]        = useState(() => [...getDueCards(categoryId)])
   const [reviewed,     setReviewed]     = useState(0)
   const [sessionStats, setSessionStats] = useState({ again: 0, hard: 0, good: 0, easy: 0 })
+  const [freeMode,     setFreeMode]     = useState(false)
 
   const card     = queue[0]
   const category = card ? categories.find(c => c.id === card.categoryId) : null
 
+  const allCards = cards.filter(c => categoryId ? c.categoryId === categoryId : true)
+
+  const startFreeSession = () => {
+    setQueue([...allCards])
+    setReviewed(0)
+    setSessionStats({ again: 0, hard: 0, good: 0, easy: 0 })
+    setFreeMode(true)
+  }
+
   const rate = (quality) => {
-    const updates = calculateNextReview(card, quality)
-    updateCard(card.id, updates)
+    // In free mode we skip SRS — no interval recalculation, no persistence.
+    let updates = null
+    if (!freeMode) {
+      updates = calculateNextReview(card, quality)
+      updateCard(card.id, updates)
+    }
 
     const keys = ['again', 'hard', 'good', 'easy']
     setSessionStats(prev => ({ ...prev, [keys[quality]]: prev[keys[quality]] + 1 }))
@@ -69,63 +83,85 @@ export default function Review({ categoryId, onDone }) {
 
     setQueue(prev => {
       const rest = prev.slice(1)
-      return quality === 0 ? [...rest, { ...prev[0], ...updates }] : rest
+      // "Again" re-queues the card (SRS mode: merge updates so in-queue metadata
+      // stays current; free mode: plain card object, no SRS changes).
+      if (quality === 0) return [...rest, updates ? { ...prev[0], ...updates } : prev[0]]
+      return rest
     })
   }
 
-  // ── Nothing due ───────────────────────────────
-  if (queue.length === 0 && reviewed === 0) {
+  // ── Done / nothing due (SRS mode) ─────────────
+  if (queue.length === 0 && !freeMode) {
     return (
       <main className="review-page">
         <div className="done-screen">
-          <div className="done-icon">🎉</div>
-          <h2 className="done-title">Tout à jour !</h2>
-          <p className="done-sub">
-            Aucune carte à réviser{categoryId ? ' dans cette catégorie' : ''} aujourd'hui.
-          </p>
-          <button className="btn btn-primary" onClick={onDone}>Retour à l'accueil</button>
+          <div className="done-icon">{reviewed === 0 ? '✨' : '✅'}</div>
+          <h2 className="done-title">Tu es à jour !</h2>
+
+          {reviewed > 0 ? (
+            <>
+              <p className="done-sub">
+                {reviewed} carte{reviewed > 1 ? 's' : ''} révisée{reviewed > 1 ? 's' : ''} dans cette session.
+              </p>
+              <div className="done-stats">
+                {sessionStats.again > 0 && (
+                  <div className="done-stat">
+                    <span className="done-stat-val" style={{ color: '#DC2626' }}>{sessionStats.again}</span>
+                    <span className="done-stat-lbl">Raté</span>
+                  </div>
+                )}
+                {sessionStats.hard > 0 && (
+                  <div className="done-stat">
+                    <span className="done-stat-val" style={{ color: '#B45309' }}>{sessionStats.hard}</span>
+                    <span className="done-stat-lbl">Difficile</span>
+                  </div>
+                )}
+                {sessionStats.good > 0 && (
+                  <div className="done-stat">
+                    <span className="done-stat-val" style={{ color: '#15803D' }}>{sessionStats.good}</span>
+                    <span className="done-stat-lbl">Bien</span>
+                  </div>
+                )}
+                {sessionStats.easy > 0 && (
+                  <div className="done-stat">
+                    <span className="done-stat-val" style={{ color: '#1D4ED8' }}>{sessionStats.easy}</span>
+                    <span className="done-stat-lbl">Facile</span>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <p className="done-sub">
+              Toutes les cartes{categoryId ? ' de cette catégorie' : ''} sont à jour.
+            </p>
+          )}
+
+          <div className="done-actions">
+            {allCards.length > 0 && (
+              <button className="btn btn-secondary btn-full" onClick={startFreeSession}>
+                Réviser quand même
+              </button>
+            )}
+            <button className="btn btn-ghost btn-full" onClick={onDone}>Retour à l'accueil</button>
+          </div>
         </div>
       </main>
     )
   }
 
-  // ── Session complete ──────────────────────────
-  if (queue.length === 0) {
+  // ── Free session complete ─────────────────────
+  if (queue.length === 0 && freeMode) {
     return (
       <main className="review-page">
         <div className="done-screen">
-          <div className="done-icon">✅</div>
-          <h2 className="done-title">Session terminée !</h2>
+          <div className="done-icon">🎉</div>
+          <h2 className="done-title">Bien joué !</h2>
           <p className="done-sub">
-            {reviewed} carte{reviewed > 1 ? 's' : ''} révisée{reviewed > 1 ? 's' : ''}
+            {reviewed} carte{reviewed > 1 ? 's' : ''} passée{reviewed > 1 ? 's' : ''} en revue.
           </p>
-          <div className="done-stats">
-            {sessionStats.again > 0 && (
-              <div className="done-stat">
-                <span className="done-stat-val" style={{ color: '#DC2626' }}>{sessionStats.again}</span>
-                <span className="done-stat-lbl">Raté</span>
-              </div>
-            )}
-            {sessionStats.hard > 0 && (
-              <div className="done-stat">
-                <span className="done-stat-val" style={{ color: '#B45309' }}>{sessionStats.hard}</span>
-                <span className="done-stat-lbl">Difficile</span>
-              </div>
-            )}
-            {sessionStats.good > 0 && (
-              <div className="done-stat">
-                <span className="done-stat-val" style={{ color: '#15803D' }}>{sessionStats.good}</span>
-                <span className="done-stat-lbl">Bien</span>
-              </div>
-            )}
-            {sessionStats.easy > 0 && (
-              <div className="done-stat">
-                <span className="done-stat-val" style={{ color: '#1D4ED8' }}>{sessionStats.easy}</span>
-                <span className="done-stat-lbl">Facile</span>
-              </div>
-            )}
-          </div>
-          <button className="btn btn-primary" onClick={onDone}>Retour à l'accueil</button>
+          <button className="btn btn-primary btn-full" style={{ maxWidth: 280 }} onClick={onDone}>
+            Retour à l'accueil
+          </button>
         </div>
       </main>
     )
@@ -143,18 +179,23 @@ export default function Review({ categoryId, onDone }) {
         <span className="review-count">{queue.length} restante{queue.length > 1 ? 's' : ''}</span>
       </div>
 
-      {category && (
-        <div>
-          <span
-            className="cat-badge"
-            style={{ background: category.color + '20', color: category.color }}
-          >
-            <span style={{
-              width: 7, height: 7, borderRadius: '50%',
-              background: category.color, display: 'inline-block',
-            }} />
-            {category.name}
-          </span>
+      {(category || freeMode) && (
+        <div className="review-badges">
+          {category && (
+            <span
+              className="cat-badge"
+              style={{ background: category.color + '20', color: category.color }}
+            >
+              <span style={{
+                width: 7, height: 7, borderRadius: '50%',
+                background: category.color, display: 'inline-block',
+              }} />
+              {category.name}
+            </span>
+          )}
+          {freeMode && (
+            <span className="free-badge">Révision libre</span>
+          )}
         </div>
       )}
 

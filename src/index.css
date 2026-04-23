@@ -419,6 +419,14 @@ body {
 }
 
 /* ── CATEGORY BADGE ──────────────────────────── */
+.review-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
 .cat-badge {
   display: inline-flex;
   align-items: center;
@@ -427,7 +435,17 @@ body {
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  margin-bottom: 14px;
+}
+
+.free-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface-2);
+  color: var(--text-muted);
 }
 
 /* ── RATING BUTTONS ──────────────────────────── */
@@ -487,6 +505,15 @@ body {
 .done-stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .done-stat-val { font-size: 26px; font-weight: 800; }
 .done-stat-lbl { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+
+.done-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  max-width: 280px;
+}
 
 /* ── FORM ────────────────────────────────────── */
 .form-group { margin-bottom: 20px; }

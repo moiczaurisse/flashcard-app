@@ -23,16 +23,19 @@ export default function Home({ onReview }) {
       </div>
 
       {/* CTA */}
-      {stats.dueCount > 0 ? (
+      {stats.totalCount > 0 ? (
         <button className="review-cta" onClick={() => onReview(null)}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <polygon points="5 3 19 12 5 21 5 3"/>
           </svg>
-          Réviser tout · {stats.dueCount} carte{stats.dueCount > 1 ? 's' : ''}
+          {stats.dueCount > 0
+            ? `Réviser · ${stats.dueCount} à faire`
+            : 'Réviser · tout à jour'
+          }
         </button>
       ) : (
         <div className="review-cta disabled">
-          ✓ Tout à jour !
+          Ajoutez des cartes pour commencer
         </div>
       )}
 
@@ -59,7 +62,7 @@ export default function Home({ onReview }) {
               <button
                 className="btn btn-secondary btn-sm"
                 onClick={() => onReview(cat.id)}
-                disabled={cs.due === 0}
+                disabled={cs.total === 0}
               >
                 Réviser
               </button>

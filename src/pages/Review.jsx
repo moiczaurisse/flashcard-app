@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useApp } from '../context/AppContext'
-import { calculateNextReview } from '../utils/srs'
+import { calculateNextReview, isDue } from '../utils/srs'
 
-const SESSION_LIMIT = 20
+const SESSION_LIMIT = 10
 
 function fisherYates(arr) {
   const a = [...arr]
@@ -33,6 +33,18 @@ function buildInterleavedQueue(cards) {
     }
   }
   return shuffled
+}
+
+// Due cards first (oldest overdue first), then future cards (soonest first).
+// Never leaves any card unreachable — the whole deck is always accessible.
+function buildSessionQueue(allCards) {
+  const due = allCards
+    .filter(isDue)
+    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+  const future = allCards
+    .filter(c => !isDue(c))
+    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+  return buildInterleavedQueue([...due, ...future].slice(0, SESSION_LIMIT))
 }
 
 function FlipCard({ card, onRate }) {
@@ -81,114 +93,79 @@ function FlipCard({ card, onRate }) {
 }
 
 export default function Review({ categoryId, onDone }) {
-  const { getDueCards, updateCard, categories, cards, recordCardReview } = useApp()
+  const { cards, updateCard, categories, recordCardReview } = useApp()
 
-  const [sessionInfo] = useState(() => {
-    const due = getDueCards(categoryId)
-    const totalDue = due.length
-    const sessionSize = Math.min(totalDue, SESSION_LIMIT)
-    const totalSessions = Math.ceil(totalDue / SESSION_LIMIT) || 1
-    return { totalDue, sessionSize, totalSessions }
-  })
+  const getCatCards = () =>
+    cards.filter(c => (categoryId ? c.categoryId === categoryId : true))
 
-  const [queue, setQueue] = useState(() => {
-    const due = getDueCards(categoryId)
-    const sorted = [...due].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-    return buildInterleavedQueue(sorted.slice(0, SESSION_LIMIT))
-  })
+  const [queue, setQueue] = useState(() => buildSessionQueue(getCatCards()))
   const [reviewed, setReviewed] = useState(0)
   const [sessionStats, setSessionStats] = useState({ again: 0, hard: 0, good: 0, easy: 0 })
-  const [freeMode, setFreeMode] = useState(false)
 
   const card = queue[0]
   const category = card ? categories.find(c => c.id === card.categoryId) : null
-  const allCards = cards.filter(c => categoryId ? c.categoryId === categoryId : true)
+  const sessionSize = reviewed + queue.length
 
-  const startFreeSession = () => {
-    setQueue(buildInterleavedQueue(allCards))
+  const startNewSession = () => {
+    setQueue(buildSessionQueue(getCatCards()))
     setReviewed(0)
     setSessionStats({ again: 0, hard: 0, good: 0, easy: 0 })
-    setFreeMode(true)
   }
 
   const rate = (quality) => {
-    let updates = null
-    if (!freeMode) {
-      updates = calculateNextReview(card, quality)
-      updateCard(card.id, updates)
-    }
+    // Always update the card scheduling, then always advance to next card.
+    // The rating affects when this card reappears, not the current session flow.
+    updateCard(card.id, calculateNextReview(card, quality))
     recordCardReview()
 
     const keys = ['again', 'hard', 'good', 'easy']
     setSessionStats(prev => ({ ...prev, [keys[quality]]: prev[keys[quality]] + 1 }))
     setReviewed(r => r + 1)
-
-    setQueue(prev => {
-      const rest = prev.slice(1)
-      if (quality === 0) {
-        const updatedCard = updates ? { ...prev[0], ...updates } : prev[0]
-        if (rest.length === 0) return [updatedCard]
-        // Insert in the latter half of the remaining queue
-        const minPos = Math.max(1, Math.ceil(rest.length * 0.5))
-        const insertAt = minPos + Math.floor(Math.random() * (rest.length - minPos + 1))
-        return [...rest.slice(0, insertAt), updatedCard, ...rest.slice(insertAt)]
-      }
-      return rest
-    })
+    setQueue(prev => prev.slice(1))
   }
 
-  // ── Done / nothing due (SRS mode) ─────────────
-  if (queue.length === 0 && !freeMode) {
+  // ── Session complete ──────────────────────────
+  if (queue.length === 0) {
     return (
       <main className="review-page">
         <div className="done-screen">
-          <div className="done-icon">{reviewed === 0 ? '✨' : '✅'}</div>
-          <h2 className="done-title">Tu es à jour !</h2>
-
-          {reviewed > 0 ? (
-            <>
-              <p className="done-sub">
-                {reviewed} carte{reviewed > 1 ? 's' : ''} révisée{reviewed > 1 ? 's' : ''} dans cette session.
-              </p>
-              <div className="done-stats">
-                {sessionStats.again > 0 && (
-                  <div className="done-stat">
-                    <span className="done-stat-val" style={{ color: '#DC2626' }}>{sessionStats.again}</span>
-                    <span className="done-stat-lbl">Raté</span>
-                  </div>
-                )}
-                {sessionStats.hard > 0 && (
-                  <div className="done-stat">
-                    <span className="done-stat-val" style={{ color: '#B45309' }}>{sessionStats.hard}</span>
-                    <span className="done-stat-lbl">Difficile</span>
-                  </div>
-                )}
-                {sessionStats.good > 0 && (
-                  <div className="done-stat">
-                    <span className="done-stat-val" style={{ color: '#15803D' }}>{sessionStats.good}</span>
-                    <span className="done-stat-lbl">Bien</span>
-                  </div>
-                )}
-                {sessionStats.easy > 0 && (
-                  <div className="done-stat">
-                    <span className="done-stat-val" style={{ color: '#1D4ED8' }}>{sessionStats.easy}</span>
-                    <span className="done-stat-lbl">Facile</span>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            <p className="done-sub">
-              Toutes les cartes{categoryId ? ' de cette catégorie' : ''} sont à jour.
-            </p>
+          <div className="done-icon">✅</div>
+          <h2 className="done-title">Session terminée !</h2>
+          <p className="done-sub">
+            {reviewed} carte{reviewed > 1 ? 's' : ''} révisée{reviewed > 1 ? 's' : ''} dans cette session.
+          </p>
+          {reviewed > 0 && (
+            <div className="done-stats">
+              {sessionStats.again > 0 && (
+                <div className="done-stat">
+                  <span className="done-stat-val" style={{ color: '#DC2626' }}>{sessionStats.again}</span>
+                  <span className="done-stat-lbl">Raté</span>
+                </div>
+              )}
+              {sessionStats.hard > 0 && (
+                <div className="done-stat">
+                  <span className="done-stat-val" style={{ color: '#B45309' }}>{sessionStats.hard}</span>
+                  <span className="done-stat-lbl">Difficile</span>
+                </div>
+              )}
+              {sessionStats.good > 0 && (
+                <div className="done-stat">
+                  <span className="done-stat-val" style={{ color: '#15803D' }}>{sessionStats.good}</span>
+                  <span className="done-stat-lbl">Bien</span>
+                </div>
+              )}
+              {sessionStats.easy > 0 && (
+                <div className="done-stat">
+                  <span className="done-stat-val" style={{ color: '#1D4ED8' }}>{sessionStats.easy}</span>
+                  <span className="done-stat-lbl">Facile</span>
+                </div>
+              )}
+            </div>
           )}
-
           <div className="done-actions">
-            {allCards.length > 0 && (
-              <button className="btn btn-secondary btn-full" onClick={startFreeSession}>
-                Réviser quand même
-              </button>
-            )}
+            <button className="btn btn-secondary btn-full" onClick={startNewSession}>
+              Nouvelle session
+            </button>
             <button className="btn btn-ghost btn-full" onClick={onDone}>Retour à l'accueil</button>
           </div>
         </div>
@@ -196,26 +173,8 @@ export default function Review({ categoryId, onDone }) {
     )
   }
 
-  // ── Free session complete ─────────────────────
-  if (queue.length === 0 && freeMode) {
-    return (
-      <main className="review-page">
-        <div className="done-screen">
-          <div className="done-icon">🎉</div>
-          <h2 className="done-title">Bien joué !</h2>
-          <p className="done-sub">
-            {reviewed} carte{reviewed > 1 ? 's' : ''} passée{reviewed > 1 ? 's' : ''} en revue.
-          </p>
-          <button className="btn btn-primary btn-full" style={{ maxWidth: 280 }} onClick={onDone}>
-            Retour à l'accueil
-          </button>
-        </div>
-      </main>
-    )
-  }
-
   // ── Active review ─────────────────────────────
-  const progress = reviewed / (reviewed + queue.length)
+  const progress = reviewed / sessionSize
 
   return (
     <main className="review-page">
@@ -223,32 +182,21 @@ export default function Review({ categoryId, onDone }) {
         <div className="progress-bar">
           <div className="progress-fill" style={{ width: `${progress * 100}%` }} />
         </div>
-        <span className="review-count">{queue.length} restante{queue.length > 1 ? 's' : ''}</span>
+        <span className="review-count">{reviewed + 1} / {sessionSize}</span>
       </div>
 
-      {!freeMode && (
-        <div className="session-info">
-          Session 1/{sessionInfo.totalSessions} · {sessionInfo.sessionSize} carte{sessionInfo.sessionSize > 1 ? 's' : ''}
-        </div>
-      )}
-
-      {(category || freeMode) && (
+      {category && (
         <div className="review-badges">
-          {category && (
-            <span
-              className="cat-badge"
-              style={{ background: category.color + '20', color: category.color }}
-            >
-              <span style={{
-                width: 7, height: 7, borderRadius: '50%',
-                background: category.color, display: 'inline-block',
-              }} />
-              {category.name}
-            </span>
-          )}
-          {freeMode && (
-            <span className="free-badge">Révision libre</span>
-          )}
+          <span
+            className="cat-badge"
+            style={{ background: category.color + '20', color: category.color }}
+          >
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%',
+              background: category.color, display: 'inline-block',
+            }} />
+            {category.name}
+          </span>
         </div>
       )}
 

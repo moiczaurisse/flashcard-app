@@ -75,6 +75,23 @@
 
     .weather-loading { font-size: 14px; color: rgba(255,255,255,0.35); }
 
+    .hourly-row {
+      display: flex; gap: 6px; overflow-x: auto; padding: 14px 0 2px;
+      border-top: 1px solid rgba(255,255,255,0.07); margin-top: 14px; width: 100%;
+      scrollbar-width: none;
+    }
+    .hourly-row::-webkit-scrollbar { display: none; }
+    .hour-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      min-width: 48px; padding: 8px 4px; border-radius: 10px;
+      background: rgba(255,255,255,0.04); flex-shrink: 0;
+    }
+    .hour-item.now { background: rgba(99,102,241,0.18); }
+    .hour-time { font-size: 11px; color: rgba(255,255,255,0.4); }
+    .hour-item.now .hour-time { color: #818cf8; font-weight: 600; }
+    .hour-icon { font-size: 18px; }
+    .hour-temp { font-size: 13px; font-weight: 500; }
+
     /* Bouton lancer quiz */
     .btn-start {
       background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -272,13 +289,16 @@
 
   <div class="weather-card" id="weather-card">
     <div class="weather-loading" id="weather-loading">Chargement météo…</div>
-    <div id="weather-content" style="display:none; display:flex; align-items:center; gap:16px; width:100%;">
-      <div class="weather-icon" id="w-icon">☀️</div>
-      <div class="weather-info">
-        <div class="weather-temp"><span id="w-temp">—</span>°C</div>
-        <div class="weather-desc" id="w-desc">—</div>
-        <div class="weather-details" id="w-details">—</div>
+    <div id="weather-content" style="display:none; flex-direction:column; width:100%;">
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div class="weather-icon" id="w-icon">☀️</div>
+        <div class="weather-info">
+          <div class="weather-temp"><span id="w-temp">—</span>°C</div>
+          <div class="weather-desc" id="w-desc">—</div>
+          <div class="weather-details" id="w-details">—</div>
+        </div>
       </div>
+      <div class="hourly-row" id="hourly-row"></div>
     </div>
   </div>
 
@@ -360,16 +380,40 @@
 
   async function loadWeather() {
     try {
-      const url = 'https://api.open-meteo.com/v1/forecast?latitude=47.2184&longitude=-1.5536&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m&timezone=Europe/Paris';
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=47.2184&longitude=-1.5536&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m&hourly=temperature_2m,weathercode&timezone=Europe/Paris&forecast_days=1';
       const r = await fetch(url);
       const d = await r.json();
       const c = d.current;
       const code = c.weathercode;
+
       document.getElementById('w-icon').textContent = WEATHER_ICONS[code] || '🌡️';
       document.getElementById('w-temp').textContent = Math.round(c.temperature_2m);
       document.getElementById('w-desc').textContent = WEATHER_DESC[code] || 'Nantes';
       document.getElementById('w-details').textContent =
         'Vent ' + Math.round(c.windspeed_10m) + ' km/h · Humidité ' + c.relativehumidity_2m + '%';
+
+      // Heures restantes de la journée
+      const nowH = new Date().getHours();
+      const times = d.hourly.time;
+      const temps = d.hourly.temperature_2m;
+      const codes = d.hourly.weathercode;
+      const row = document.getElementById('hourly-row');
+      row.innerHTML = '';
+
+      for (let i = 0; i < times.length; i++) {
+        const hStr = times[i].slice(11, 13);
+        const h = parseInt(hStr);
+        if (h < nowH) continue;
+        const item = document.createElement('div');
+        item.className = 'hour-item' + (h === nowH ? ' now' : '');
+        const label = h === nowH ? 'Maint.' : hStr + 'h';
+        item.innerHTML =
+          '<span class="hour-time">' + label + '</span>' +
+          '<span class="hour-icon">' + (WEATHER_ICONS[codes[i]] || '🌡️') + '</span>' +
+          '<span class="hour-temp">' + Math.round(temps[i]) + '°</span>';
+        row.appendChild(item);
+      }
+
       document.getElementById('weather-loading').style.display = 'none';
       document.getElementById('weather-content').style.display = 'flex';
     } catch(e) {

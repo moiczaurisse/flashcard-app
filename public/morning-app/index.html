@@ -360,14 +360,14 @@
 
   async function loadWeather() {
     try {
-      const url = 'https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m&timezone=Europe/Paris';
+      const url = 'https://api.open-meteo.com/v1/forecast?latitude=47.2184&longitude=-1.5536&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m&timezone=Europe/Paris';
       const r = await fetch(url);
       const d = await r.json();
       const c = d.current;
       const code = c.weathercode;
       document.getElementById('w-icon').textContent = WEATHER_ICONS[code] || '🌡️';
       document.getElementById('w-temp').textContent = Math.round(c.temperature_2m);
-      document.getElementById('w-desc').textContent = WEATHER_DESC[code] || 'Paris';
+      document.getElementById('w-desc').textContent = WEATHER_DESC[code] || 'Nantes';
       document.getElementById('w-details').textContent =
         'Vent ' + Math.round(c.windspeed_10m) + ' km/h · Humidité ' + c.relativehumidity_2m + '%';
       document.getElementById('weather-loading').style.display = 'none';

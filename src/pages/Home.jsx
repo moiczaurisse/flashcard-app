@@ -1,10 +1,40 @@
+import { useEffect, useState } from 'react'
 import { useApp } from '../context/AppContext'
+import {
+  isNotificationSupported,
+  getPermissionState,
+  requestNotificationPermission,
+  scheduleDailyMorningNotification,
+  DEFAULT_HOUR,
+  DEFAULT_MINUTE,
+} from '../utils/morningNotification'
 
 export default function Home({ onReview, onStartDailyGoal }) {
   const { categories, getStats, getCatStats, getDailyGoal } = useApp()
   const stats = getStats()
   const goal = getDailyGoal()
   const goalCategory = goal ? categories.find(c => c.id === goal.categoryId) : null
+
+  const [permission, setPermission] = useState(() => getPermissionState())
+  const [enabling, setEnabling] = useState(false)
+
+  // À chaque ouverture de la home, si la permission est déjà accordée,
+  // on (re)planifie la notif du lendemain — c'est ce qui la garde "vivante" au fil des jours.
+  useEffect(() => {
+    if (permission === 'granted') {
+      scheduleDailyMorningNotification(DEFAULT_HOUR, DEFAULT_MINUTE)
+    }
+  }, [permission])
+
+  const enableMorningReminder = async () => {
+    setEnabling(true)
+    const result = await requestNotificationPermission()
+    setPermission(result)
+    if (result === 'granted') {
+      await scheduleDailyMorningNotification(DEFAULT_HOUR, DEFAULT_MINUTE)
+    }
+    setEnabling(false)
+  }
 
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
@@ -23,6 +53,23 @@ export default function Home({ onReview, onStartDailyGoal }) {
           </div>
         </div>
       </div>
+
+      {/* Morning reminder opt-in */}
+      {isNotificationSupported() && permission === 'default' && (
+        <div className="cat-item" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 8 }}>
+          <span className="cat-name">
+            ☀️ Active le rappel du matin (météo + 5 questions, {DEFAULT_HOUR}h{String(DEFAULT_MINUTE).padStart(2, '0')})
+          </span>
+          <button className="btn btn-secondary btn-full" onClick={enableMorningReminder} disabled={enabling}>
+            {enabling ? 'Activation…' : 'Activer la notification'}
+          </button>
+        </div>
+      )}
+      {isNotificationSupported() && permission === 'denied' && (
+        <p className="empty-state-text" style={{ marginBottom: 16 }}>
+          Notifications bloquées pour cette app — active-les dans Réglages → Notifications pour avoir le rappel du matin.
+        </p>
+      )}
 
       {/* Daily goal progress */}
       {goal && (

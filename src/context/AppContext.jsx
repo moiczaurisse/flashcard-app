@@ -48,11 +48,20 @@ const SEED_CARDS = [
     "27 pays (depuis le Brexit en 2020)."),
 ]
 
+// ── Daily goal helpers ───────────────────────
+const DAILY_GOAL_TARGET = 50
+
+function todayKey() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
 // ── Provider ─────────────────────────────────
 export function AppProvider({ children }) {
   const [cards, setCards]               = useLocalStorage('fc_cards', SEED_CARDS)
   const [categories, setCategories]     = useLocalStorage('fc_cats',  SEED_CATS)
   const [totalReviewed, setTotalReviewed] = useLocalStorage('fc_total_reviewed', 0)
+  const [dailyGoal, setDailyGoalRaw]    = useLocalStorage('fc_daily_goal', null)
 
   const addCard = useCallback((data) => {
     const card = {
@@ -118,9 +127,42 @@ export function AppProvider({ children }) {
     }
   }, [setCards, setCategories])
 
-  const recordCardReview = useCallback(() => {
+  // Returns today's goal, or null if none was set / it's stale (different day).
+  const getDailyGoal = useCallback(() => {
+    if (!dailyGoal || dailyGoal.date !== todayKey()) return null
+    return dailyGoal
+  }, [dailyGoal])
+
+  // mode: 'theme' (fixed categoryId) or 'random' (a category picked once and locked for the day).
+  const setDailyGoal = useCallback((mode, categoryId = null) => {
+    let catId = categoryId
+    if (mode === 'random') {
+      if (categories.length === 0) return null
+      catId = categories[Math.floor(Math.random() * categories.length)].id
+    }
+    const goal = {
+      date: todayKey(),
+      mode,
+      categoryId: catId,
+      target: DAILY_GOAL_TARGET,
+      count: 0,
+    }
+    setDailyGoalRaw(goal)
+    return goal
+  }, [categories, setDailyGoalRaw])
+
+  const clearDailyGoal = useCallback(() => {
+    setDailyGoalRaw(null)
+  }, [setDailyGoalRaw])
+
+  const recordCardReview = useCallback((categoryId = null) => {
     setTotalReviewed(prev => prev + 1)
-  }, [setTotalReviewed])
+    setDailyGoalRaw(prev => {
+      if (!prev || prev.date !== todayKey()) return prev
+      if (prev.categoryId && categoryId && prev.categoryId !== categoryId) return prev
+      return { ...prev, count: Math.min(prev.target, prev.count + 1) }
+    })
+  }, [setTotalReviewed, setDailyGoalRaw])
 
   const getDueCards = useCallback((catId = null) => {
     return cards.filter(c => {
@@ -154,6 +196,7 @@ export function AppProvider({ children }) {
       getDueCards, getStats, getCatStats,
       recordCardReview, totalReviewed,
       importData,
+      getDailyGoal, setDailyGoal, clearDailyGoal,
     }}>
       {children}
     </Ctx.Provider>

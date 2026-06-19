@@ -37,14 +37,14 @@ function buildInterleavedQueue(cards) {
 
 // Due cards first (oldest overdue first), then future cards (soonest first).
 // Never leaves any card unreachable — the whole deck is always accessible.
-function buildSessionQueue(allCards) {
+function buildSessionQueue(allCards, limit = SESSION_LIMIT) {
   const due = allCards
     .filter(isDue)
     .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
   const future = allCards
     .filter(c => !isDue(c))
     .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-  return buildInterleavedQueue([...due, ...future].slice(0, SESSION_LIMIT))
+  return buildInterleavedQueue([...due, ...future].slice(0, limit))
 }
 
 function FlipCard({ card, onRate }) {
@@ -92,13 +92,18 @@ function FlipCard({ card, onRate }) {
   )
 }
 
-export default function Review({ categoryId, onDone }) {
-  const { cards, updateCard, categories, recordCardReview } = useApp()
+export default function Review({ categoryId, onDone, dailyGoalMode = false }) {
+  const { cards, updateCard, categories, recordCardReview, getDailyGoal } = useApp()
+
+  const goal = dailyGoalMode ? getDailyGoal() : null
+  const remaining = goal ? Math.max(0, goal.target - goal.count) : null
 
   const getCatCards = () =>
     cards.filter(c => (categoryId ? c.categoryId === categoryId : true))
 
-  const [queue, setQueue] = useState(() => buildSessionQueue(getCatCards()))
+  const [queue, setQueue] = useState(() =>
+    buildSessionQueue(getCatCards(), remaining ?? SESSION_LIMIT)
+  )
   const [reviewed, setReviewed] = useState(0)
   const [sessionStats, setSessionStats] = useState({ again: 0, hard: 0, good: 0, easy: 0 })
 
@@ -107,7 +112,9 @@ export default function Review({ categoryId, onDone }) {
   const sessionSize = reviewed + queue.length
 
   const startNewSession = () => {
-    setQueue(buildSessionQueue(getCatCards()))
+    const g = dailyGoalMode ? getDailyGoal() : null
+    const lim = g ? Math.max(0, g.target - g.count) : SESSION_LIMIT
+    setQueue(buildSessionQueue(getCatCards(), lim))
     setReviewed(0)
     setSessionStats({ again: 0, hard: 0, good: 0, easy: 0 })
   }
@@ -116,7 +123,7 @@ export default function Review({ categoryId, onDone }) {
     // Always update the card scheduling, then always advance to next card.
     // The rating affects when this card reappears, not the current session flow.
     updateCard(card.id, calculateNextReview(card, quality))
-    recordCardReview()
+    recordCardReview(card.categoryId)
 
     const keys = ['again', 'hard', 'good', 'easy']
     setSessionStats(prev => ({ ...prev, [keys[quality]]: prev[keys[quality]] + 1 }))
@@ -126,13 +133,24 @@ export default function Review({ categoryId, onDone }) {
 
   // ── Session complete ──────────────────────────
   if (queue.length === 0) {
+    const liveGoal = dailyGoalMode ? getDailyGoal() : null
+    const goalReached = liveGoal && liveGoal.count >= liveGoal.target
+    const noCardsAvailable = reviewed === 0 && !goalReached
+
     return (
       <main className="review-page">
         <div className="done-screen">
-          <div className="done-icon">✅</div>
-          <h2 className="done-title">Session terminée !</h2>
+          <div className="done-icon">{goalReached ? '🎯' : '✅'}</div>
+          <h2 className="done-title">
+            {goalReached ? 'Objectif du jour atteint !' : 'Session terminée !'}
+          </h2>
           <p className="done-sub">
-            {reviewed} carte{reviewed > 1 ? 's' : ''} révisée{reviewed > 1 ? 's' : ''} dans cette session.
+            {noCardsAvailable
+              ? "Plus de cartes disponibles dans ce thème pour l'instant."
+              : `${reviewed} carte${reviewed > 1 ? 's' : ''} révisée${reviewed > 1 ? 's' : ''} dans cette session.`}
+            {liveGoal && !noCardsAvailable && (
+              <> Objectif : {liveGoal.count} / {liveGoal.target}.</>
+            )}
           </p>
           {reviewed > 0 && (
             <div className="done-stats">
@@ -163,9 +181,11 @@ export default function Review({ categoryId, onDone }) {
             </div>
           )}
           <div className="done-actions">
-            <button className="btn btn-secondary btn-full" onClick={startNewSession}>
-              Nouvelle session
-            </button>
+            {!goalReached && !noCardsAvailable && (
+              <button className="btn btn-secondary btn-full" onClick={startNewSession}>
+                Nouvelle session
+              </button>
+            )}
             <button className="btn btn-ghost btn-full" onClick={onDone}>Retour à l'accueil</button>
           </div>
         </div>

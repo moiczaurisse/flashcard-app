@@ -1,8 +1,10 @@
 import { useApp } from '../context/AppContext'
 
-export default function Home({ onReview }) {
-  const { categories, getStats, getCatStats } = useApp()
+export default function Home({ onReview, onStartDailyGoal }) {
+  const { categories, getStats, getCatStats, getDailyGoal } = useApp()
   const stats = getStats()
+  const goal = getDailyGoal()
+  const goalCategory = goal ? categories.find(c => c.id === goal.categoryId) : null
 
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
@@ -21,6 +23,33 @@ export default function Home({ onReview }) {
           </div>
         </div>
       </div>
+
+      {/* Daily goal progress */}
+      {goal && (
+        <div className="cat-item" style={{ flexDirection: 'column', alignItems: 'stretch', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {goalCategory && <span className="cat-dot" style={{ background: goalCategory.color }} />}
+            <span className="cat-name">
+              Objectif du jour{goalCategory ? ` · ${goalCategory.name}` : ''}
+            </span>
+            <span className="review-count">{goal.count} / {goal.target}</span>
+          </div>
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ width: `${Math.min(100, (goal.count / goal.target) * 100)}%` }}
+            />
+          </div>
+          {goal.count < goal.target && (
+            <button
+              className="btn btn-secondary btn-full"
+              onClick={() => onStartDailyGoal(goal)}
+            >
+              Continuer l'objectif
+            </button>
+          )}
+        </div>
+      )}
 
       {/* CTA */}
       {stats.totalCount > 0 ? (

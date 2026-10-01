@@ -29,11 +29,9 @@ décrit ses besoins en français et s'appuie sur **Claude Code** comme assistant
 - `hooks/useLocalStorage.js` → state React synchronisé avec localStorage.
 - `utils/srs.js` → algo SRS + helpers (`calculateNextReview`, `isDue`,
   `isMastered`, `migrateCard`, `planBacklogResorb`).
-- `utils/morningNotification.js` → routine/notification du matin.
 - `components/TabBar.jsx` → barre d'onglets fixe (badge "dues").
 - `pages/` → `Home`, `Review` (session 20 cartes max, ordre aléatoire),
   `Add`, `Manage` (CRUD, fusion, import/export, Outils), `Stats`, `DailyGoal`.
-- `public/morning/` → mini-page vanilla séparée (202 questions en dur).
 
 **Modèles de données**
 - Carte : `{ id, categoryId, question, answer, interval, easeFactor,
@@ -76,6 +74,21 @@ le code ne contient qu'un seed de 7 cartes. Backup : `data/flashcards-clean.json
 > Règle : après chaque fonctionnalité que l'utilisateur a validée, ajouter une
 > entrée datée (quoi changé, ce qui a marché ou non, idées suivantes), la plus
 > récente en haut. Garder ce fichier sous ~150 lignes.
+
+### 2026-10-01 — Suppression routine du matin + icône
+- **Routine du matin supprimée** : `public/morning/`, `src/utils/morningNotification.js`,
+  le handler `notificationclick` de `sw.js` et l'opt-in notif dans `Home.jsx`.
+  Le daily goal et le reste sont conservés. Cause du bug « le site s'ouvrait sur
+  la page morning » : aucune redirection de `/` — la page morning était atteinte
+  via la notification quotidienne et/ou un raccourci écran d'accueil capturé sur
+  `/morning/` (page qui était indépendamment installable). `sw.js` garde
+  `skipWaiting`/`clientsClaim`/`cleanupOutdatedCaches` → les anciens caches
+  (dont morning) sont purgés à l'activation.
+- **Icône de l'app changée** : nouveaux `favicon.svg`, `apple-touch-icon.png` (180),
+  `icon-192.png`, `icon-512.png` dans `public/`. Manifest : icônes 192/512
+  (purpose any), précache des png/svg via `globPatterns`.
+- Note : un raccourci écran d'accueil existant pointant sur `/morning/` doit être
+  retiré puis réajouté (l'URL capturée ne peut pas être changée à distance).
 
 ### 2026-10-01
 - **srs.js** : intervalle plafonné à 365 jours (`MAX_INTERVAL`).

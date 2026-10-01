@@ -68,7 +68,6 @@ src/
                             inspiré d'Anki). Fonctions : calculateNextReview,
                             isDue, isMastered, isReviewedToday. Qualité de réponse
                             sur 4 niveaux : 0=Again, 1=Hard, 2=Good, 3=Easy.
-    morningNotification.js → logique de notification/routine du matin.
   components/
     TabBar.jsx            → barre d'onglets fixe en bas (badge "dues").
   pages/
@@ -81,10 +80,7 @@ src/
     Stats.jsx           → statistiques globales.
     DailyGoal.jsx       → objectif quotidien (50 cartes/jour, mode thème ou aléatoire).
 public/
-  favicon.svg
-  morning/              → mini-page "routine du matin" séparée (HTML + JS vanilla,
-    index.html           hors de React) avec questions du matin + météo.
-    morning-questions.js (202 questions en dur : chefs-lieux + numéros de départements)
+  favicon.svg, apple-touch-icon.png, icon-192.png, icon-512.png → icônes PWA
 ```
 
 ## 4. MODÈLES DE DONNÉES (tels qu'utilisés)

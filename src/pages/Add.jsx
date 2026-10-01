@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import { useApp } from '../context/AppContext'
-
-const PALETTE = [
-  '#534AB7', '#E879A0', '#14B8A6', '#F97316',
-  '#3B82F6', '#EF4444', '#8B5CF6', '#F59E0B',
-  '#06B6D4', '#84CC16', '#EC4899', '#10B981',
-]
+import { CAT_PALETTE as PALETTE } from '../utils/palette'
 
 export default function Add() {
   const { categories, addCard, addCategory } = useApp()

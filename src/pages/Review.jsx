@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useApp } from '../context/AppContext'
 import { calculateNextReview, isDue } from '../utils/srs'
+import Confetti from '../components/Confetti'
 
 const SESSION_LIMIT = 10
 
@@ -47,13 +48,14 @@ function buildSessionQueue(allCards, limit = SESSION_LIMIT) {
   return buildInterleavedQueue([...due, ...future].slice(0, limit))
 }
 
-function FlipCard({ card, onRate }) {
+function FlipCard({ card, onRate, color }) {
   const [flipped, setFlipped] = useState(false)
 
   return (
     <>
       <div
         className="flip-wrap"
+        style={{ '--cat': color || 'var(--primary)' }}
         onClick={() => !flipped && setFlipped(true)}
         role="button"
         aria-label={flipped ? 'Réponse affichée' : 'Révéler la réponse'}
@@ -140,6 +142,7 @@ export default function Review({ categoryId, onDone, dailyGoalMode = false }) {
     return (
       <main className="review-page">
         <div className="done-screen">
+          {goalReached && <Confetti />}
           <div className="done-icon">{goalReached ? '🎯' : '✅'}</div>
           <h2 className="done-title">
             {goalReached ? 'Objectif du jour atteint !' : 'Session terminée !'}
@@ -220,7 +223,7 @@ export default function Review({ categoryId, onDone, dailyGoalMode = false }) {
         </div>
       )}
 
-      <FlipCard key={reviewed} card={card} onRate={rate} />
+      <FlipCard key={reviewed} card={card} onRate={rate} color={category?.color} />
     </main>
   )
 }

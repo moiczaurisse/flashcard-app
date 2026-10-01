@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useApp } from '../context/AppContext'
+import Confetti from '../components/Confetti'
 
 const dayKey = (d) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
@@ -67,6 +68,7 @@ export default function Home({ onReview, onStartDailyGoal }) {
   const goalCategory = goal ? categories.find(c => c.id === goal.categoryId) : null
 
   const [selectedDay, setSelectedDay] = useState(null)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
@@ -83,15 +85,25 @@ export default function Home({ onReview, onStartDailyGoal }) {
   else if (goal) motivation = 'Continue, tu y es presque !'
   else motivation = 'Beau travail, continue comme ça !'
 
+  // Confetti once per day, the first time Home is seen with the goal reached.
+  useEffect(() => {
+    if (goal && goal.count >= goal.target && localStorage.getItem('fc_goal_celebrated') !== goal.date) {
+      localStorage.setItem('fc_goal_celebrated', goal.date)
+      setShowConfetti(true)
+      const t = setTimeout(() => setShowConfetti(false), 1600)
+      return () => clearTimeout(t)
+    }
+  }, [goal])
+
   const { cols, today } = buildHeatmap(12)
 
   return (
     <main className="page">
       {/* Hero */}
       <div className="home-hero">
+        {showConfetti && <Confetti />}
         <div className="home-hero-top">
           <span className="home-greeting-text">{greeting}, Loïc !</span>
-          {streak > 0 && <span className="streak-chip">🔥 {streak} jour{streak > 1 ? 's' : ''}</span>}
         </div>
         <div className="home-hero-main">
           <ProgressRing value={ringValue} target={ringTarget} />
@@ -101,6 +113,16 @@ export default function Home({ onReview, onStartDailyGoal }) {
               carte{stats.dueCount !== 1 ? 's' : ''} à réviser
             </div>
             <div className="home-motivation">{motivation}</div>
+          </div>
+        </div>
+        <div className="hero-tiles">
+          <div className="hero-tile">
+            <span className="hero-tile-value">🔥 {streak}</span>
+            <span className="hero-tile-label">jour{streak > 1 ? 's' : ''} de suite</span>
+          </div>
+          <div className="hero-tile">
+            <span className="hero-tile-value">{todayReviewed}</span>
+            <span className="hero-tile-label">révisée{todayReviewed > 1 ? 's' : ''} aujourd'hui</span>
           </div>
         </div>
       </div>

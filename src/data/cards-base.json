@@ -3,12 +3,12 @@
     {
       "id": "c1",
       "name": "Français",
-      "color": "#534AB7"
+      "color": "#6366F1"
     },
     {
       "id": "c3",
       "name": "Géographie",
-      "color": "#14B8A6"
+      "color": "#EC4899"
     },
     {
       "id": "cat-capitales",
@@ -18,12 +18,12 @@
     {
       "id": "cat-histoire",
       "name": "Histoire",
-      "color": "#E879A0"
+      "color": "#F97316"
     },
     {
       "id": "cat-vrac",
       "name": "Vrac TDS",
-      "color": "#F97316"
+      "color": "#3B82F6"
     },
     {
       "id": "cat-dept-pref",
@@ -33,7 +33,7 @@
     {
       "id": "cat-dept-num",
       "name": "Numéros des départements français",
-      "color": "#3B82F6"
+      "color": "#8B5CF6"
     }
   ],
   "cards": [

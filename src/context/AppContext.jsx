@@ -1,6 +1,7 @@
 import { createContext, useContext, useCallback, useEffect, useRef } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { isDue, isReviewedToday, isMastered, migrateCard, planBacklogResorb } from '../utils/srs'
+import { CAT_PALETTE } from '../utils/palette'
 
 const Ctx = createContext(null)
 
@@ -100,6 +101,17 @@ export function AppProvider({ children }) {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // One-time refresh of category colors to the vivid palette (fixes dull /
+  // duplicate colors). Runs once categories exist; the flag makes it a no-op
+  // afterwards, so colours picked later in "Ajouter" are preserved.
+  useEffect(() => {
+    if (localStorage.getItem('fc_cat_palette_v') === '2') return
+    if (categories.length === 0) return
+    setCategories(prev => prev.map((c, i) => ({ ...c, color: CAT_PALETTE[i % CAT_PALETTE.length] })))
+    localStorage.setItem('fc_cat_palette_v', '2')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories])
 
   const addCard = useCallback((data) => {
     const card = {

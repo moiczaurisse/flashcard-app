@@ -1,52 +1,24 @@
-import { createContext, useContext, useCallback, useEffect } from 'react'
+import { createContext, useContext, useCallback, useEffect, useRef } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { isDue, isReviewedToday, isMastered, migrateCard, planBacklogResorb } from '../utils/srs'
 
 const Ctx = createContext(null)
 
 // ── Seed data ────────────────────────────────
-function makeCard(id, catId, q, a, daysOffset = 0, interval = 0, reps = 0) {
-  const due = new Date()
-  due.setDate(due.getDate() + daysOffset)
-  due.setHours(0, 0, 0, 0)
-  return {
-    id,
-    categoryId: catId,
-    question: q,
-    answer: a,
-    interval,
-    easeFactor: 2.5,
-    repetitions: reps,
-    dueDate: due.toISOString(),
-    lastReviewed: null,
-    createdAt: new Date().toISOString(),
-  }
-}
+// Empty on purpose: a fresh device is populated from the bundled packs below
+// (merged on start), so a new install shows the real deck, not example cards.
+const SEED_CATS = []
+const SEED_CARDS = []
 
-const SEED_CATS = [
-  { id: 'c1', name: 'Français',    color: '#534AB7' },
-  { id: 'c2', name: 'Histoire',    color: '#E879A0' },
-  { id: 'c3', name: 'Géographie',  color: '#14B8A6' },
-]
-
-const SEED_CARDS = [
-  makeCard('k1', 'c1', "Que signifie « ubiquité » ?",
-    "La capacité d'être présent partout à la fois."),
-  makeCard('k2', 'c1', "Donnez un synonyme d'« indigent ».",
-    "Pauvre, démuni, nécessiteux."),
-  makeCard('k3', 'c1', "Définissez « épistémologie ».",
-    "Branche de la philosophie étudiant la nature et les fondements de la connaissance.",
-    4, 4, 2),
-  makeCard('k4', 'c2', "En quelle année a eu lieu la prise de la Bastille ?",
-    "14 juillet 1789."),
-  makeCard('k5', 'c2', "Qui était Vercingétorix ?",
-    "Chef arverne qui unifia les Gaulois contre César. Vaincu à Alésia en 52 av. J.-C.",
-    30, 30, 6),
-  makeCard('k6', 'c3', "Quelle est la capitale de l'Australie ?",
-    "Canberra (et non Sydney ou Melbourne !)."),
-  makeCard('k7', 'c3', "Combien de pays composent l'Union européenne ?",
-    "27 pays (depuis le Brexit en 2020)."),
-]
+// ── Bundled content packs (src/data/**/*.json) ───
+// Any *.json dropped in src/data/ (including src/data/packs/) is auto-included,
+// same format as the manual import: { categories, cards }. Content only — SRS
+// progress is (re)initialised at merge time, never taken from these files.
+const BUNDLED = Object.values(
+  import.meta.glob('../data/**/*.json', { eager: true, import: 'default' })
+)
+const BUNDLED_CARDS = BUNDLED.flatMap(d => (Array.isArray(d?.cards) ? d.cards : []))
+const BUNDLED_CATS  = BUNDLED.flatMap(d => (Array.isArray(d?.categories) ? d.categories : []))
 
 // ── Daily goal helpers ───────────────────────
 const DAILY_GOAL_TARGET = 50
@@ -64,6 +36,8 @@ export function AppProvider({ children }) {
   const [dailyGoal, setDailyGoalRaw]    = useLocalStorage('fc_daily_goal', null)
   // Journal d'activité par jour : { "YYYY-MM-DD": { reviewed, good } }
   const [reviewLog, setReviewLog]       = useLocalStorage('fc_review_log', {})
+  // Ids des cartes supprimées : la fusion des packs ne les re-ajoute jamais.
+  const [deletedIds, setDeletedIds]     = useLocalStorage('fc_deleted_ids', [])
 
   // One-time data repair on load: fix malformed dueDates, clamp runaway
   // intervals, pull absurd far-future dueDates back. Only writes if something
@@ -73,6 +47,57 @@ export function AppProvider({ children }) {
     if (cards.some(c => migrateCard(c) !== c)) {
       setCards(prev => prev.map(migrateCard))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Merge bundled packs on start: add every bundled card/category whose id is
+  // new (and not previously deleted), with fresh SRS state. Existing cards are
+  // NEVER touched. Idempotent: a ref guards StrictMode's double-invoke, and the
+  // id checks inside setState make any re-run a no-op.
+  const mergedRef = useRef(false)
+  useEffect(() => {
+    if (mergedRef.current) return
+    mergedRef.current = true
+    const deletedSet = new Set(deletedIds)
+
+    setCards(prev => {
+      const existing = new Set(prev.map(c => c.id))
+      const toAdd = BUNDLED_CARDS.filter(c => c.id && !existing.has(c.id) && !deletedSet.has(c.id))
+      if (toAdd.length === 0) return prev
+
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      const spread = toAdd.length > 30   // beaucoup de nouvelles cartes → étalées 30/jour
+      const now = new Date().toISOString()
+
+      const built = toAdd.map((c, i) => {
+        const due = new Date(today)
+        if (spread) due.setDate(due.getDate() + Math.floor(i / 30))
+        return {
+          id: c.id,
+          categoryId: c.categoryId,
+          question: c.question,
+          answer: c.answer,
+          interval: 0,
+          easeFactor: 2.5,
+          repetitions: 0,
+          dueDate: due.toISOString(),
+          lastReviewed: null,
+          createdAt: now,
+        }
+      })
+      return [...prev, ...built]
+    })
+
+    setCategories(prev => {
+      const existing = new Set(prev.map(c => c.id))
+      const needed = new Set(
+        BUNDLED_CARDS.filter(c => c.id && !deletedSet.has(c.id)).map(c => c.categoryId)
+      )
+      const toAdd = BUNDLED_CATS.filter(c => c.id && !existing.has(c.id) && needed.has(c.id))
+      if (toAdd.length === 0) return prev
+      return [...prev, ...toAdd.map(c => ({ id: c.id, name: c.name, color: c.color }))]
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -97,12 +122,17 @@ export function AppProvider({ children }) {
 
   const deleteCard = useCallback((id) => {
     setCards(prev => prev.filter(c => c.id !== id))
-  }, [setCards])
+    setDeletedIds(prev => (prev.includes(id) ? prev : [...prev, id]))
+  }, [setCards, setDeletedIds])
 
   const deleteCards = useCallback((ids) => {
     const set = new Set(ids)
     setCards(prev => prev.filter(c => !set.has(c.id)))
-  }, [setCards])
+    setDeletedIds(prev => {
+      const add = ids.filter(id => !prev.includes(id))
+      return add.length ? [...prev, ...add] : prev
+    })
+  }, [setCards, setDeletedIds])
 
   // Spreads the overdue backlog over the coming days (perDay at a time),
   // changing only dueDate. Returns the plan so the caller can report numbers.
@@ -130,10 +160,16 @@ export function AppProvider({ children }) {
     if (moveTo) {
       setCards(prev => prev.map(c => c.categoryId === id ? { ...c, categoryId: moveTo } : c))
     } else {
+      // Cards deleted along with the category are recorded so the merge won't re-add them.
+      const removed = cards.filter(c => c.categoryId === id).map(c => c.id)
       setCards(prev => prev.filter(c => c.categoryId !== id))
+      setDeletedIds(prev => {
+        const add = removed.filter(rid => !prev.includes(rid))
+        return add.length ? [...prev, ...add] : prev
+      })
     }
     setCategories(prev => prev.filter(c => c.id !== id))
-  }, [setCards, setCategories])
+  }, [cards, setCards, setCategories, setDeletedIds])
 
   const mergeCategories = useCallback((sourceId, targetId) => {
     setCards(prev => prev.map(c => c.categoryId === sourceId ? { ...c, categoryId: targetId } : c))

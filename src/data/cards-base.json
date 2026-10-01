@@ -1,0 +1,2981 @@
+{
+  "categories": [
+    {
+      "id": "c1",
+      "name": "Français",
+      "color": "#534AB7"
+    },
+    {
+      "id": "c3",
+      "name": "Géographie",
+      "color": "#14B8A6"
+    },
+    {
+      "id": "cat-capitales",
+      "name": "Capitales du monde",
+      "color": "#14B8A6"
+    },
+    {
+      "id": "cat-histoire",
+      "name": "Histoire",
+      "color": "#E879A0"
+    },
+    {
+      "id": "cat-vrac",
+      "name": "Vrac TDS",
+      "color": "#F97316"
+    },
+    {
+      "id": "cat-dept-pref",
+      "name": "Chefs-lieux des départements français",
+      "color": "#EF4444"
+    },
+    {
+      "id": "cat-dept-num",
+      "name": "Numéros des départements français",
+      "color": "#3B82F6"
+    }
+  ],
+  "cards": [
+    {
+      "id": "k1",
+      "categoryId": "c1",
+      "question": "Que signifie « ubiquité » ?",
+      "answer": "La capacité d'être présent partout à la fois."
+    },
+    {
+      "id": "k2",
+      "categoryId": "c1",
+      "question": "Donnez un synonyme d'« indigent ».",
+      "answer": "Pauvre, démuni, nécessiteux."
+    },
+    {
+      "id": "k3",
+      "categoryId": "c1",
+      "question": "Définissez « épistémologie ».",
+      "answer": "Branche de la philosophie étudiant la nature et les fondements de la connaissance."
+    },
+    {
+      "id": "k6",
+      "categoryId": "c3",
+      "question": "Quelle est la capitale de l'Australie ?",
+      "answer": "Canberra (et non Sydney ou Melbourne !)."
+    },
+    {
+      "id": "k7",
+      "categoryId": "c3",
+      "question": "Combien de pays composent l'Union européenne ?",
+      "answer": "27 pays (depuis le Brexit en 2020)."
+    },
+    {
+      "id": "cap1",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la France ?",
+      "answer": "Paris"
+    },
+    {
+      "id": "cap2",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Allemagne ?",
+      "answer": "Berlin"
+    },
+    {
+      "id": "cap3",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Espagne ?",
+      "answer": "Madrid"
+    },
+    {
+      "id": "cap4",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Italie ?",
+      "answer": "Rome"
+    },
+    {
+      "id": "cap5",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Royaume-Uni ?",
+      "answer": "Londres"
+    },
+    {
+      "id": "cap6",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Portugal ?",
+      "answer": "Lisbonne"
+    },
+    {
+      "id": "cap7",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Pays-Bas ?",
+      "answer": "Amsterdam (siège du gouvernement : La Haye)"
+    },
+    {
+      "id": "cap8",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Belgique ?",
+      "answer": "Bruxelles"
+    },
+    {
+      "id": "cap9",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Suisse ?",
+      "answer": "Berne"
+    },
+    {
+      "id": "cap10",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Autriche ?",
+      "answer": "Vienne"
+    },
+    {
+      "id": "cap11",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Grèce ?",
+      "answer": "Athènes"
+    },
+    {
+      "id": "cap12",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Turquie ?",
+      "answer": "Ankara (et non Istanbul)"
+    },
+    {
+      "id": "cap13",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Pologne ?",
+      "answer": "Varsovie"
+    },
+    {
+      "id": "cap14",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Roumanie ?",
+      "answer": "Bucarest"
+    },
+    {
+      "id": "cap15",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Hongrie ?",
+      "answer": "Budapest"
+    },
+    {
+      "id": "cap16",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la République tchèque ?",
+      "answer": "Prague"
+    },
+    {
+      "id": "cap17",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Suède ?",
+      "answer": "Stockholm"
+    },
+    {
+      "id": "cap18",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Norvège ?",
+      "answer": "Oslo"
+    },
+    {
+      "id": "cap19",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Danemark ?",
+      "answer": "Copenhague"
+    },
+    {
+      "id": "cap20",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Finlande ?",
+      "answer": "Helsinki"
+    },
+    {
+      "id": "cap21",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Russie ?",
+      "answer": "Moscou"
+    },
+    {
+      "id": "cap22",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Ukraine ?",
+      "answer": "Kiev (Kyiv)"
+    },
+    {
+      "id": "cap23",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Serbie ?",
+      "answer": "Belgrade"
+    },
+    {
+      "id": "cap24",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Croatie ?",
+      "answer": "Zagreb"
+    },
+    {
+      "id": "cap25",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Bulgarie ?",
+      "answer": "Sofia"
+    },
+    {
+      "id": "cap26",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Irlande ?",
+      "answer": "Dublin"
+    },
+    {
+      "id": "cap27",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Islande ?",
+      "answer": "Reykjavik"
+    },
+    {
+      "id": "cap28",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Slovaquie ?",
+      "answer": "Bratislava"
+    },
+    {
+      "id": "cap29",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Slovénie ?",
+      "answer": "Ljubljana"
+    },
+    {
+      "id": "cap30",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Albanie ?",
+      "answer": "Tirana"
+    },
+    {
+      "id": "cap31",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Bosnie-Herzégovine ?",
+      "answer": "Sarajevo"
+    },
+    {
+      "id": "cap32",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Monténégro ?",
+      "answer": "Podgorica"
+    },
+    {
+      "id": "cap33",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Macédoine du Nord ?",
+      "answer": "Skopje"
+    },
+    {
+      "id": "cap34",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Kosovo ?",
+      "answer": "Pristina"
+    },
+    {
+      "id": "cap35",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Lettonie ?",
+      "answer": "Riga"
+    },
+    {
+      "id": "cap36",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Lituanie ?",
+      "answer": "Vilnius"
+    },
+    {
+      "id": "cap37",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Estonie ?",
+      "answer": "Tallinn"
+    },
+    {
+      "id": "cap38",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Biélorussie ?",
+      "answer": "Minsk"
+    },
+    {
+      "id": "cap39",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Moldavie ?",
+      "answer": "Chișinău"
+    },
+    {
+      "id": "cap40",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Chypre ?",
+      "answer": "Nicosie"
+    },
+    {
+      "id": "cap41",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Malte ?",
+      "answer": "La Valette"
+    },
+    {
+      "id": "cap42",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Luxembourg ?",
+      "answer": "Luxembourg"
+    },
+    {
+      "id": "cap43",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Andorre ?",
+      "answer": "Andorre-la-Vieille"
+    },
+    {
+      "id": "cap44",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Monaco ?",
+      "answer": "Monaco (cité-État)"
+    },
+    {
+      "id": "cap45",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Saint-Marin ?",
+      "answer": "Saint-Marin"
+    },
+    {
+      "id": "cap46",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Vatican ?",
+      "answer": "Vatican (cité-État)"
+    },
+    {
+      "id": "cap47",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Liechtenstein ?",
+      "answer": "Vaduz"
+    },
+    {
+      "id": "cap48",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Maroc ?",
+      "answer": "Rabat (et non Casablanca)"
+    },
+    {
+      "id": "cap49",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Algérie ?",
+      "answer": "Alger"
+    },
+    {
+      "id": "cap50",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Tunisie ?",
+      "answer": "Tunis"
+    },
+    {
+      "id": "cap51",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Égypte ?",
+      "answer": "Le Caire"
+    },
+    {
+      "id": "cap52",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Libye ?",
+      "answer": "Tripoli"
+    },
+    {
+      "id": "cap53",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Mauritanie ?",
+      "answer": "Nouakchott"
+    },
+    {
+      "id": "cap54",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Mali ?",
+      "answer": "Bamako"
+    },
+    {
+      "id": "cap55",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Niger ?",
+      "answer": "Niamey"
+    },
+    {
+      "id": "cap56",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Tchad ?",
+      "answer": "N'Djamena"
+    },
+    {
+      "id": "cap57",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Soudan ?",
+      "answer": "Khartoum"
+    },
+    {
+      "id": "cap58",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Soudan du Sud ?",
+      "answer": "Djouba (Juba)"
+    },
+    {
+      "id": "cap59",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Érythrée ?",
+      "answer": "Asmara"
+    },
+    {
+      "id": "cap60",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Éthiopie ?",
+      "answer": "Addis-Abeba"
+    },
+    {
+      "id": "cap61",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Somalie ?",
+      "answer": "Mogadiscio"
+    },
+    {
+      "id": "cap62",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Djibouti ?",
+      "answer": "Djibouti"
+    },
+    {
+      "id": "cap63",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Kenya ?",
+      "answer": "Nairobi"
+    },
+    {
+      "id": "cap64",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Ouganda ?",
+      "answer": "Kampala"
+    },
+    {
+      "id": "cap65",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Rwanda ?",
+      "answer": "Kigali"
+    },
+    {
+      "id": "cap66",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Burundi ?",
+      "answer": "Gitega (officielle) / Bujumbura (économique)"
+    },
+    {
+      "id": "cap67",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Tanzanie ?",
+      "answer": "Dodoma (officielle) / Dar es Salaam (économique)"
+    },
+    {
+      "id": "cap68",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Mozambique ?",
+      "answer": "Maputo"
+    },
+    {
+      "id": "cap69",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Malawi ?",
+      "answer": "Lilongwe"
+    },
+    {
+      "id": "cap70",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Zambie ?",
+      "answer": "Lusaka"
+    },
+    {
+      "id": "cap71",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Zimbabwe ?",
+      "answer": "Harare"
+    },
+    {
+      "id": "cap72",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Botswana ?",
+      "answer": "Gaborone"
+    },
+    {
+      "id": "cap73",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Namibie ?",
+      "answer": "Windhoek"
+    },
+    {
+      "id": "cap74",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Afrique du Sud ?",
+      "answer": "Pretoria (exécutif), Le Cap (législatif), Bloemfontein (judiciaire)"
+    },
+    {
+      "id": "cap75",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Lesotho ?",
+      "answer": "Maseru"
+    },
+    {
+      "id": "cap76",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Swaziland (Eswatini) ?",
+      "answer": "Mbabane"
+    },
+    {
+      "id": "cap77",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Madagascar ?",
+      "answer": "Antananarivo"
+    },
+    {
+      "id": "cap78",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Sénégal ?",
+      "answer": "Dakar"
+    },
+    {
+      "id": "cap79",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Gambie ?",
+      "answer": "Banjul"
+    },
+    {
+      "id": "cap80",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Guinée-Bissau ?",
+      "answer": "Bissau"
+    },
+    {
+      "id": "cap81",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Guinée ?",
+      "answer": "Conakry"
+    },
+    {
+      "id": "cap82",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Sierra Leone ?",
+      "answer": "Freetown"
+    },
+    {
+      "id": "cap83",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Liberia ?",
+      "answer": "Monrovia"
+    },
+    {
+      "id": "cap84",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Côte d'Ivoire ?",
+      "answer": "Yamoussoukro (officielle) / Abidjan (économique)"
+    },
+    {
+      "id": "cap85",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Ghana ?",
+      "answer": "Accra"
+    },
+    {
+      "id": "cap86",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Togo ?",
+      "answer": "Lomé"
+    },
+    {
+      "id": "cap87",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Bénin ?",
+      "answer": "Porto-Novo (officielle) / Cotonou (économique)"
+    },
+    {
+      "id": "cap88",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Nigeria ?",
+      "answer": "Abuja (et non Lagos)"
+    },
+    {
+      "id": "cap89",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Cameroun ?",
+      "answer": "Yaoundé (et non Douala)"
+    },
+    {
+      "id": "cap90",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la République centrafricaine ?",
+      "answer": "Bangui"
+    },
+    {
+      "id": "cap91",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Gabon ?",
+      "answer": "Libreville"
+    },
+    {
+      "id": "cap190",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Guinée équatoriale ?",
+      "answer": "Malabo"
+    },
+    {
+      "id": "cap93",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Congo-Brazzaville ?",
+      "answer": "Brazzaville"
+    },
+    {
+      "id": "cap94",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la République démocratique du Congo ?",
+      "answer": "Kinshasa"
+    },
+    {
+      "id": "cap95",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Angola ?",
+      "answer": "Luanda"
+    },
+    {
+      "id": "cap96",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Comores ?",
+      "answer": "Moroni"
+    },
+    {
+      "id": "cap97",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Maurice ?",
+      "answer": "Port-Louis"
+    },
+    {
+      "id": "cap98",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Seychelles ?",
+      "answer": "Victoria"
+    },
+    {
+      "id": "cap99",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Cap-Vert ?",
+      "answer": "Praia"
+    },
+    {
+      "id": "cap191",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de São Tomé-et-Príncipe ?",
+      "answer": "São Tomé"
+    },
+    {
+      "id": "cap101",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des États-Unis ?",
+      "answer": "Washington D.C. (et non New York)"
+    },
+    {
+      "id": "cap102",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Canada ?",
+      "answer": "Ottawa (et non Toronto)"
+    },
+    {
+      "id": "cap103",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Mexique ?",
+      "answer": "Mexico"
+    },
+    {
+      "id": "cap104",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Guatemala ?",
+      "answer": "Guatemala City"
+    },
+    {
+      "id": "cap105",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Belize ?",
+      "answer": "Belmopan (et non Belize City)"
+    },
+    {
+      "id": "cap106",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Honduras ?",
+      "answer": "Tegucigalpa"
+    },
+    {
+      "id": "cap107",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Salvador ?",
+      "answer": "San Salvador"
+    },
+    {
+      "id": "cap108",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Nicaragua ?",
+      "answer": "Managua"
+    },
+    {
+      "id": "cap109",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Costa Rica ?",
+      "answer": "San José"
+    },
+    {
+      "id": "cap110",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Panama ?",
+      "answer": "Panama City"
+    },
+    {
+      "id": "cap111",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Cuba ?",
+      "answer": "La Havane"
+    },
+    {
+      "id": "cap112",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Jamaïque ?",
+      "answer": "Kingston"
+    },
+    {
+      "id": "cap113",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale d'Haïti ?",
+      "answer": "Port-au-Prince"
+    },
+    {
+      "id": "cap114",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la République dominicaine ?",
+      "answer": "Saint-Domingue"
+    },
+    {
+      "id": "cap115",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Trinidad-et-Tobago ?",
+      "answer": "Port of Spain"
+    },
+    {
+      "id": "cap116",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Barbade ?",
+      "answer": "Bridgetown"
+    },
+    {
+      "id": "cap117",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Colombie ?",
+      "answer": "Bogotá"
+    },
+    {
+      "id": "cap118",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Venezuela ?",
+      "answer": "Caracas"
+    },
+    {
+      "id": "cap119",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Guyana ?",
+      "answer": "Georgetown"
+    },
+    {
+      "id": "cap120",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Suriname ?",
+      "answer": "Paramaribo"
+    },
+    {
+      "id": "cap121",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Brésil ?",
+      "answer": "Brasilia (et non Rio de Janeiro ou São Paulo)"
+    },
+    {
+      "id": "cap122",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Pérou ?",
+      "answer": "Lima"
+    },
+    {
+      "id": "cap123",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Bolivie ?",
+      "answer": "Sucre (constitutionnelle) / La Paz (siège du gouvernement)"
+    },
+    {
+      "id": "cap124",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Chili ?",
+      "answer": "Santiago"
+    },
+    {
+      "id": "cap125",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Argentine ?",
+      "answer": "Buenos Aires"
+    },
+    {
+      "id": "cap126",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Uruguay ?",
+      "answer": "Montevideo"
+    },
+    {
+      "id": "cap127",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Paraguay ?",
+      "answer": "Asunción"
+    },
+    {
+      "id": "cap128",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Équateur ?",
+      "answer": "Quito (et non Guayaquil)"
+    },
+    {
+      "id": "cap129",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Chine ?",
+      "answer": "Pékin (Beijing)"
+    },
+    {
+      "id": "cap130",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Japon ?",
+      "answer": "Tokyo"
+    },
+    {
+      "id": "cap131",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Corée du Sud ?",
+      "answer": "Séoul"
+    },
+    {
+      "id": "cap132",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Corée du Nord ?",
+      "answer": "Pyongyang"
+    },
+    {
+      "id": "cap133",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Inde ?",
+      "answer": "New Delhi (et non Mumbai ou Calcutta)"
+    },
+    {
+      "id": "cap134",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Pakistan ?",
+      "answer": "Islamabad (et non Karachi)"
+    },
+    {
+      "id": "cap135",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Bangladesh ?",
+      "answer": "Dacca"
+    },
+    {
+      "id": "cap136",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Népal ?",
+      "answer": "Katmandou"
+    },
+    {
+      "id": "cap137",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Bhoutan ?",
+      "answer": "Thimphu"
+    },
+    {
+      "id": "cap138",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Sri Lanka ?",
+      "answer": "Sri Jayawardenepura Kotte (officielle) / Colombo (commerciale)"
+    },
+    {
+      "id": "cap139",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Maldives ?",
+      "answer": "Malé"
+    },
+    {
+      "id": "cap140",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Afghanistan ?",
+      "answer": "Kaboul"
+    },
+    {
+      "id": "cap141",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Ouzbékistan ?",
+      "answer": "Tachkent"
+    },
+    {
+      "id": "cap142",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Kazakhstan ?",
+      "answer": "Astana (anciennement Nur-Sultan)"
+    },
+    {
+      "id": "cap143",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Kirghizstan ?",
+      "answer": "Bichkek"
+    },
+    {
+      "id": "cap144",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Tadjikistan ?",
+      "answer": "Douchanbé"
+    },
+    {
+      "id": "cap145",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Turkménistan ?",
+      "answer": "Achgabat"
+    },
+    {
+      "id": "cap146",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Mongolie ?",
+      "answer": "Oulan-Bator"
+    },
+    {
+      "id": "cap147",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Thaïlande ?",
+      "answer": "Bangkok (nom officiel : Krung Thep Maha Nakhon)"
+    },
+    {
+      "id": "cap148",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Vietnam ?",
+      "answer": "Hanoï (et non Hô Chi Minh-Ville)"
+    },
+    {
+      "id": "cap149",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Cambodge ?",
+      "answer": "Phnom Penh"
+    },
+    {
+      "id": "cap150",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Laos ?",
+      "answer": "Vientiane"
+    },
+    {
+      "id": "cap151",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Malaisie ?",
+      "answer": "Kuala Lumpur (siège administratif : Putrajaya)"
+    },
+    {
+      "id": "cap152",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Singapour ?",
+      "answer": "Singapour (cité-État)"
+    },
+    {
+      "id": "cap153",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Indonésie ?",
+      "answer": "Jakarta (transfert en cours vers Nusantara)"
+    },
+    {
+      "id": "cap154",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Philippines ?",
+      "answer": "Manille"
+    },
+    {
+      "id": "cap155",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Brunei ?",
+      "answer": "Bandar Seri Begawan"
+    },
+    {
+      "id": "cap156",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Timor oriental ?",
+      "answer": "Dili"
+    },
+    {
+      "id": "cap157",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Myanmar (Birmanie) ?",
+      "answer": "Naypyidaw (et non Rangoun)"
+    },
+    {
+      "id": "cap158",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Arabie Saoudite ?",
+      "answer": "Riyad"
+    },
+    {
+      "id": "cap159",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Émirats arabes unis ?",
+      "answer": "Abou Dhabi (et non Dubaï)"
+    },
+    {
+      "id": "cap160",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Qatar ?",
+      "answer": "Doha"
+    },
+    {
+      "id": "cap161",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Koweït ?",
+      "answer": "Koweït City"
+    },
+    {
+      "id": "cap162",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Bahreïn ?",
+      "answer": "Manama"
+    },
+    {
+      "id": "cap163",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale d'Oman ?",
+      "answer": "Mascate"
+    },
+    {
+      "id": "cap164",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Yémen ?",
+      "answer": "Sanaa"
+    },
+    {
+      "id": "cap165",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Iran ?",
+      "answer": "Téhéran"
+    },
+    {
+      "id": "cap166",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Irak ?",
+      "answer": "Bagdad"
+    },
+    {
+      "id": "cap167",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Syrie ?",
+      "answer": "Damas"
+    },
+    {
+      "id": "cap168",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Liban ?",
+      "answer": "Beyrouth"
+    },
+    {
+      "id": "cap169",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Jordanie ?",
+      "answer": "Amman"
+    },
+    {
+      "id": "cap170",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale d'Israël ?",
+      "answer": "Jérusalem (revendiquée) / Tel Aviv (siège diplomatique pour beaucoup de pays)"
+    },
+    {
+      "id": "cap171",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Arménie ?",
+      "answer": "Erevan"
+    },
+    {
+      "id": "cap172",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Géorgie (pays) ?",
+      "answer": "Tbilissi"
+    },
+    {
+      "id": "cap173",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Azerbaïdjan ?",
+      "answer": "Bakou"
+    },
+    {
+      "id": "cap174",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de l'Australie ?",
+      "answer": "Canberra (et non Sydney ou Melbourne)"
+    },
+    {
+      "id": "cap175",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Nouvelle-Zélande ?",
+      "answer": "Wellington (et non Auckland)"
+    },
+    {
+      "id": "cap176",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Papouasie-Nouvelle-Guinée ?",
+      "answer": "Port Moresby"
+    },
+    {
+      "id": "cap177",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Fidji ?",
+      "answer": "Suva"
+    },
+    {
+      "id": "cap178",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Nouvelle-Calédonie (territoire français) ?",
+      "answer": "Nouméa"
+    },
+    {
+      "id": "cap179",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Samoa ?",
+      "answer": "Apia"
+    },
+    {
+      "id": "cap180",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Tonga ?",
+      "answer": "Nuku'alofa"
+    },
+    {
+      "id": "cap181",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Vanuatu ?",
+      "answer": "Port-Vila"
+    },
+    {
+      "id": "cap182",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Îles Salomon ?",
+      "answer": "Honiara"
+    },
+    {
+      "id": "cap183",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Kiribati ?",
+      "answer": "South Tarawa"
+    },
+    {
+      "id": "cap184",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Nauru ?",
+      "answer": "Yaren (pas de capitale officielle, Yaren est le siège du gouvernement)"
+    },
+    {
+      "id": "cap185",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Tuvalu ?",
+      "answer": "Funafuti"
+    },
+    {
+      "id": "cap186",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Palaos ?",
+      "answer": "Ngerulmud (et non Koror)"
+    },
+    {
+      "id": "cap187",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Îles Marshall ?",
+      "answer": "Majuro"
+    },
+    {
+      "id": "cap188",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des États fédérés de Micronésie ?",
+      "answer": "Palikir"
+    },
+    {
+      "id": "cap189",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale du Burkina Faso ?",
+      "answer": "Ouagadougou"
+    },
+    {
+      "id": "cap192",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Dominique ?",
+      "answer": "Roseau"
+    },
+    {
+      "id": "cap193",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Sainte-Lucie ?",
+      "answer": "Castries"
+    },
+    {
+      "id": "cap194",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Saint-Vincent-et-les-Grenadines ?",
+      "answer": "Kingstown"
+    },
+    {
+      "id": "cap195",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de la Grenade ?",
+      "answer": "Saint-Georges"
+    },
+    {
+      "id": "cap196",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale d'Antigua-et-Barbuda ?",
+      "answer": "Saint John's"
+    },
+    {
+      "id": "cap197",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale de Saint-Kitts-et-Nevis ?",
+      "answer": "Basseterre"
+    },
+    {
+      "id": "cap198",
+      "categoryId": "cat-capitales",
+      "question": "Quelle est la capitale des Bahamas ?",
+      "answer": "Nassau"
+    },
+    {
+      "id": "h1",
+      "categoryId": "cat-histoire",
+      "question": "Quelle était la devise de Henri II (souvent liée à un croissant de lune) ?",
+      "answer": "\"Donec totum impleat orbem\" (Jusqu'à ce qu'il remplisse le monde entier)."
+    },
+    {
+      "id": "h2",
+      "categoryId": "cat-histoire",
+      "question": "Quel texte fondamental Henri IV signe-t-il en 1598 ?",
+      "answer": "L'Édit de Nantes."
+    },
+    {
+      "id": "h3",
+      "categoryId": "cat-histoire",
+      "question": "Quel chef militaire protestant est la première victime du massacre de la Saint-Barthélemy ?",
+      "answer": "L'amiral Gaspard de Coligny."
+    },
+    {
+      "id": "h4",
+      "categoryId": "cat-histoire",
+      "question": "Quel est le lien entre Henri III et Henri IV ?",
+      "answer": "Cousins issus de germains (et beaux-frères)."
+    },
+    {
+      "id": "h5",
+      "categoryId": "cat-histoire",
+      "question": "Qui succède à Henri III et devient le premier roi Bourbon ?",
+      "answer": "Henri IV."
+    },
+    {
+      "id": "h6",
+      "categoryId": "cat-histoire",
+      "question": "Quelle phrase célèbre (apocryphe) Henri IV aurait-il dite pour justifier sa conversion ?",
+      "answer": "\"Paris vaut bien une messe\"."
+    },
+    {
+      "id": "h7",
+      "categoryId": "cat-histoire",
+      "question": "Qui est le père de Louis XIII ?",
+      "answer": "Henri IV."
+    },
+    {
+      "id": "h8",
+      "categoryId": "cat-histoire",
+      "question": "Quel était le surnom de Henri IV ?",
+      "answer": "Le Vert-Galant (ou le bon roi Henri)."
+    },
+    {
+      "id": "h9",
+      "categoryId": "cat-histoire",
+      "question": "Sous quel roi a eu lieu le massacre de la Saint-Barthélemy ?",
+      "answer": "Charles IX."
+    },
+    {
+      "id": "h10",
+      "categoryId": "cat-histoire",
+      "question": "Quel âge avait Charles IX à son avènement, nécessitant une régence de sa mère ?",
+      "answer": "10 ans."
+    },
+    {
+      "id": "h11",
+      "categoryId": "cat-histoire",
+      "question": "Qui était la favorite toute-puissante de Henri II, rivale de Catherine de Médicis ?",
+      "answer": "Diane de Poitiers."
+    },
+    {
+      "id": "h12",
+      "categoryId": "cat-histoire",
+      "question": "Quel est l'ordre de succession des trois fils de Catherine de Médicis ?",
+      "answer": "François II, puis Charles IX, puis Henri III."
+    },
+    {
+      "id": "h13",
+      "categoryId": "cat-histoire",
+      "question": "Qui est la seconde épouse de Henri IV, après son divorce d'avec la Reine Margot ?",
+      "answer": "Marie de Médicis."
+    },
+    {
+      "id": "h14",
+      "categoryId": "cat-histoire",
+      "question": "En quelle année et comment meurt Henri II ?",
+      "answer": "En 1559, lors d'un tournoi, une lance dans l'œil."
+    },
+    {
+      "id": "h15",
+      "categoryId": "cat-histoire",
+      "question": "Quel objet de table Catherine de Médicis a-t-elle importé d'Italie ?",
+      "answer": "La fourchette."
+    },
+    {
+      "id": "h16",
+      "categoryId": "cat-histoire",
+      "question": "Qui était l'épouse de Henri II et la mère des derniers rois Valois ?",
+      "answer": "Catherine de Médicis."
+    },
+    {
+      "id": "h17",
+      "categoryId": "cat-histoire",
+      "question": "Combien de temps a régné François II ?",
+      "answer": "Environ 1 an (1559-1560)."
+    },
+    {
+      "id": "h18",
+      "categoryId": "cat-histoire",
+      "question": "Avant d'être roi de France, de quel pays Henri III a-t-il été élu roi ?",
+      "answer": "La Pologne."
+    },
+    {
+      "id": "h19",
+      "categoryId": "cat-histoire",
+      "question": "Quel écrivain et philosophe est l'auteur des Essais sous Henri III et Henri IV ?",
+      "answer": "Michel de Montaigne."
+    },
+    {
+      "id": "h20",
+      "categoryId": "cat-histoire",
+      "question": "De quelle ville italienne et de quelle famille puissante venait Catherine de Médicis ?",
+      "answer": "Florence (famille Médicis)."
+    },
+    {
+      "id": "h21",
+      "categoryId": "cat-histoire",
+      "question": "En quelle année et par qui Henri IV est-il assassiné ?",
+      "answer": "En 1610, par Ravaillac."
+    },
+    {
+      "id": "h22",
+      "categoryId": "cat-histoire",
+      "question": "Quel ministre fidèle de Henri IV a dit : \"Labourage et pâturage sont les deux mamelles de la France\" ?",
+      "answer": "Sully (Maximilien de Béthune)."
+    },
+    {
+      "id": "h23",
+      "categoryId": "cat-histoire",
+      "question": "Quel plat Henri IV souhaitait-il voir sur la table de chaque paysan le dimanche ?",
+      "answer": "La poule au pot."
+    },
+    {
+      "id": "h24",
+      "categoryId": "cat-histoire",
+      "question": "Quel mariage devait sceller la paix entre catholiques et protestants en 1572 ?",
+      "answer": "Henri de Navarre et Marguerite de Valois (la Reine Margot)."
+    },
+    {
+      "id": "h25",
+      "categoryId": "cat-histoire",
+      "question": "Quel château célèbre Henri II a-t-il offert à sa maîtresse Diane de Poitiers ?",
+      "answer": "Le château de Chenonceau."
+    },
+    {
+      "id": "h26",
+      "categoryId": "cat-histoire",
+      "question": "Qui était le chef de la Ligue (le parti catholique ultra) ?",
+      "answer": "Henri de Guise (surnommé le Balafré)."
+    },
+    {
+      "id": "h27",
+      "categoryId": "cat-histoire",
+      "question": "Que permettait l'Édit de Nantes ?",
+      "answer": "La liberté de culte aux protestants (Huguenots)."
+    },
+    {
+      "id": "h28",
+      "categoryId": "cat-histoire",
+      "question": "Qui est le capitaine de la garde qui a accidentellement tué Henri II ?",
+      "answer": "Gabriel de Montgomery."
+    },
+    {
+      "id": "h29",
+      "categoryId": "cat-histoire",
+      "question": "Quelles sont les dates du règne de Charles IX ?",
+      "answer": "1560 à 1574. Il avait 10 ans à son avènement (régence de Catherine de Médicis) et mourut à 23 ans de tuberculose, traumatisé par la Saint-Barthélemy."
+    },
+    {
+      "id": "h30",
+      "categoryId": "cat-histoire",
+      "question": "Qui est la mère de Louis XIII ?",
+      "answer": "Marie de Médicis."
+    },
+    {
+      "id": "h31",
+      "categoryId": "cat-histoire",
+      "question": "Quel médecin et astrologue était le protégé de Catherine de Médicis ?",
+      "answer": "Nostradamus."
+    },
+    {
+      "id": "h32",
+      "categoryId": "cat-histoire",
+      "question": "Où Henri IV a-t-il été assassiné à Paris ?",
+      "answer": "Rue de la Ferronnerie."
+    },
+    {
+      "id": "h33",
+      "categoryId": "cat-histoire",
+      "question": "Quel grand poète de la Pléiade était le favori de la cour des Valois ?",
+      "answer": "Pierre de Ronsard."
+    },
+    {
+      "id": "h34",
+      "categoryId": "cat-histoire",
+      "question": "Quelle reine est surnommée \"La Reine Noire\" à cause de son deuil éternel ?",
+      "answer": "Catherine de Médicis."
+    },
+    {
+      "id": "h35",
+      "categoryId": "cat-histoire",
+      "question": "Dans quel château Henri III fait-il assassiner le Duc de Guise en 1588 ?",
+      "answer": "Le château de Blois."
+    },
+    {
+      "id": "h36",
+      "categoryId": "cat-histoire",
+      "question": "Quel roi de France succède à François Ier en 1547 ?",
+      "answer": "Henri II."
+    },
+    {
+      "id": "h37",
+      "categoryId": "cat-histoire",
+      "question": "Comment meurt Henri III en 1589 ?",
+      "answer": "Assassiné par le moine Jacques Clément."
+    },
+    {
+      "id": "h38",
+      "categoryId": "cat-histoire",
+      "question": "Quel roi aimait s'entourer de ses \"Mignons\" ?",
+      "answer": "Henri III."
+    },
+    {
+      "id": "h39",
+      "categoryId": "cat-histoire",
+      "question": "Quel ingénieur a créé le premier réseau de canaux sous Henri IV ?",
+      "answer": "Sully (canal de Briare)."
+    },
+    {
+      "id": "h40",
+      "categoryId": "cat-histoire",
+      "question": "Quel était le nom de la dynastie de François II, Charles IX et Henri III ?",
+      "answer": "Les Valois."
+    },
+    {
+      "id": "h41",
+      "categoryId": "cat-histoire",
+      "question": "Qui est l'épouse célèbre et tragique de François II ?",
+      "answer": "Marie Stuart, reine d'Écosse."
+    },
+    {
+      "id": "h42",
+      "categoryId": "cat-histoire",
+      "question": "Quelles sont les dates du règne de Henri III ?",
+      "answer": "1574 à 1589. Il revint en urgence de Pologne pour monter sur le trône, et mourut assassiné par le moine Jacques Clément."
+    },
+    {
+      "id": "h43",
+      "categoryId": "cat-histoire",
+      "question": "Quel est le lien entre Henri II et Henri III ?",
+      "answer": "Père et fils."
+    },
+    {
+      "id": "h44",
+      "categoryId": "cat-histoire",
+      "question": "Quelle est la date précise du massacre de la Saint-Barthélemy ?",
+      "answer": "24 août 1572."
+    },
+    {
+      "id": "v1",
+      "categoryId": "cat-vrac",
+      "question": "Quel os du thorax antérieur tire son nom du latin signifiant « petite clé » ?",
+      "answer": "La clavicule."
+    },
+    {
+      "id": "v2",
+      "categoryId": "cat-vrac",
+      "question": "Quel vainqueur de la bataille de Hattin en 1187 est le premier sultan de la dynastie des Ayyoubides ?",
+      "answer": "Salah ad-Din (Saladin)."
+    },
+    {
+      "id": "v3",
+      "categoryId": "cat-vrac",
+      "question": "Quel mot masculin désigne une habitation traditionnelle de Polynésie ?",
+      "answer": "Le faré."
+    },
+    {
+      "id": "v4",
+      "categoryId": "cat-vrac",
+      "question": "Quelle partie du corps, dont l'adjectif est « génien », est en avant chez une personne prognathe ?",
+      "answer": "Le menton."
+    },
+    {
+      "id": "v5",
+      "categoryId": "cat-vrac",
+      "question": "Quel philosophe français du XVIIIe siècle a utilisé une anagramme de François-Marie Arouet Le Jeune pour former son pseudonyme ?",
+      "answer": "Voltaire (anagramme de AROVET L I)."
+    },
+    {
+      "id": "v6",
+      "categoryId": "cat-vrac",
+      "question": "Quel taillage de légumes en dés porte le même nom qu'une ancienne république yougoslave ?",
+      "answer": "La macédoine."
+    },
+    {
+      "id": "v7",
+      "categoryId": "cat-vrac",
+      "question": "Quel chanteur britannique né le 25 mars 1947 est connu pour sa collaboration avec le parolier Bernie Taupin ?",
+      "answer": "Elton John."
+    },
+    {
+      "id": "v8",
+      "categoryId": "cat-vrac",
+      "question": "À quel écrivain doit-on la création du terme « Merdre », qui correspond à un mois du calendrier pataphysique ?",
+      "answer": "Alfred Jarry."
+    },
+    {
+      "id": "v9",
+      "categoryId": "cat-vrac",
+      "question": "Par opposition à l'anaphore, quel terme désigne la répétition d'un mot en fin de plusieurs phrases ?",
+      "answer": "L'épiphore."
+    },
+    {
+      "id": "v10",
+      "categoryId": "cat-vrac",
+      "question": "Quel philosophe anglais du XVIIe siècle est l'exact homonyme d'un peintre irlandais du XXe siècle connu pour ses tableaux de violence ?",
+      "answer": "Francis Bacon."
+    },
+    {
+      "id": "v11",
+      "categoryId": "cat-vrac",
+      "question": "Quel pays africain, dont le nom signifie « Pays des hommes intègres », était anciennement dénommé Haute-Volta ?",
+      "answer": "Le Burkina Faso."
+    },
+    {
+      "id": "v12",
+      "categoryId": "cat-vrac",
+      "question": "Quel jeu, dont Nigel Richards est champion international, fut créé par Alfred Mosher Butts en 1948 ?",
+      "answer": "Le Scrabble."
+    },
+    {
+      "id": "v13",
+      "categoryId": "cat-vrac",
+      "question": "Quel langage de programmation tire son nom du prénom de la fille de Lord Byron, considérée comme l'une des premières informaticiennes ?",
+      "answer": "Ada."
+    },
+    {
+      "id": "v14",
+      "categoryId": "cat-vrac",
+      "question": "Quel nom désigne le produit ajouté à un autre pour renforcer son action, notamment en médecine ?",
+      "answer": "Un adjuvant."
+    },
+    {
+      "id": "v15",
+      "categoryId": "cat-vrac",
+      "question": "Quel détenteur du record du monde du marathon (2h00'35\" à Chicago) est décédé dans un accident de voiture début 2024 ?",
+      "answer": "Kelvin Kiptum."
+    },
+    {
+      "id": "v16",
+      "categoryId": "cat-vrac",
+      "question": "Quel est le nom scientifique du saignement de nez ? (du grec « au-dessus » et « couler goutte à goutte »)",
+      "answer": "L'épistaxis."
+    },
+    {
+      "id": "v17",
+      "categoryId": "cat-vrac",
+      "question": "Quel nom désigne l'hypertrophie anormale de la glande thyroïde ?",
+      "answer": "Le goître."
+    },
+    {
+      "id": "v18",
+      "categoryId": "cat-vrac",
+      "question": "Dans quel sport Yoo Nam-kyu, Jan-Ove Waldner et Ryu Seung-Min sont-ils les seuls non-Chinois médaillés d'or olympiques ?",
+      "answer": "Le tennis de table (ping-pong)."
+    },
+    {
+      "id": "v19",
+      "categoryId": "cat-vrac",
+      "question": "Quel train reliant Calais à Vintimille a laissé son nom à un restaurant de la Gare de Lyon ?",
+      "answer": "Le Train Bleu (inauguré en 1901)."
+    },
+    {
+      "id": "v20",
+      "categoryId": "cat-vrac",
+      "question": "Quel nom issu du latin « changer » désigne l'écorce intérieure de l'arbre, aussi appelée seconde écorce ?",
+      "answer": "Le cambium."
+    },
+    {
+      "id": "v21",
+      "categoryId": "cat-vrac",
+      "question": "De quelle planète, palindrome de trois lettres, provient l'extraterrestre interprété par Jacques Villeret dans La Soupe aux Choux ?",
+      "answer": "Oxo."
+    },
+    {
+      "id": "v22",
+      "categoryId": "cat-vrac",
+      "question": "Quel animal hybride mâle et stérile est issu de l'accouplement de l'âne et de la jument ?",
+      "answer": "Le mulet."
+    },
+    {
+      "id": "v23",
+      "categoryId": "cat-vrac",
+      "question": "Quelle espèce de mammifère marin, aussi appelée « épaulard », est surnommée « killer whale » en anglais ?",
+      "answer": "L'orque."
+    },
+    {
+      "id": "v24",
+      "categoryId": "cat-vrac",
+      "question": "Quel animal est dit « au poing » dans le titre du roman d'Hervé Bazin narrant la relation de Brasse-Bouillon avec sa mère Folcoche ?",
+      "answer": "La vipère (Vipère au poing)."
+    },
+    {
+      "id": "v25",
+      "categoryId": "cat-vrac",
+      "question": "Quel nom porte le réseau social lancé par Donald Trump peu après l'assaut du Capitole en 2021 ?",
+      "answer": "Truth Social."
+    },
+    {
+      "id": "v26",
+      "categoryId": "cat-vrac",
+      "question": "Quel nom d'échassier est associé au « Garçon » dans le titre du film de Hayao Miyazaki sorti en 2023 ?",
+      "answer": "Le héron (Le Garçon et le Héron)."
+    },
+    {
+      "id": "v27",
+      "categoryId": "cat-vrac",
+      "question": "Quelle partie du corps est dite « In the sky » dans le plus grand succès du groupe The Alan Parsons Project ?",
+      "answer": "L'œil (Eye in the Sky)."
+    },
+    {
+      "id": "v28",
+      "categoryId": "cat-vrac",
+      "question": "Quel chien, aussi appelé terrier du Congo, n'aboie pas mais émet un cri ressemblant à un gloussement, et dont le nom est une syllabe redoublée ?",
+      "answer": "Le Basenji (ou Nyam Nyam)."
+    },
+    {
+      "id": "v29",
+      "categoryId": "cat-vrac",
+      "question": "Aux côtés d'Henri Gault, quel journaliste gastronomique a donné son nom à un célèbre guide en 1972 ?",
+      "answer": "Christian Millau."
+    },
+    {
+      "id": "v30",
+      "categoryId": "cat-vrac",
+      "question": "Apparu pour la première fois dans La Ballade de la mer salée, quel héros de BD fut créé en 1967 par Hugo Pratt ?",
+      "answer": "Corto Maltese."
+    },
+    {
+      "id": "v31",
+      "categoryId": "cat-vrac",
+      "question": "Quelle région de 58 km², considérée comme le seul désert français, se situe en Corse ?",
+      "answer": "Le désert des Agriates."
+    },
+    {
+      "id": "v32",
+      "categoryId": "cat-vrac",
+      "question": "Quel animal était autrefois appelé « goupil » ? Son nom actuel vient d'une célèbre œuvre littéraire médiévale.",
+      "answer": "Le renard (Roman de Renart)."
+    },
+    {
+      "id": "v33",
+      "categoryId": "cat-vrac",
+      "question": "Quel est le pays dont la capitale est née de la fusion d'Óbuda, Pest et Buda en 1873 ?",
+      "answer": "La Hongrie (Budapest)."
+    },
+    {
+      "id": "v34",
+      "categoryId": "cat-vrac",
+      "question": "Quel premier ministre-président du royaume de Hongrie rebelle aux Habsbourg a donné son nom à la grande avenue de Budapest où se trouve l'Opéra national ?",
+      "answer": "Gyula Andrássy."
+    },
+    {
+      "id": "v35",
+      "categoryId": "cat-vrac",
+      "question": "Quel navigateur italien, prénommé Amerigo, a laissé son nom au continent américain ?",
+      "answer": "Amerigo Vespucci."
+    },
+    {
+      "id": "v36",
+      "categoryId": "cat-vrac",
+      "question": "Quel préfixe multiplie une unité par un milliard ?",
+      "answer": "Giga."
+    },
+    {
+      "id": "v37",
+      "categoryId": "cat-vrac",
+      "question": "De quel pays est originaire le groupe de musique industrielle « Les Tambours du Bronx », formé en 1987 ?",
+      "answer": "La France."
+    },
+    {
+      "id": "v38",
+      "categoryId": "cat-vrac",
+      "question": "De quelle région française l'hymne « Bro gozh ma zadoù » (Vieux pays de mes pères) a-t-il été adopté officiellement en 2021 ?",
+      "answer": "La Bretagne."
+    },
+    {
+      "id": "v39",
+      "categoryId": "cat-vrac",
+      "question": "Quel héros fut interprété par Russell Crowe, Kevin Costner et Errol Flynn dans des films différents ?",
+      "answer": "Robin des Bois."
+    },
+    {
+      "id": "v40",
+      "categoryId": "cat-vrac",
+      "question": "Sous quel nom est connu Shōwa Tennō, l'empereur du Japon dont le règne débuta en 1926 et qui vécut la Seconde Guerre mondiale ?",
+      "answer": "Hirohito."
+    },
+    {
+      "id": "v41",
+      "categoryId": "cat-vrac",
+      "question": "Quel nom, homophone du nom d'un animal, désigne le trou dans lequel on passe le fil d'une aiguille ?",
+      "answer": "Le chas (homophone de « chat »)."
+    },
+    {
+      "id": "v42",
+      "categoryId": "cat-vrac",
+      "question": "Quelle série dans laquelle Isabelle Nanty incarne une avocate porte un nom de cinq lettres, homonyme d'un peintre né en 1863 à Ådalsbruk ?",
+      "answer": "Munch."
+    },
+    {
+      "id": "v43",
+      "categoryId": "cat-vrac",
+      "question": "Quel anglicisme désigne la procédure de destitution du président des États-Unis ?",
+      "answer": "L'impeachment."
+    },
+    {
+      "id": "dept-pref-1",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Ain (01) ?",
+      "answer": "Bourg-en-Bresse"
+    },
+    {
+      "id": "dept-pref-2",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Aisne (02) ?",
+      "answer": "Laon"
+    },
+    {
+      "id": "dept-pref-3",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Allier (03) ?",
+      "answer": "Moulins"
+    },
+    {
+      "id": "dept-pref-4",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Alpes-de-Haute-Provence (04) ?",
+      "answer": "Digne-les-Bains"
+    },
+    {
+      "id": "dept-pref-5",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Hautes-Alpes (05) ?",
+      "answer": "Gap"
+    },
+    {
+      "id": "dept-pref-6",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Alpes-Maritimes (06) ?",
+      "answer": "Nice"
+    },
+    {
+      "id": "dept-pref-7",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Ardèche (07) ?",
+      "answer": "Privas"
+    },
+    {
+      "id": "dept-pref-8",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Ardennes (08) ?",
+      "answer": "Charleville-Mézières"
+    },
+    {
+      "id": "dept-pref-9",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Ariège (09) ?",
+      "answer": "Foix"
+    },
+    {
+      "id": "dept-pref-10",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Aube (10) ?",
+      "answer": "Troyes"
+    },
+    {
+      "id": "dept-pref-11",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Aude (11) ?",
+      "answer": "Carcassonne"
+    },
+    {
+      "id": "dept-pref-12",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Aveyron (12) ?",
+      "answer": "Rodez"
+    },
+    {
+      "id": "dept-pref-13",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Bouches-du-Rhône (13) ?",
+      "answer": "Marseille"
+    },
+    {
+      "id": "dept-pref-14",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Calvados (14) ?",
+      "answer": "Caen"
+    },
+    {
+      "id": "dept-pref-15",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Cantal (15) ?",
+      "answer": "Aurillac"
+    },
+    {
+      "id": "dept-pref-16",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Charente (16) ?",
+      "answer": "Angoulême"
+    },
+    {
+      "id": "dept-pref-17",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Charente-Maritime (17) ?",
+      "answer": "La Rochelle"
+    },
+    {
+      "id": "dept-pref-18",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Cher (18) ?",
+      "answer": "Bourges"
+    },
+    {
+      "id": "dept-pref-19",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Corrèze (19) ?",
+      "answer": "Tulle"
+    },
+    {
+      "id": "dept-pref-20",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Corse-du-Sud (2A) ?",
+      "answer": "Ajaccio"
+    },
+    {
+      "id": "dept-pref-21",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haute-Corse (2B) ?",
+      "answer": "Bastia"
+    },
+    {
+      "id": "dept-pref-22",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Côte-d'Or (21) ?",
+      "answer": "Dijon"
+    },
+    {
+      "id": "dept-pref-23",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Côtes-d'Armor (22) ?",
+      "answer": "Saint-Brieuc"
+    },
+    {
+      "id": "dept-pref-24",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Creuse (23) ?",
+      "answer": "Guéret"
+    },
+    {
+      "id": "dept-pref-25",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Dordogne (24) ?",
+      "answer": "Périgueux"
+    },
+    {
+      "id": "dept-pref-26",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Doubs (25) ?",
+      "answer": "Besançon"
+    },
+    {
+      "id": "dept-pref-27",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Drôme (26) ?",
+      "answer": "Valence"
+    },
+    {
+      "id": "dept-pref-28",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Eure (27) ?",
+      "answer": "Évreux"
+    },
+    {
+      "id": "dept-pref-29",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Eure-et-Loir (28) ?",
+      "answer": "Chartres"
+    },
+    {
+      "id": "dept-pref-30",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Finistère (29) ?",
+      "answer": "Quimper"
+    },
+    {
+      "id": "dept-pref-31",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Gard (30) ?",
+      "answer": "Nîmes"
+    },
+    {
+      "id": "dept-pref-32",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haute-Garonne (31) ?",
+      "answer": "Toulouse"
+    },
+    {
+      "id": "dept-pref-33",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Gers (32) ?",
+      "answer": "Auch"
+    },
+    {
+      "id": "dept-pref-34",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Gironde (33) ?",
+      "answer": "Bordeaux"
+    },
+    {
+      "id": "dept-pref-35",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Hérault (34) ?",
+      "answer": "Montpellier"
+    },
+    {
+      "id": "dept-pref-36",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Ille-et-Vilaine (35) ?",
+      "answer": "Rennes"
+    },
+    {
+      "id": "dept-pref-37",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Indre (36) ?",
+      "answer": "Châteauroux"
+    },
+    {
+      "id": "dept-pref-38",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Indre-et-Loire (37) ?",
+      "answer": "Tours"
+    },
+    {
+      "id": "dept-pref-39",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Isère (38) ?",
+      "answer": "Grenoble"
+    },
+    {
+      "id": "dept-pref-40",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Jura (39) ?",
+      "answer": "Lons-le-Saunier"
+    },
+    {
+      "id": "dept-pref-41",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Landes (40) ?",
+      "answer": "Mont-de-Marsan"
+    },
+    {
+      "id": "dept-pref-42",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Loir-et-Cher (41) ?",
+      "answer": "Blois"
+    },
+    {
+      "id": "dept-pref-43",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Loire (42) ?",
+      "answer": "Saint-Étienne"
+    },
+    {
+      "id": "dept-pref-44",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haute-Loire (43) ?",
+      "answer": "Le Puy-en-Velay"
+    },
+    {
+      "id": "dept-pref-45",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Loire-Atlantique (44) ?",
+      "answer": "Nantes"
+    },
+    {
+      "id": "dept-pref-46",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Loiret (45) ?",
+      "answer": "Orléans"
+    },
+    {
+      "id": "dept-pref-47",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Lot (46) ?",
+      "answer": "Cahors"
+    },
+    {
+      "id": "dept-pref-48",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Lot-et-Garonne (47) ?",
+      "answer": "Agen"
+    },
+    {
+      "id": "dept-pref-49",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Lozère (48) ?",
+      "answer": "Mende"
+    },
+    {
+      "id": "dept-pref-50",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Maine-et-Loire (49) ?",
+      "answer": "Angers"
+    },
+    {
+      "id": "dept-pref-51",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Manche (50) ?",
+      "answer": "Saint-Lô"
+    },
+    {
+      "id": "dept-pref-52",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Marne (51) ?",
+      "answer": "Châlons-en-Champagne"
+    },
+    {
+      "id": "dept-pref-53",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haute-Marne (52) ?",
+      "answer": "Chaumont"
+    },
+    {
+      "id": "dept-pref-54",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Mayenne (53) ?",
+      "answer": "Laval"
+    },
+    {
+      "id": "dept-pref-55",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Meurthe-et-Moselle (54) ?",
+      "answer": "Nancy"
+    },
+    {
+      "id": "dept-pref-56",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Meuse (55) ?",
+      "answer": "Bar-le-Duc"
+    },
+    {
+      "id": "dept-pref-57",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Morbihan (56) ?",
+      "answer": "Vannes"
+    },
+    {
+      "id": "dept-pref-58",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Moselle (57) ?",
+      "answer": "Metz"
+    },
+    {
+      "id": "dept-pref-59",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Nièvre (58) ?",
+      "answer": "Nevers"
+    },
+    {
+      "id": "dept-pref-60",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Nord (59) ?",
+      "answer": "Lille"
+    },
+    {
+      "id": "dept-pref-61",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Oise (60) ?",
+      "answer": "Beauvais"
+    },
+    {
+      "id": "dept-pref-62",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Orne (61) ?",
+      "answer": "Alençon"
+    },
+    {
+      "id": "dept-pref-63",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Pas-de-Calais (62) ?",
+      "answer": "Arras"
+    },
+    {
+      "id": "dept-pref-64",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Puy-de-Dôme (63) ?",
+      "answer": "Clermont-Ferrand"
+    },
+    {
+      "id": "dept-pref-65",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Pyrénées-Atlantiques (64) ?",
+      "answer": "Pau"
+    },
+    {
+      "id": "dept-pref-66",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Hautes-Pyrénées (65) ?",
+      "answer": "Tarbes"
+    },
+    {
+      "id": "dept-pref-67",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Pyrénées-Orientales (66) ?",
+      "answer": "Perpignan"
+    },
+    {
+      "id": "dept-pref-68",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Bas-Rhin (67) ?",
+      "answer": "Strasbourg"
+    },
+    {
+      "id": "dept-pref-69",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haut-Rhin (68) ?",
+      "answer": "Colmar"
+    },
+    {
+      "id": "dept-pref-70",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Rhône (69) ?",
+      "answer": "Lyon"
+    },
+    {
+      "id": "dept-pref-71",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haute-Saône (70) ?",
+      "answer": "Vesoul"
+    },
+    {
+      "id": "dept-pref-72",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Saône-et-Loire (71) ?",
+      "answer": "Mâcon"
+    },
+    {
+      "id": "dept-pref-73",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Sarthe (72) ?",
+      "answer": "Le Mans"
+    },
+    {
+      "id": "dept-pref-74",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Savoie (73) ?",
+      "answer": "Chambéry"
+    },
+    {
+      "id": "dept-pref-75",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haute-Savoie (74) ?",
+      "answer": "Annecy"
+    },
+    {
+      "id": "dept-pref-76",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Paris (75) ?",
+      "answer": "Paris"
+    },
+    {
+      "id": "dept-pref-77",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Seine-Maritime (76) ?",
+      "answer": "Rouen"
+    },
+    {
+      "id": "dept-pref-78",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Seine-et-Marne (77) ?",
+      "answer": "Melun"
+    },
+    {
+      "id": "dept-pref-79",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Yvelines (78) ?",
+      "answer": "Versailles"
+    },
+    {
+      "id": "dept-pref-80",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Deux-Sèvres (79) ?",
+      "answer": "Niort"
+    },
+    {
+      "id": "dept-pref-81",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Somme (80) ?",
+      "answer": "Amiens"
+    },
+    {
+      "id": "dept-pref-82",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Tarn (81) ?",
+      "answer": "Albi"
+    },
+    {
+      "id": "dept-pref-83",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Tarn-et-Garonne (82) ?",
+      "answer": "Montauban"
+    },
+    {
+      "id": "dept-pref-84",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Var (83) ?",
+      "answer": "Toulon"
+    },
+    {
+      "id": "dept-pref-85",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Vaucluse (84) ?",
+      "answer": "Avignon"
+    },
+    {
+      "id": "dept-pref-86",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Vendée (85) ?",
+      "answer": "La Roche-sur-Yon"
+    },
+    {
+      "id": "dept-pref-87",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Vienne (86) ?",
+      "answer": "Poitiers"
+    },
+    {
+      "id": "dept-pref-88",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Haute-Vienne (87) ?",
+      "answer": "Limoges"
+    },
+    {
+      "id": "dept-pref-89",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Vosges (88) ?",
+      "answer": "Épinal"
+    },
+    {
+      "id": "dept-pref-90",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Yonne (89) ?",
+      "answer": "Auxerre"
+    },
+    {
+      "id": "dept-pref-91",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Territoire de Belfort (90) ?",
+      "answer": "Belfort"
+    },
+    {
+      "id": "dept-pref-92",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Essonne (91) ?",
+      "answer": "Évry-Courcouronnes"
+    },
+    {
+      "id": "dept-pref-93",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Hauts-de-Seine (92) ?",
+      "answer": "Nanterre"
+    },
+    {
+      "id": "dept-pref-94",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Seine-Saint-Denis (93) ?",
+      "answer": "Bobigny"
+    },
+    {
+      "id": "dept-pref-95",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Val-de-Marne (94) ?",
+      "answer": "Créteil"
+    },
+    {
+      "id": "dept-pref-96",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Val-d'Oise (95) ?",
+      "answer": "Pontoise"
+    },
+    {
+      "id": "dept-pref-97",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Guadeloupe (971) ?",
+      "answer": "Basse-Terre"
+    },
+    {
+      "id": "dept-pref-98",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Martinique (972) ?",
+      "answer": "Fort-de-France"
+    },
+    {
+      "id": "dept-pref-99",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Guyane (973) ?",
+      "answer": "Cayenne"
+    },
+    {
+      "id": "dept-pref-100",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : La Réunion (974) ?",
+      "answer": "Saint-Denis"
+    },
+    {
+      "id": "dept-pref-101",
+      "categoryId": "cat-dept-pref",
+      "question": "Quel est le chef-lieu du département : Mayotte (976) ?",
+      "answer": "Mamoudzou"
+    },
+    {
+      "id": "dept-num-1",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Ain ?",
+      "answer": "01"
+    },
+    {
+      "id": "dept-num-2",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Aisne ?",
+      "answer": "02"
+    },
+    {
+      "id": "dept-num-3",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Allier ?",
+      "answer": "03"
+    },
+    {
+      "id": "dept-num-4",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Alpes-de-Haute-Provence ?",
+      "answer": "04"
+    },
+    {
+      "id": "dept-num-5",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Hautes-Alpes ?",
+      "answer": "05"
+    },
+    {
+      "id": "dept-num-6",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Alpes-Maritimes ?",
+      "answer": "06"
+    },
+    {
+      "id": "dept-num-7",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Ardèche ?",
+      "answer": "07"
+    },
+    {
+      "id": "dept-num-8",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Ardennes ?",
+      "answer": "08"
+    },
+    {
+      "id": "dept-num-9",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Ariège ?",
+      "answer": "09"
+    },
+    {
+      "id": "dept-num-10",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Aube ?",
+      "answer": "10"
+    },
+    {
+      "id": "dept-num-11",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Aude ?",
+      "answer": "11"
+    },
+    {
+      "id": "dept-num-12",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Aveyron ?",
+      "answer": "12"
+    },
+    {
+      "id": "dept-num-13",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Bouches-du-Rhône ?",
+      "answer": "13"
+    },
+    {
+      "id": "dept-num-14",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Calvados ?",
+      "answer": "14"
+    },
+    {
+      "id": "dept-num-15",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Cantal ?",
+      "answer": "15"
+    },
+    {
+      "id": "dept-num-16",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Charente ?",
+      "answer": "16"
+    },
+    {
+      "id": "dept-num-17",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Charente-Maritime ?",
+      "answer": "17"
+    },
+    {
+      "id": "dept-num-18",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Cher ?",
+      "answer": "18"
+    },
+    {
+      "id": "dept-num-19",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Corrèze ?",
+      "answer": "19"
+    },
+    {
+      "id": "dept-num-20",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Corse-du-Sud ?",
+      "answer": "2A"
+    },
+    {
+      "id": "dept-num-21",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haute-Corse ?",
+      "answer": "2B"
+    },
+    {
+      "id": "dept-num-22",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Côte-d'Or ?",
+      "answer": "21"
+    },
+    {
+      "id": "dept-num-23",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Côtes-d'Armor ?",
+      "answer": "22"
+    },
+    {
+      "id": "dept-num-24",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Creuse ?",
+      "answer": "23"
+    },
+    {
+      "id": "dept-num-25",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Dordogne ?",
+      "answer": "24"
+    },
+    {
+      "id": "dept-num-26",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Doubs ?",
+      "answer": "25"
+    },
+    {
+      "id": "dept-num-27",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Drôme ?",
+      "answer": "26"
+    },
+    {
+      "id": "dept-num-28",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Eure ?",
+      "answer": "27"
+    },
+    {
+      "id": "dept-num-29",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Eure-et-Loir ?",
+      "answer": "28"
+    },
+    {
+      "id": "dept-num-30",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Finistère ?",
+      "answer": "29"
+    },
+    {
+      "id": "dept-num-31",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Gard ?",
+      "answer": "30"
+    },
+    {
+      "id": "dept-num-32",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haute-Garonne ?",
+      "answer": "31"
+    },
+    {
+      "id": "dept-num-33",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Gers ?",
+      "answer": "32"
+    },
+    {
+      "id": "dept-num-34",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Gironde ?",
+      "answer": "33"
+    },
+    {
+      "id": "dept-num-35",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Hérault ?",
+      "answer": "34"
+    },
+    {
+      "id": "dept-num-36",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Ille-et-Vilaine ?",
+      "answer": "35"
+    },
+    {
+      "id": "dept-num-37",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Indre ?",
+      "answer": "36"
+    },
+    {
+      "id": "dept-num-38",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Indre-et-Loire ?",
+      "answer": "37"
+    },
+    {
+      "id": "dept-num-39",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Isère ?",
+      "answer": "38"
+    },
+    {
+      "id": "dept-num-40",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Jura ?",
+      "answer": "39"
+    },
+    {
+      "id": "dept-num-41",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Landes ?",
+      "answer": "40"
+    },
+    {
+      "id": "dept-num-42",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Loir-et-Cher ?",
+      "answer": "41"
+    },
+    {
+      "id": "dept-num-43",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Loire ?",
+      "answer": "42"
+    },
+    {
+      "id": "dept-num-44",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haute-Loire ?",
+      "answer": "43"
+    },
+    {
+      "id": "dept-num-45",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Loire-Atlantique ?",
+      "answer": "44"
+    },
+    {
+      "id": "dept-num-46",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Loiret ?",
+      "answer": "45"
+    },
+    {
+      "id": "dept-num-47",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Lot ?",
+      "answer": "46"
+    },
+    {
+      "id": "dept-num-48",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Lot-et-Garonne ?",
+      "answer": "47"
+    },
+    {
+      "id": "dept-num-49",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Lozère ?",
+      "answer": "48"
+    },
+    {
+      "id": "dept-num-50",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Maine-et-Loire ?",
+      "answer": "49"
+    },
+    {
+      "id": "dept-num-51",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Manche ?",
+      "answer": "50"
+    },
+    {
+      "id": "dept-num-52",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Marne ?",
+      "answer": "51"
+    },
+    {
+      "id": "dept-num-53",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haute-Marne ?",
+      "answer": "52"
+    },
+    {
+      "id": "dept-num-54",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Mayenne ?",
+      "answer": "53"
+    },
+    {
+      "id": "dept-num-55",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Meurthe-et-Moselle ?",
+      "answer": "54"
+    },
+    {
+      "id": "dept-num-56",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Meuse ?",
+      "answer": "55"
+    },
+    {
+      "id": "dept-num-57",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Morbihan ?",
+      "answer": "56"
+    },
+    {
+      "id": "dept-num-58",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Moselle ?",
+      "answer": "57"
+    },
+    {
+      "id": "dept-num-59",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Nièvre ?",
+      "answer": "58"
+    },
+    {
+      "id": "dept-num-60",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Nord ?",
+      "answer": "59"
+    },
+    {
+      "id": "dept-num-61",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Oise ?",
+      "answer": "60"
+    },
+    {
+      "id": "dept-num-62",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Orne ?",
+      "answer": "61"
+    },
+    {
+      "id": "dept-num-63",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Pas-de-Calais ?",
+      "answer": "62"
+    },
+    {
+      "id": "dept-num-64",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Puy-de-Dôme ?",
+      "answer": "63"
+    },
+    {
+      "id": "dept-num-65",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Pyrénées-Atlantiques ?",
+      "answer": "64"
+    },
+    {
+      "id": "dept-num-66",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Hautes-Pyrénées ?",
+      "answer": "65"
+    },
+    {
+      "id": "dept-num-67",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Pyrénées-Orientales ?",
+      "answer": "66"
+    },
+    {
+      "id": "dept-num-68",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Bas-Rhin ?",
+      "answer": "67"
+    },
+    {
+      "id": "dept-num-69",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haut-Rhin ?",
+      "answer": "68"
+    },
+    {
+      "id": "dept-num-70",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Rhône ?",
+      "answer": "69"
+    },
+    {
+      "id": "dept-num-71",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haute-Saône ?",
+      "answer": "70"
+    },
+    {
+      "id": "dept-num-72",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Saône-et-Loire ?",
+      "answer": "71"
+    },
+    {
+      "id": "dept-num-73",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Sarthe ?",
+      "answer": "72"
+    },
+    {
+      "id": "dept-num-74",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Savoie ?",
+      "answer": "73"
+    },
+    {
+      "id": "dept-num-75",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haute-Savoie ?",
+      "answer": "74"
+    },
+    {
+      "id": "dept-num-76",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Paris ?",
+      "answer": "75"
+    },
+    {
+      "id": "dept-num-77",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Seine-Maritime ?",
+      "answer": "76"
+    },
+    {
+      "id": "dept-num-78",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Seine-et-Marne ?",
+      "answer": "77"
+    },
+    {
+      "id": "dept-num-79",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Yvelines ?",
+      "answer": "78"
+    },
+    {
+      "id": "dept-num-80",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Deux-Sèvres ?",
+      "answer": "79"
+    },
+    {
+      "id": "dept-num-81",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Somme ?",
+      "answer": "80"
+    },
+    {
+      "id": "dept-num-82",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Tarn ?",
+      "answer": "81"
+    },
+    {
+      "id": "dept-num-83",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Tarn-et-Garonne ?",
+      "answer": "82"
+    },
+    {
+      "id": "dept-num-84",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Var ?",
+      "answer": "83"
+    },
+    {
+      "id": "dept-num-85",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Vaucluse ?",
+      "answer": "84"
+    },
+    {
+      "id": "dept-num-86",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Vendée ?",
+      "answer": "85"
+    },
+    {
+      "id": "dept-num-87",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Vienne ?",
+      "answer": "86"
+    },
+    {
+      "id": "dept-num-88",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Haute-Vienne ?",
+      "answer": "87"
+    },
+    {
+      "id": "dept-num-89",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Vosges ?",
+      "answer": "88"
+    },
+    {
+      "id": "dept-num-90",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Yonne ?",
+      "answer": "89"
+    },
+    {
+      "id": "dept-num-91",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Territoire de Belfort ?",
+      "answer": "90"
+    },
+    {
+      "id": "dept-num-92",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Essonne ?",
+      "answer": "91"
+    },
+    {
+      "id": "dept-num-93",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Hauts-de-Seine ?",
+      "answer": "92"
+    },
+    {
+      "id": "dept-num-94",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Seine-Saint-Denis ?",
+      "answer": "93"
+    },
+    {
+      "id": "dept-num-95",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Val-de-Marne ?",
+      "answer": "94"
+    },
+    {
+      "id": "dept-num-96",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Val-d'Oise ?",
+      "answer": "95"
+    },
+    {
+      "id": "dept-num-97",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Guadeloupe ?",
+      "answer": "971"
+    },
+    {
+      "id": "dept-num-98",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Martinique ?",
+      "answer": "972"
+    },
+    {
+      "id": "dept-num-99",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Guyane ?",
+      "answer": "973"
+    },
+    {
+      "id": "dept-num-100",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : La Réunion ?",
+      "answer": "974"
+    },
+    {
+      "id": "dept-num-101",
+      "categoryId": "cat-dept-num",
+      "question": "Quel est le numéro du département : Mayotte ?",
+      "answer": "976"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "categories": [
+    {
+      "id": "cat-foot-c1",
+      "name": "Ligue des champions (2000-2026)",
+      "color": "#16A34A"
+    }
+  ],
+  "cards": [
+    {
+      "id": "k20261001-c1-2000",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2000 ?",
+      "answer": "Real Madrid, 3-0 contre Valence (Paris, Stade de France). 💡 Première finale 100 % espagnole."
+    },
+    {
+      "id": "k20261001-c1-2001",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2001 ?",
+      "answer": "Bayern Munich, 1-1, 5-4 aux tirs au but contre Valence (Milan). 💡 Oliver Kahn arrête trois tirs au but."
+    },
+    {
+      "id": "k20261001-c1-2002",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2002 ?",
+      "answer": "Real Madrid, 2-1 contre le Bayer Leverkusen (Glasgow). 💡 Volée de Zidane, l'un des plus beaux buts de finale."
+    },
+    {
+      "id": "k20261001-c1-2003",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2003 ?",
+      "answer": "AC Milan, 0-0, 3-2 aux tirs au but contre la Juventus (Manchester). 💡 Finale 100 % italienne."
+    },
+    {
+      "id": "k20261001-c1-2004",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2004 ?",
+      "answer": "FC Porto, 3-0 contre Monaco (Gelsenkirchen). 💡 Porto est entraîné par José Mourinho."
+    },
+    {
+      "id": "k20261001-c1-2005",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2005 ?",
+      "answer": "Liverpool, 3-3, 3-2 aux tirs au but contre l'AC Milan (Istanbul). 💡 Milan menait 3-0 à la mi-temps."
+    },
+    {
+      "id": "k20261001-c1-2006",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2006 ?",
+      "answer": "FC Barcelone, 2-1 contre Arsenal (Paris, Stade de France). 💡 Arsenal a joué presque tout le match à dix (expulsion de Lehmann)."
+    },
+    {
+      "id": "k20261001-c1-2007",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2007 ?",
+      "answer": "AC Milan, 2-1 contre Liverpool (Athènes). 💡 Revanche de la finale 2005, avec un doublé d'Inzaghi."
+    },
+    {
+      "id": "k20261001-c1-2008",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2008 ?",
+      "answer": "Manchester United, 1-1, 6-5 aux tirs au but contre Chelsea (Moscou). 💡 John Terry glisse en tirant son penalty."
+    },
+    {
+      "id": "k20261001-c1-2009",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2009 ?",
+      "answer": "FC Barcelone, 2-0 contre Manchester United (Rome). 💡 Buts d'Eto'o et de Messi, de la tête."
+    },
+    {
+      "id": "k20261001-c1-2010",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2010 ?",
+      "answer": "Inter Milan, 2-0 contre le Bayern Munich (Madrid, Bernabéu). 💡 Doublé de Milito, et triplé historique pour l'Inter de Mourinho."
+    },
+    {
+      "id": "k20261001-c1-2011",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2011 ?",
+      "answer": "FC Barcelone, 3-1 contre Manchester United (Londres, Wembley)."
+    },
+    {
+      "id": "k20261001-c1-2012",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2012 ?",
+      "answer": "Chelsea, 1-1, 4-3 aux tirs au but contre le Bayern Munich (Munich). 💡 Chelsea l'emporte dans le stade de son adversaire."
+    },
+    {
+      "id": "k20261001-c1-2013",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2013 ?",
+      "answer": "Bayern Munich, 2-1 contre le Borussia Dortmund (Londres, Wembley). 💡 Première finale 100 % allemande."
+    },
+    {
+      "id": "k20261001-c1-2014",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2014 ?",
+      "answer": "Real Madrid, 4-1 après prolongation contre l'Atlético Madrid (Lisbonne). 💡 Ramos égalise à la 93e minute : c'est la « Décima », 10e titre."
+    },
+    {
+      "id": "k20261001-c1-2015",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2015 ?",
+      "answer": "FC Barcelone, 3-1 contre la Juventus (Berlin)."
+    },
+    {
+      "id": "k20261001-c1-2016",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2016 ?",
+      "answer": "Real Madrid, 1-1, 5-3 aux tirs au but contre l'Atlético Madrid (Milan). 💡 Revanche de 2014 : Cristiano Ronaldo marque le dernier tir au but."
+    },
+    {
+      "id": "k20261001-c1-2017",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2017 ?",
+      "answer": "Real Madrid, 4-1 contre la Juventus (Cardiff). 💡 Premier club à conserver le titre depuis la création de la Ligue des champions."
+    },
+    {
+      "id": "k20261001-c1-2018",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2018 ?",
+      "answer": "Real Madrid, 3-1 contre Liverpool (Kiev). 💡 Troisième titre d'affilée, avec le ciseau acrobatique de Bale."
+    },
+    {
+      "id": "k20261001-c1-2019",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2019 ?",
+      "answer": "Liverpool, 2-0 contre Tottenham (Madrid). 💡 Finale 100 % anglaise."
+    },
+    {
+      "id": "k20261001-c1-2020",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2020 ?",
+      "answer": "Bayern Munich, 1-0 contre le PSG (Lisbonne). 💡 But de Coman, formé au PSG."
+    },
+    {
+      "id": "k20261001-c1-2021",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2021 ?",
+      "answer": "Chelsea, 1-0 contre Manchester City (Porto). 💡 But de Havertz, et finale 100 % anglaise."
+    },
+    {
+      "id": "k20261001-c1-2022",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2022 ?",
+      "answer": "Real Madrid, 1-0 contre Liverpool (Paris, Stade de France). 💡 But de Vinícius Júnior."
+    },
+    {
+      "id": "k20261001-c1-2023",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2023 ?",
+      "answer": "Manchester City, 1-0 contre l'Inter Milan (Istanbul). 💡 But de Rodri, pour le triplé de City."
+    },
+    {
+      "id": "k20261001-c1-2024",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2024 ?",
+      "answer": "Real Madrid, 2-0 contre le Borussia Dortmund (Londres, Wembley). 💡 15e titre du Real."
+    },
+    {
+      "id": "k20261001-c1-2025",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2025 ?",
+      "answer": "Paris Saint-Germain, 5-0 contre l'Inter Milan (Munich). 💡 Premier titre du PSG, et plus large victoire de l'histoire en finale."
+    },
+    {
+      "id": "k20261001-c1-2026",
+      "categoryId": "cat-foot-c1",
+      "question": "Qui a gagné la finale de la Ligue des champions en 2026 ?",
+      "answer": "Paris Saint-Germain, 1-1, 4-3 aux tirs au but contre Arsenal (Budapest). 💡 Deuxième titre d'affilée pour le PSG."
+    },
+    {
+      "id": "k20261001-c1-b01",
+      "categoryId": "cat-foot-c1",
+      "question": "Quel club a remporté le plus de Ligues des champions depuis 2000 ?",
+      "answer": "Le Real Madrid, 8 titres (2000, 2002, 2014, 2016, 2017, 2018, 2022, 2024)."
+    },
+    {
+      "id": "k20261001-c1-b02",
+      "categoryId": "cat-foot-c1",
+      "question": "Combien de Ligues des champions le Real Madrid a-t-il gagnées au total ?",
+      "answer": "15 (le dernier titre date de 2024)."
+    },
+    {
+      "id": "k20261001-c1-b03",
+      "categoryId": "cat-foot-c1",
+      "question": "Quelles finales depuis 2000 ont opposé deux clubs anglais ?",
+      "answer": "2008 (Manchester United-Chelsea), 2019 (Liverpool-Tottenham) et 2021 (Chelsea-Manchester City)."
+    },
+    {
+      "id": "k20261001-c1-b04",
+      "categoryId": "cat-foot-c1",
+      "question": "Quelles finales depuis 2000 ont opposé deux clubs espagnols ?",
+      "answer": "2000 (Real-Valence), 2014 et 2016 (Real-Atlético)."
+    },
+    {
+      "id": "k20261001-c1-b05",
+      "categoryId": "cat-foot-c1",
+      "question": "Quel club a perdu les finales de 2000 et de 2001 ?",
+      "answer": "Valence, contre le Real Madrid puis contre le Bayern Munich."
+    },
+    {
+      "id": "k20261001-c1-b06",
+      "categoryId": "cat-foot-c1",
+      "question": "Quelles finales depuis 2000 se sont jouées au Stade de France ?",
+      "answer": "2000, 2006 et 2022."
+    },
+    {
+      "id": "k20261001-c1-b07",
+      "categoryId": "cat-foot-c1",
+      "question": "Quelles finales depuis 2000 se sont jouées à Wembley ?",
+      "answer": "2011, 2013 et 2024."
+    }
+  ]
+}

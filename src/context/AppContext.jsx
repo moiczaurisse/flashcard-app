@@ -1,6 +1,6 @@
-import { createContext, useContext, useCallback } from 'react'
+import { createContext, useContext, useCallback, useEffect } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
-import { isDue, isReviewedToday, isMastered } from '../utils/srs'
+import { isDue, isReviewedToday, isMastered, migrateCard, planBacklogResorb } from '../utils/srs'
 
 const Ctx = createContext(null)
 
@@ -63,6 +63,17 @@ export function AppProvider({ children }) {
   const [totalReviewed, setTotalReviewed] = useLocalStorage('fc_total_reviewed', 0)
   const [dailyGoal, setDailyGoalRaw]    = useLocalStorage('fc_daily_goal', null)
 
+  // One-time data repair on load: fix malformed dueDates, clamp runaway
+  // intervals, pull absurd far-future dueDates back. Only writes if something
+  // actually changed (migrateCard returns the same ref otherwise), so this is
+  // idempotent and safe under StrictMode's double-invoke.
+  useEffect(() => {
+    if (cards.some(c => migrateCard(c) !== c)) {
+      setCards(prev => prev.map(migrateCard))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const addCard = useCallback((data) => {
     const card = {
       id: `k${Date.now()}`,
@@ -85,6 +96,23 @@ export function AppProvider({ children }) {
   const deleteCard = useCallback((id) => {
     setCards(prev => prev.filter(c => c.id !== id))
   }, [setCards])
+
+  const deleteCards = useCallback((ids) => {
+    const set = new Set(ids)
+    setCards(prev => prev.filter(c => !set.has(c.id)))
+  }, [setCards])
+
+  // Spreads the overdue backlog over the coming days (perDay at a time),
+  // changing only dueDate. Returns the plan so the caller can report numbers.
+  const resorbBacklog = useCallback((perDay = 30) => {
+    const plan = planBacklogResorb(cards, perDay)
+    if (plan.overdueCount > 0) {
+      setCards(prev => prev.map(c =>
+        plan.assignments[c.id] ? { ...c, dueDate: plan.assignments[c.id] } : c
+      ))
+    }
+    return plan
+  }, [cards, setCards])
 
   const addCategory = useCallback((data) => {
     const cat = { id: `c${Date.now()}`, ...data }
@@ -191,11 +219,11 @@ export function AppProvider({ children }) {
   return (
     <Ctx.Provider value={{
       cards, categories,
-      addCard, updateCard, deleteCard, addCategory,
+      addCard, updateCard, deleteCard, deleteCards, addCategory,
       updateCategory, deleteCategory, mergeCategories,
       getDueCards, getStats, getCatStats,
       recordCardReview, totalReviewed,
-      importData,
+      importData, resorbBacklog,
       getDailyGoal, setDailyGoal, clearDailyGoal,
     }}>
       {children}

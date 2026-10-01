@@ -995,3 +995,77 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
+
+/* ── MANAGE: TOOLS + DUPLICATES ──────────────── */
+.manage-tools-section {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.dupe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.dupe-group {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.dupe-group-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+}
+
+.dupe-group-cat {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dupe-group-q {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.dupe-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.dupe-option.active {
+  border-color: var(--primary);
+  background: var(--primary-10);
+}
+
+.dupe-option input { flex-shrink: 0; accent-color: var(--primary); }
+
+.dupe-option-answer {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.dupe-option-meta {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}

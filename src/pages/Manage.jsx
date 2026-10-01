@@ -1,14 +1,40 @@
 import { useState, useRef } from 'react'
 import { useApp } from '../context/AppContext'
+import { planBacklogResorb } from '../utils/srs'
+
+// Normalised question text, used to detect duplicates (same wording, ignoring
+// case / surrounding and repeated whitespace).
+const normQ = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ')
+
+// Groups cards with identical questions WITHIN the same category.
+// Returns only groups of 2+ cards: { key, cards }.
+function findDuplicateGroups(cards) {
+  const map = new Map()
+  for (const c of cards) {
+    const key = `${c.categoryId}::${normQ(c.question)}`
+    if (!map.has(key)) map.set(key, [])
+    map.get(key).push(c)
+  }
+  return [...map.entries()]
+    .filter(([, g]) => g.length > 1)
+    .map(([key, g]) => ({ key, cards: g }))
+}
+
+// "Most advanced" card in a duplicate group: most repetitions, then most
+// recently reviewed. Used as the default card to keep.
+const cardScore = (c) => (c.repetitions || 0) * 1e13 + (c.lastReviewed ? Date.parse(c.lastReviewed) : 0)
+const mostReviewed = (g) => g.reduce((best, c) => (cardScore(c) > cardScore(best) ? c : best), g[0])
 
 export default function Manage() {
-  const { cards, categories, deleteCard, updateCard, importData, updateCategory, deleteCategory, mergeCategories } = useApp()
+  const { cards, categories, deleteCard, deleteCards, updateCard, importData, updateCategory, deleteCategory, mergeCategories, resorbBacklog } = useApp()
   const [expandedCards, setExpandedCards] = useState(new Set())
   const [editCard, setEditCard] = useState(null)
   const [deleteTarget, setDeleteTarget] = useState(null)
   const [renameCat, setRenameCat] = useState(null)
   const [deleteCatTarget, setDeleteCatTarget] = useState(null)
   const [mergeSrc, setMergeSrc] = useState(null)
+  const [resorbOpen, setResorbOpen] = useState(false)
+  const [dupesOpen, setDupesOpen] = useState(false)
   const [toast, setToast] = useState(null)
   const fileInputRef = useRef(null)
 
@@ -97,6 +123,17 @@ export default function Manage() {
       </div>
 
       {toast && <div className="manage-toast">{toast}</div>}
+
+      {/* ── Tools section ── */}
+      <div className="section-label" style={{ marginBottom: 10 }}>Outils</div>
+      <div className="manage-tools-section">
+        <button className="btn btn-secondary btn-sm" onClick={() => setResorbOpen(true)}>
+          Résorber le retard
+        </button>
+        <button className="btn btn-secondary btn-sm" onClick={() => setDupesOpen(true)}>
+          Rechercher les doublons
+        </button>
+      </div>
 
       {/* ── Categories section ── */}
       <div className="section-label" style={{ marginBottom: 10 }}>Catégories</div>
@@ -247,6 +284,32 @@ export default function Manage() {
             showToast(`Fusionné dans « ${targetName} »`)
           }}
           onClose={() => setMergeSrc(null)}
+        />
+      )}
+
+      {/* Resorb backlog */}
+      {resorbOpen && (
+        <ResorbModal
+          cards={cards}
+          onConfirm={() => {
+            const { overdueCount } = resorbBacklog(30)
+            setResorbOpen(false)
+            showToast(`${overdueCount} carte${overdueCount > 1 ? 's' : ''} replanifiée${overdueCount > 1 ? 's' : ''}`)
+          }}
+          onClose={() => setResorbOpen(false)}
+        />
+      )}
+
+      {/* Find duplicates */}
+      {dupesOpen && (
+        <DuplicatesModal
+          cards={cards}
+          categories={categories}
+          onDeleteCards={(ids) => {
+            deleteCards(ids)
+            showToast(`${ids.length} doublon${ids.length > 1 ? 's' : ''} supprimé${ids.length > 1 ? 's' : ''}`)
+          }}
+          onClose={() => setDupesOpen(false)}
         />
       )}
     </main>
@@ -479,6 +542,113 @@ function MergeCategoryModal({ category, categories, onMerge, onClose }) {
             Fusionner
           </button>
         </div>
+      </div>
+    </div>
+  )
+}
+
+function ResorbModal({ cards, onConfirm, onClose }) {
+  const { overdueCount, days, perDay } = planBacklogResorb(cards, 30)
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()}>
+        <h3 className="modal-title">Résorber le retard</h3>
+        {overdueCount === 0 ? (
+          <>
+            <p className="modal-body">Aucune carte en retard. Tout est à jour !</p>
+            <div className="modal-actions">
+              <button className="btn btn-primary" onClick={onClose}>Fermer</button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="modal-body">
+              <strong>{overdueCount}</strong> carte{overdueCount > 1 ? 's' : ''} en retard
+              {' '}{overdueCount > 1 ? 'seront réparties' : 'sera replanifiée'} sur{' '}
+              <strong>{days}</strong> jour{days > 1 ? 's' : ''} ({perDay} par jour, à partir
+              d'aujourd'hui). Seules les dates d'échéance changent : votre progression
+              (intervalle, difficulté) est conservée.
+            </p>
+            <div className="modal-actions">
+              <button className="btn btn-ghost" onClick={onClose}>Annuler</button>
+              <button className="btn btn-primary" onClick={onConfirm}>Replanifier</button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function DuplicatesModal({ cards, categories, onDeleteCards, onClose }) {
+  const groups = findDuplicateGroups(cards)
+  const catName = (id) => categories.find(c => c.id === id)?.name || '—'
+
+  // Which card to keep in each group (default: the most reviewed one).
+  const [keepIds, setKeepIds] = useState(() => {
+    const m = {}
+    groups.forEach(g => { m[g.key] = mostReviewed(g.cards).id })
+    return m
+  })
+
+  const resolveGroup = (group) => {
+    const keep = keepIds[group.key]
+    const toDelete = group.cards.filter(c => c.id !== keep).map(c => c.id)
+    if (toDelete.length) onDeleteCards(toDelete)
+  }
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()}>
+        <h3 className="modal-title">Doublons</h3>
+        {groups.length === 0 ? (
+          <>
+            <p className="modal-body">Aucun doublon trouvé.</p>
+            <div className="modal-actions">
+              <button className="btn btn-primary" onClick={onClose}>Fermer</button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="modal-body">
+              {groups.length} question{groups.length > 1 ? 's' : ''} en double. Choisissez la
+              carte à conserver, les autres seront supprimées.
+            </p>
+            <div className="dupe-list">
+              {groups.map(group => (
+                <div key={group.key} className="dupe-group">
+                  <div className="dupe-group-head">
+                    <span className="cat-dot" style={{ background: categories.find(c => c.id === group.cards[0].categoryId)?.color }} />
+                    <span className="dupe-group-cat">{catName(group.cards[0].categoryId)}</span>
+                  </div>
+                  <div className="dupe-group-q">{group.cards[0].question}</div>
+                  {group.cards.map(c => (
+                    <label key={c.id} className={`dupe-option ${keepIds[group.key] === c.id ? 'active' : ''}`}>
+                      <input
+                        type="radio"
+                        name={`keep-${group.key}`}
+                        checked={keepIds[group.key] === c.id}
+                        onChange={() => setKeepIds(prev => ({ ...prev, [group.key]: c.id }))}
+                      />
+                      <span className="dupe-option-answer">{c.answer}</span>
+                      <span className="dupe-option-meta">{c.repetitions || 0} rév.</span>
+                    </label>
+                  ))}
+                  <button
+                    className="btn btn-danger-light btn-sm"
+                    onClick={() => resolveGroup(group)}
+                  >
+                    Garder la sélection, supprimer {group.cards.length - 1} autre{group.cards.length - 1 > 1 ? 's' : ''}
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="modal-actions">
+              <button className="btn btn-ghost" onClick={onClose}>Fermer</button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

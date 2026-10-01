@@ -1,6 +1,11 @@
 const MIN_EASE = 1.3
 const MAX_EASE = 4.0
 
+// Cap on the scheduling interval (days). Prevents runaway intervals from
+// repeated "Easy" answers pushing a card years into the future (Anki uses
+// a similar default maximum).
+export const MAX_INTERVAL = 365
+
 // Randomise intervals slightly to prevent review pile-ups on a single day.
 // Applied only to mature intervals (≥ 7 days) per Anki's fuzz approach.
 function fuzz(n) {
@@ -49,6 +54,8 @@ export function calculateNextReview(card, quality) {
     easeFactor = Math.min(MAX_EASE, +(easeFactor + 0.15).toFixed(2))
   }
 
+  interval = Math.min(MAX_INTERVAL, interval)
+
   const due = new Date()
   due.setDate(due.getDate() + interval)
   due.setHours(0, 0, 0, 0)
@@ -66,6 +73,9 @@ export function isDue(card) {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const due = new Date(card.dueDate)
+  // A malformed dueDate (e.g. "2026-04-24T00::00:00.000Z") parses to NaN.
+  // Treat such a card as due today so it resurfaces instead of vanishing.
+  if (isNaN(due.getTime())) return true
   due.setHours(0, 0, 0, 0)
   return due <= today
 }
@@ -83,4 +93,77 @@ export function isReviewedToday(card) {
     today.getMonth() === rev.getMonth() &&
     today.getDate() === rev.getDate()
   )
+}
+
+// One-time data repair, applied to each card on load. Returns the SAME object
+// reference when nothing needs fixing, so callers can cheaply detect changes
+// and avoid unnecessary writes. Fixes:
+//   - malformed dueDate strings ("::" typo, or otherwise unparseable),
+//   - intervals above MAX_INTERVAL (runaway "Easy" cards),
+//   - absurd far-future dueDates (e.g. year 2071) pulled back to a sane horizon.
+export function migrateCard(card) {
+  let { dueDate, interval } = card
+  let changed = false
+
+  // Repair an unparseable dueDate.
+  if (!dueDate || isNaN(Date.parse(dueDate))) {
+    const repaired = String(dueDate || '').replace(/::/g, ':')
+    if (repaired && !isNaN(Date.parse(repaired))) {
+      dueDate = repaired
+    } else {
+      const d = new Date()
+      d.setHours(0, 0, 0, 0)
+      dueDate = d.toISOString()
+    }
+    changed = true
+  }
+
+  // Clamp a runaway interval.
+  if (typeof interval === 'number' && interval > MAX_INTERVAL) {
+    interval = MAX_INTERVAL
+    changed = true
+  }
+
+  // Pull a dueDate scheduled beyond today + MAX_INTERVAL back to a sane date.
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const horizon = new Date(today)
+  horizon.setDate(horizon.getDate() + MAX_INTERVAL)
+  if (new Date(dueDate) > horizon) {
+    const newDue = new Date(today)
+    newDue.setDate(newDue.getDate() + Math.min(interval || 0, MAX_INTERVAL))
+    newDue.setHours(0, 0, 0, 0)
+    dueDate = newDue.toISOString()
+    changed = true
+  }
+
+  return changed ? { ...card, dueDate, interval } : card
+}
+
+// Plans a progressive reschedule of the overdue backlog: spreads all currently
+// due cards over the coming days, `perDay` at a time, starting today. Only the
+// dueDate is affected — interval / easeFactor / repetitions are left untouched.
+// Returns the plan WITHOUT mutating anything.
+export function planBacklogResorb(cards, perDay = 30) {
+  const overdue = cards
+    .filter(isDue)
+    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const assignments = {}
+  overdue.forEach((card, i) => {
+    const d = new Date(today)
+    d.setDate(d.getDate() + Math.floor(i / perDay))
+    d.setHours(0, 0, 0, 0)
+    assignments[card.id] = d.toISOString()
+  })
+
+  return {
+    overdueCount: overdue.length,
+    days: overdue.length === 0 ? 0 : Math.ceil(overdue.length / perDay),
+    perDay,
+    assignments,
+  }
 }

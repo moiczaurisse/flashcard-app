@@ -23,22 +23,30 @@ décrit ses besoins en français et s'appuie sur **Claude Code** comme assistant
 **Architecture (`src/`)**
 - `main.jsx` → monte `<App>` dans `<AppProvider>` (StrictMode).
 - `App.jsx` → navigation par onglets, orchestre pages + objectif quotidien.
-- `context/AppContext.jsx` → **cœur** : état global (cards, categories,
-  totalReviewed, dailyGoal), seed data, CRUD, stats, objectif quotidien,
-  migration au chargement. Hook `useApp()`.
+- `context/AppContext.jsx` → **cœur** : état global, CRUD, stats, objectif
+  quotidien, **fusion des packs bundlés au démarrage**, migrations au chargement
+  (réparation cartes + couleurs). Seed VIDE (deck réel = packs). Hook `useApp()`.
 - `hooks/useLocalStorage.js` → state React synchronisé avec localStorage.
 - `utils/srs.js` → algo SRS + helpers (`calculateNextReview`, `isDue`,
-  `isMastered`, `migrateCard`, `planBacklogResorb`).
+  `isMastered`, `migrateCard`, `planBacklogResorb` — étale + mélange le backlog).
+- `utils/palette.js` → `CAT_PALETTE` (12 couleurs vives, source unique couleurs catégories).
 - `components/TabBar.jsx` → barre d'onglets fixe (badge "dues").
-- `pages/` → `Home`, `Review` (session 20 cartes max, ordre aléatoire),
-  `Add`, `Manage` (CRUD, fusion, import/export, Outils), `Stats`, `DailyGoal`.
+- `components/Confetti.jsx` → burst CSS (objectif atteint ; off en reduced-motion).
+- `data/` → contenu bundlé : `cards-base.json` + `packs/*.json` (auto-inclus via
+  `import.meta.glob`), même format que l'export. Contenu seul (sans SRS).
+- `pages/` → `Home` (hero anneau/streak/heatmap), `Review` (session 10 cartes max,
+  ordre entrelacé, flip), `Add`, `Manage` (CRUD, fusion, import/export, Outils),
+  `Stats`, `DailyGoal`.
 
 **Modèles de données**
 - Carte : `{ id, categoryId, question, answer, interval, easeFactor,
   repetitions, dueDate, lastReviewed, createdAt }`. IDs : `k${Date.now()}`.
 - Catégorie : `{ id, name, color }`. IDs : `c${Date.now()}`.
 - Objectif quotidien : `{ date, mode('theme'|'random'), categoryId, target, count }`.
-- Clés localStorage : `fc_cards`, `fc_cats`, `fc_total_reviewed`, `fc_daily_goal`.
+- Journal d'activité `fc_review_log` : `{ "YYYY-MM-DD": { reviewed, good } }`.
+- Clés localStorage : `fc_cards`, `fc_cats`, `fc_total_reviewed`, `fc_daily_goal`,
+  `fc_review_log`, `fc_deleted_ids` (jamais re-fusionnés), `fc_cat_palette_v`,
+  `fc_goal_celebrated`.
 
 **Règles SRS (`utils/srs.js`)** — variante SM-2, 4 boutons, `inLearning` = reps < 2.
 - Again (0) : interval→1, reps→0 ; ease −0.20 si déjà en review.
@@ -48,9 +56,12 @@ décrit ses besoins en français et s'appuie sur **Claude Code** comme assistant
 - `fuzz` : ±15 % sur intervalles ≥ 7j. `MAX_INTERVAL` = 365 jours.
 - `isMastered` : interval ≥ 21 et reps > 0.
 
-**Données réelles** : les vraies cartes vivent dans le localStorage du navigateur
-(≈ 490 cartes, 7 catégories, surtout géographie). Elles ne sont PAS dans le repo ;
-le code ne contient qu'un seed de 7 cartes. Backup : `data/flashcards-clean.json`.
+**Données réelles** : désormais **bundlées dans l'app** (`src/data/cards-base.json`
+= 490 cartes nettoyées, + packs). Fusion par id au démarrage : un nouvel appareil
+reçoit tout le deck ; un appareil existant ne voit rien écrasé (progression SRS
+intacte). Pour ajouter un pack : déposer un `*.json` (même format) dans
+`src/data/packs/`. Backup source : `data/flashcards-clean.json` (racine).
+Mode clair/sombre auto via `@media (prefers-color-scheme)`.
 
 **Conventions**
 - Textes/UI en français ; commentaires de code souvent en anglais.
@@ -74,6 +85,30 @@ le code ne contient qu'un seed de 7 cartes. Backup : `data/flashcards-clean.json
 > Règle : après chaque fonctionnalité que l'utilisateur a validée, ajouter une
 > entrée datée (quoi changé, ce qui a marché ou non, idées suivantes), la plus
 > récente en haut. Garder ce fichier sous ~150 lignes.
+
+### 2026-10-01 — Overhaul visuel + mode sombre
+- `utils/palette.js` (12 couleurs vives) ; migration unique (`fc_cat_palette_v`)
+  recolore les catégories existantes (corrige 2 teals identiques).
+- Hero : dégradé violet→corail + mini-cartes grands chiffres (streak/aujourd'hui).
+  Carte de révision : bandeau couleur catégorie (`--cat`). Tab bar : pilule + rebond.
+  Boutons révision colorés (rouge/orange/vert/bleu). Confettis CSS à l'objectif.
+- **Mode sombre** via `@media (prefers-color-scheme: dark)` (variables redéfinies).
+  Limite : quelques accents codés en dur dans Stats peu contrastés en sombre.
+
+### 2026-10-01 — Packs bundlés + couche motivation
+- Cartes **embarquées** (`src/data/cards-base.json` + `packs/*.json`, `import.meta.glob`),
+  fusion par id au démarrage (jamais d'écrasement), `fc_deleted_ids`, seed vidé.
+  Base = export nettoyé (490, ids identiques → 0 doublon sur appareil existant).
+- `fc_review_log` + `getStreak` ; Accueil : anneau objectif, streak 🔥, heatmap
+  12 semaines ; Stats : maîtrise globale.
+
+### 2026-10-01 — Safe-area iOS (résolu)
+- Cause du flottement bas : `apple-mobile-web-app-status-bar-style: black-translucent`
+  rendait `innerHeight = écran − barre de statut`, bas tronqué. Passé à **`default`**
+  → la tab bar touche le bord (barre de statut opaque en échange ; re-add écran
+  d'accueil requis). Tab bar : `56px + --tab-bottom(10px)`, collée `bottom:0`.
+- `planBacklogResorb` **mélange** maintenant (Fisher-Yates) → journées multi-catégories
+  (résout la limite notée plus bas).
 
 ### 2026-10-01 — Suppression routine du matin + icône
 - **Routine du matin supprimée** : `public/morning/`, `src/utils/morningNotification.js`,

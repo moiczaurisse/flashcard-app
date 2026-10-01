@@ -140,14 +140,24 @@ export function migrateCard(card) {
   return changed ? { ...card, dueDate, interval } : card
 }
 
+// Fisher-Yates shuffle (returns a new array, leaves the input untouched).
+function shuffle(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 // Plans a progressive reschedule of the overdue backlog: spreads all currently
 // due cards over the coming days, `perDay` at a time, starting today. Only the
 // dueDate is affected — interval / easeFactor / repetitions are left untouched.
 // Returns the plan WITHOUT mutating anything.
 export function planBacklogResorb(cards, perDay = 30) {
-  const overdue = cards
-    .filter(isDue)
-    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+  // Shuffle first so each day mixes categories, instead of being dominated by
+  // one (cards are stored grouped by category).
+  const overdue = shuffle(cards.filter(isDue))
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)

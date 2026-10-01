@@ -26,6 +26,7 @@
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 
   --tab-height: 60px;
+  --tab-bottom: 10px;
 }
 
 *, *::before, *::after {
@@ -67,10 +68,9 @@ body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  /* Top: respect the iOS status-bar safe area (standalone PWA) + ~8px,
-     while keeping the 24px desktop padding (env() = 0 off-device).
-     Bottom: clear the TabBar (keeps a 20px gap above it, matching desktop). */
-  padding: max(24px, env(safe-area-inset-top) + 8px) 16px calc(80px + env(safe-area-inset-bottom) * 0.4);
+  /* Top: iOS status-bar safe area + 16px, with a 24px desktop fallback (env()=0).
+     Bottom: clear the TabBar (56px + --tab-bottom) with a 16px gap above it. */
+  padding: max(24px, env(safe-area-inset-top) + 16px) 16px calc(56px + var(--tab-bottom) + 16px);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -81,8 +81,8 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* Same top/bottom safe-area handling as .page (desktop padding preserved). */
-  padding: max(20px, env(safe-area-inset-top) + 8px) 16px calc(80px + env(safe-area-inset-bottom) * 0.4);
+  /* Same top/bottom handling as .page (20px desktop fallback preserved). */
+  padding: max(20px, env(safe-area-inset-top) + 16px) 16px calc(56px + var(--tab-bottom) + 16px);
   overflow: hidden;
   min-height: 0;
 }
@@ -93,13 +93,11 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  /* Icons sit in a 60px content box; the bar extends down to the screen bottom
-     (bottom:0) so its background/top-border reach the very edge. Only ~40% of
-     the home-indicator inset is added as breathing room below the icons, so
-     they sit just above the indicator instead of floating a full inset up.
-     env() = 0 off-device → unchanged 60px bar on desktop. */
-  height: calc(60px + env(safe-area-inset-bottom) * 0.4);
-  padding-bottom: calc(env(safe-area-inset-bottom) * 0.4);
+  /* Glued to the bottom (bottom:0) so background/top-border reach the very edge.
+     Fixed --tab-bottom breathing room below the 56px icon row — no safe-area
+     scaling, so the bar no longer floats up by the full inset. */
+  height: calc(56px + var(--tab-bottom));
+  padding-bottom: var(--tab-bottom);
   background: var(--bg);
   border-top: 1px solid var(--border);
   display: flex;

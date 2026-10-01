@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useApp } from '../context/AppContext'
 
 export default function Home({ onReview, onStartDailyGoal }) {
@@ -99,6 +100,49 @@ export default function Home({ onReview, onStartDailyGoal }) {
           )
         })
       )}
+
+      {/* ─── TEMP DEBUG (standalone iOS only) — à retirer après screenshot ─── */}
+      {navigator.standalone && <StandaloneDebug />}
     </main>
+  )
+}
+
+// ─── TEMP DEBUG — à supprimer après diagnostic ───────────────────
+function StandaloneDebug() {
+  const [d, setD] = useState(null)
+
+  useEffect(() => {
+    const read = () => {
+      // Lit les env(safe-area-inset-*) via une sonde cachée (padding = env(...)).
+      const probe = document.createElement('div')
+      probe.style.cssText =
+        'position:fixed;visibility:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);'
+      document.body.appendChild(probe)
+      const cs = getComputedStyle(probe)
+      const sat = cs.paddingTop
+      const sab = cs.paddingBottom
+      probe.remove()
+
+      const tab = document.querySelector('.tab-bar')?.getBoundingClientRect().bottom
+      setD({
+        innerH: window.innerHeight,
+        screenH: window.screen.height,
+        vvH: window.visualViewport ? Math.round(window.visualViewport.height) : 'n/a',
+        sat,
+        sab,
+        tabBottom: tab != null ? Math.round(tab) : 'n/a',
+      })
+    }
+    read()
+    window.addEventListener('resize', read)
+    return () => window.removeEventListener('resize', read)
+  }, [])
+
+  if (!d) return null
+  return (
+    <div style={{ fontSize: 10, lineHeight: 1.5, color: 'var(--text-muted)', textAlign: 'center', marginTop: 24, opacity: 0.85 }}>
+      innerH {d.innerH} · screenH {d.screenH} · vvH {d.vvH}<br />
+      safe-top {d.sat} · safe-bottom {d.sab} · tabBottom {d.tabBottom}
+    </div>
   )
 }

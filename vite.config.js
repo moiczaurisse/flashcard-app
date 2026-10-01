@@ -13,6 +13,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectManifest: {
         injectionPoint: 'self.__WB_MANIFEST',
+        // Précache aussi les icônes (png/svg) et le manifest, pas seulement js/css/html.
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
       },
       manifest: {
         name: 'Flashcards SRS',
@@ -24,12 +26,8 @@ export default defineConfig({
         orientation: 'portrait',
         start_url: '/',
         icons: [
-          {
-            src: '/favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
-            purpose: 'any',
-          },
+          { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
         ],
       },
     }),

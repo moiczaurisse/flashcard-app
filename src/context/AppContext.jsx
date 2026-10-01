@@ -62,6 +62,8 @@ export function AppProvider({ children }) {
   const [categories, setCategories]     = useLocalStorage('fc_cats',  SEED_CATS)
   const [totalReviewed, setTotalReviewed] = useLocalStorage('fc_total_reviewed', 0)
   const [dailyGoal, setDailyGoalRaw]    = useLocalStorage('fc_daily_goal', null)
+  // Journal d'activité par jour : { "YYYY-MM-DD": { reviewed, good } }
+  const [reviewLog, setReviewLog]       = useLocalStorage('fc_review_log', {})
 
   // One-time data repair on load: fix malformed dueDates, clamp runaway
   // intervals, pull absurd far-future dueDates back. Only writes if something
@@ -183,14 +185,46 @@ export function AppProvider({ children }) {
     setDailyGoalRaw(null)
   }, [setDailyGoalRaw])
 
-  const recordCardReview = useCallback((categoryId = null) => {
+  const recordCardReview = useCallback((categoryId = null, quality = null) => {
     setTotalReviewed(prev => prev + 1)
+    const key = todayKey()
+    setReviewLog(prev => {
+      const day = prev[key] || { reviewed: 0, good: 0 }
+      return {
+        ...prev,
+        [key]: {
+          reviewed: day.reviewed + 1,
+          good: day.good + (quality >= 2 ? 1 : 0),
+        },
+      }
+    })
     setDailyGoalRaw(prev => {
       if (!prev || prev.date !== todayKey()) return prev
       if (prev.categoryId && categoryId && prev.categoryId !== categoryId) return prev
       return { ...prev, count: Math.min(prev.target, prev.count + 1) }
     })
-  }, [setTotalReviewed, setDailyGoalRaw])
+  }, [setTotalReviewed, setReviewLog, setDailyGoalRaw])
+
+  // Jours consécutifs avec ≥ 1 révision. Tolère qu'aujourd'hui soit encore
+  // vide : la série qui se termine hier reste valable (grâce d'un jour).
+  const getStreak = useCallback(() => {
+    const has = (d) => {
+      const k = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+      return (reviewLog[k]?.reviewed || 0) > 0
+    }
+    const cursor = new Date()
+    cursor.setHours(0, 0, 0, 0)
+    if (!has(cursor)) {
+      cursor.setDate(cursor.getDate() - 1)
+      if (!has(cursor)) return 0
+    }
+    let streak = 0
+    while (has(cursor)) {
+      streak++
+      cursor.setDate(cursor.getDate() - 1)
+    }
+    return streak
+  }, [reviewLog])
 
   const getDueCards = useCallback((catId = null) => {
     return cards.filter(c => {
@@ -223,6 +257,7 @@ export function AppProvider({ children }) {
       updateCategory, deleteCategory, mergeCategories,
       getDueCards, getStats, getCatStats,
       recordCardReview, totalReviewed,
+      reviewLog, getStreak,
       importData, resorbBacklog,
       getDailyGoal, setDailyGoal, clearDailyGoal,
     }}>

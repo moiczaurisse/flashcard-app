@@ -1,7 +1,9 @@
 import { useApp } from '../context/AppContext'
 
 export default function Stats() {
-  const { categories, getCatStats, totalReviewed } = useApp()
+  const { categories, getCatStats, getStats, totalReviewed } = useApp()
+  const g = getStats()
+  const masteryPct = g.totalCount > 0 ? Math.round((g.mastered / g.totalCount) * 100) : 0
 
   return (
     <main className="page">
@@ -14,6 +16,15 @@ export default function Stats() {
         <div className="stat-global-item">
           <div className="stat-global-value">{totalReviewed}</div>
           <div className="stat-global-label">Cartes révisées</div>
+        </div>
+        <div className="stats-global-mastery">
+          <div className="stats-global-mastery-head">
+            <span>Maîtrise globale</span>
+            <span>{masteryPct}% · {g.mastered}/{g.totalCount}</span>
+          </div>
+          <div className="progress-bar stats-global-bar">
+            <div className="progress-fill" style={{ width: `${masteryPct}%`, background: '#fff' }} />
+          </div>
         </div>
       </div>
 

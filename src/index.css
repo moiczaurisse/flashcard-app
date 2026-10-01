@@ -1076,3 +1076,123 @@ body {
   font-weight: 600;
   color: var(--text-muted);
 }
+
+/* ── HOME HERO: RING / STREAK / MOTIVATION ───── */
+.home-hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.home-hero-top .home-greeting-text { margin-bottom: 0; }
+
+.streak-chip {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.home-hero-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.home-hero-main .home-due-number { font-size: 48px; letter-spacing: -2px; }
+
+.home-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.home-motivation {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.92;
+  margin-top: 2px;
+}
+
+.ring-wrap { position: relative; width: 76px; height: 76px; flex-shrink: 0; }
+.ring-track { stroke: rgba(255, 255, 255, 0.25); stroke-width: 6; }
+.ring-fill {
+  stroke: #fff;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.ring-value { font-size: 22px; font-weight: 800; color: #fff; }
+.ring-target { font-size: 10px; font-weight: 600; color: #fff; opacity: 0.7; margin-top: 2px; }
+
+/* ── ACTIVITY HEATMAP ────────────────────────── */
+.heatmap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.heatmap-grid { display: flex; gap: 4px; justify-content: center; }
+.hm-col { display: flex; flex-direction: column; gap: 4px; }
+.hm-cell {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 0;
+  padding: 0;
+  display: block;
+  cursor: pointer;
+}
+.hm-cell.lvl-0 { background: var(--surface-2); }
+.hm-cell.lvl-1 { background: #D7D2F5; }
+.hm-cell.lvl-2 { background: #A99FEA; }
+.hm-cell.lvl-3 { background: var(--primary-light); }
+.hm-cell.lvl-4 { background: var(--primary); }
+.hm-cell.hm-future { visibility: hidden; }
+
+.heatmap-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.heatmap-selected { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+.heatmap-legend { display: flex; align-items: center; gap: 3px; font-size: 10px; color: var(--text-light); }
+.heatmap-legend .hm-cell { width: 11px; height: 11px; cursor: default; }
+
+/* ── STATS: GLOBAL MASTERY ───────────────────── */
+.stats-global-mastery { margin-top: 16px; }
+.stats-global-mastery-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  opacity: 0.95;
+  margin-bottom: 6px;
+}
+.stats-global-bar { background: rgba(255, 255, 255, 0.25); }
+
+/* ── REDUCED MOTION ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ring-fill, .progress-fill, .flip-inner { transition: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

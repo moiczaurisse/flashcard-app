@@ -1,25 +1,106 @@
+import { useState } from 'react'
 import { useApp } from '../context/AppContext'
 
+const dayKey = (d) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+
+const fmtDay = (d) => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
+
+// Intensity level (0–4) for the heatmap, based on cards reviewed that day.
+function level(count) {
+  if (!count) return 0
+  if (count < 5) return 1
+  if (count < 15) return 2
+  if (count < 30) return 3
+  return 4
+}
+
+// Builds the last `weeks` Monday-aligned columns of 7 days each.
+function buildHeatmap(weeks = 12) {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const mondayOffset = (today.getDay() + 6) % 7
+  const start = new Date(today)
+  start.setDate(today.getDate() - mondayOffset - (weeks - 1) * 7)
+
+  const cols = []
+  for (let w = 0; w < weeks; w++) {
+    const col = []
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(start)
+      date.setDate(start.getDate() + w * 7 + d)
+      col.push(date)
+    }
+    cols.push(col)
+  }
+  return { cols, today }
+}
+
+function ProgressRing({ value, target }) {
+  const r = 32
+  const c = 2 * Math.PI * r
+  const pct = target > 0 ? Math.min(1, value / target) : 0
+  return (
+    <div className="ring-wrap">
+      <svg width="76" height="76" viewBox="0 0 76 76">
+        <circle className="ring-track" cx="38" cy="38" r={r} fill="none" />
+        <circle
+          className="ring-fill"
+          cx="38" cy="38" r={r} fill="none"
+          strokeDasharray={c}
+          strokeDashoffset={c * (1 - pct)}
+          transform="rotate(-90 38 38)"
+        />
+      </svg>
+      <div className="ring-center">
+        <span className="ring-value">{value}</span>
+        <span className="ring-target">/ {target}</span>
+      </div>
+    </div>
+  )
+}
+
 export default function Home({ onReview, onStartDailyGoal }) {
-  const { categories, getStats, getCatStats, getDailyGoal } = useApp()
+  const { categories, getStats, getCatStats, getDailyGoal, reviewLog, getStreak } = useApp()
   const stats = getStats()
   const goal = getDailyGoal()
   const goalCategory = goal ? categories.find(c => c.id === goal.categoryId) : null
 
+  const [selectedDay, setSelectedDay] = useState(null)
+
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
+
+  const streak = getStreak()
+  const todayReviewed = reviewLog[dayKey(new Date())]?.reviewed || 0
+  const ringValue = goal ? goal.count : todayReviewed
+  const ringTarget = goal ? goal.target : 50
+
+  let motivation
+  if (goal && goal.count >= goal.target) motivation = 'Objectif du jour atteint ! 🎉'
+  else if (ringValue === 0) motivation = stats.dueCount > 0 ? 'Prêt à réviser ?' : 'Rien à réviser, profite !'
+  else if (streak >= 7) motivation = `En feu ! ${streak} jours d'affilée 🔥`
+  else if (goal) motivation = 'Continue, tu y es presque !'
+  else motivation = 'Beau travail, continue comme ça !'
+
+  const { cols, today } = buildHeatmap(12)
 
   return (
     <main className="page">
       {/* Hero */}
       <div className="home-hero">
-        <div className="home-greeting-text">{greeting}, Loïc !</div>
-        <div className="home-due-row">
-          <div className="home-due-number">{stats.dueCount}</div>
-          <div className="home-due-info">
+        <div className="home-hero-top">
+          <span className="home-greeting-text">{greeting}, Loïc !</span>
+          {streak > 0 && <span className="streak-chip">🔥 {streak} jour{streak > 1 ? 's' : ''}</span>}
+        </div>
+        <div className="home-hero-main">
+          <ProgressRing value={ringValue} target={ringTarget} />
+          <div className="home-hero-info">
+            <div className="home-due-number">{stats.dueCount}</div>
             <div className="home-due-label">
               carte{stats.dueCount !== 1 ? 's' : ''} à réviser
             </div>
+            <div className="home-motivation">{motivation}</div>
           </div>
         </div>
       </div>
@@ -99,6 +180,44 @@ export default function Home({ onReview, onStartDailyGoal }) {
           )
         })
       )}
+
+      {/* Activity heatmap */}
+      <p className="section-label" style={{ marginTop: 28 }}>Activité · 12 semaines</p>
+      <div className="heatmap">
+        <div className="heatmap-grid">
+          {cols.map((col, wi) => (
+            <div className="hm-col" key={wi}>
+              {col.map((date, di) => {
+                const future = date > today
+                const count = reviewLog[dayKey(date)]?.reviewed || 0
+                return (
+                  <button
+                    key={di}
+                    className={`hm-cell lvl-${level(count)}${future ? ' hm-future' : ''}`}
+                    disabled={future}
+                    onClick={() => setSelectedDay({ date, count })}
+                    aria-label={`${count} carte(s) le ${fmtDay(date)}`}
+                  />
+                )
+              })}
+            </div>
+          ))}
+        </div>
+        <div className="heatmap-footer">
+          <span className="heatmap-selected">
+            {selectedDay
+              ? (selectedDay.count > 0
+                  ? `${selectedDay.count} carte${selectedDay.count > 1 ? 's' : ''} le ${fmtDay(selectedDay.date)}`
+                  : `Aucune révision le ${fmtDay(selectedDay.date)}`)
+              : 'Appuie sur un jour'}
+          </span>
+          <span className="heatmap-legend">
+            Moins
+            <i className="hm-cell lvl-0" /><i className="hm-cell lvl-1" /><i className="hm-cell lvl-2" /><i className="hm-cell lvl-3" /><i className="hm-cell lvl-4" />
+            Plus
+          </span>
+        </div>
+      </div>
     </main>
   )
 }

@@ -123,7 +123,7 @@ export default function Review({ categoryId, onDone, dailyGoalMode = false }) {
     // Always update the card scheduling, then always advance to next card.
     // The rating affects when this card reappears, not the current session flow.
     updateCard(card.id, calculateNextReview(card, quality))
-    recordCardReview(card.categoryId)
+    recordCardReview(card.categoryId, quality)
 
     const keys = ['again', 'hard', 'good', 'easy']
     setSessionStats(prev => ({ ...prev, [keys[quality]]: prev[keys[quality]] + 1 }))
